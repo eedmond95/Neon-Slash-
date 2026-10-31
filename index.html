@@ -709,6 +709,45 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 #top .v7-hud-score,#top .v7-hud-combo{min-height:0}
 }
 @media(prefers-reduced-motion:reduce){#menu .v7-portrait svg,#menu .v7-orbit,#feverStatus,#ui.fever-mode:before{animation:none!important}}
+</style><style id="rebirth-v7-details">
+#levels .v7-levels,#shop .v7-shop{max-width:950px!important;width:min(94vw,950px)!important;max-height:88dvh!important;overflow:auto!important;padding:clamp(18px,3vw,35px)!important}
+#levels .v7-levels h2,#shop .v7-shop h2{font:1000 clamp(29px,5vw,49px) system-ui;letter-spacing:-.05em;color:#f5fcff!important;margin:8px 0}
+#levels .v7-levels p,#shop .v7-shop p{font-size:13px!important;color:#abbfd8!important;line-height:1.55!important;max-width:650px}
+#levels .level-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px!important;margin-top:24px!important}
+#levels .v7-sector-tile{min-height:140px;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:space-between!important;text-align:left!important;padding:16px!important;border-radius:17px!important;background:linear-gradient(145deg,#102a43,#0c1732 70%,#1c1534)!important;border:1px solid #6bc4ff77!important;box-shadow:inset 0 1px #ffffff20,0 8px 24px #0007!important;gap:11px;position:relative}
+#levels .v7-sector-tile:before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(ellipse at 100% 0%,#6ae5ff25,transparent 64%)}
+#levels .v7-sector-tile.sector-rose{border-color:#ee88d177!important}
+#levels .v7-sector-tile.sector-rose:before{background:radial-gradient(ellipse at 100% 0%,#ff6aa826,transparent 65%)}
+#levels .v7-sector-tile.sector-aqua{border-color:#6affdb77!important}
+#levels .v7-sector-tile.sector-aqua:before{background:radial-gradient(ellipse at 100% 0%,#43ffc82b,transparent 65%)}
+#levels .v7-sector-tile.sector-gold{border-color:#ffd18b77!important}
+#levels .v7-sector-tile.sector-gold:before{background:radial-gradient(ellipse at 100% 0%,#ffbd5f25,transparent 65%)}
+#levels .v7-sector-tile .v7-sector-top{display:flex;align-items:center;justify-content:space-between;font:900 10px system-ui;color:#99e7ff;letter-spacing:.15em}
+#levels .v7-sector-tile .v7-sector-top span:last-child{font-size:17px;color:#bcf8ff}
+#levels .v7-sector-tile strong{font:950 clamp(15px,2vw,20px) system-ui;color:#fff;letter-spacing:.02em}
+#levels .v7-sector-tile .v7-sector-bottom{font:850 9px system-ui;color:#80ecd0;letter-spacing:.09em}
+#levels .v7-sector-tile.locked{opacity:.39!important;border-color:#647b9666!important;cursor:not-allowed;filter:saturate(.5)}
+#levels .v7-sector-tile.locked .v7-sector-bottom{color:#9cafc4}
+#levels .v7-sector-tile.selected{box-shadow:0 0 0 2px #a4f9ff77,0 0 31px #47dfff44!important}
+#shop .v7-armory-glyph{color:#fddca2}
+#shop .v7-shop-wallet{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px 18px;margin:22px 0 15px;background:#0b2942c9;border:1px solid #77c7ff67;border-radius:13px}
+#shop .v7-shop-wallet span{font:900 10px system-ui;color:#9ccde7;letter-spacing:.12em}
+#shop .v7-shop-wallet strong{font:950 22px system-ui;color:#ffe0a0}
+#shop .shop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px!important}
+#shop .v7-upgrade{background:linear-gradient(150deg,#112947,#171633)!important;border-radius:15px!important;padding:18px 15px!important;box-shadow:inset 0 1px #ffffff15}
+#shop .v7-upgrade-head{display:flex;align-items:center;gap:12px}
+#shop .v7-upgrade-symbol{display:grid;place-items:center;min-width:40px;width:40px;height:40px;border-radius:12px;border:1px solid #8bd6ff72;background:#1b3c5d;color:#a8f4ff;font-size:22px}
+#shop .v7-upgrade-head b{color:#eafaff;font-size:12px;font-weight:900}
+#shop .v7-upgrade-head small{display:block;min-height:0!important;font:750 9px system-ui;color:#7badcd;margin-top:3px}
+#shop .v7-upgrade p{min-height:50px;margin:18px 0 10px;font-size:12px!important;line-height:1.4;color:#a9c1dd}
+#shop .v7-upgrade-tiers{display:flex;gap:5px}
+#shop .v7-upgrade-tiers i{height:6px;border-radius:5px;flex:1;background:#2c3452}
+#shop .v7-upgrade-tiers i.owned{background:linear-gradient(90deg,#57e7f6,#af89ff);box-shadow:0 0 8px #57e7ff66}
+#shop .v7-upgrade-bottom{display:flex;justify-content:space-between;gap:5px;margin:13px 0 12px;align-items:center;font:900 9px system-ui;color:#9ac5e1;letter-spacing:.08em}
+#shop .v7-upgrade-bottom strong{color:#ffe0a0;font-size:14px}
+#shop .v7-upgrade button{width:100%;min-height:40px;background:linear-gradient(110deg,#137a9c,#4e46a4)!important;border-radius:10px!important;font-size:10px!important;padding:9px 7px!important;letter-spacing:.03em!important}
+#shop .v7-upgrade button:disabled{background:#152341!important;color:#899cb5!important}
+@media(max-width:660px){#levels .level-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px!important}#levels .v7-sector-tile{min-height:119px;padding:12px!important}#levels .v7-sector-tile strong{font-size:14px}#shop .shop-grid{grid-template-columns:1fr!important}#shop .v7-upgrade p{min-height:0}#shop .v7-shop-wallet span{font-size:9px}#shop .v7-shop-wallet strong{font-size:16px}}
 </style></head><body><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
 <linearGradient id="lyraHair" x2="1" y2="1"><stop stop-color="#f78cff"/><stop offset=".43" stop-color="#ae48fa"/><stop offset="1" stop-color="#482cb5"/></linearGradient><linearGradient id="lyraSuit" x2="0" y2="1"><stop stop-color="#273c75"/><stop offset="1" stop-color="#11142f"/></linearGradient>
 <symbol id="lyraChibiArt" viewBox="0 0 200 240"><path d="M48 76Q10 18 91 9Q163 -7 178 74L169 171Q139 193 117 164L52 167Z" fill="url(#lyraHair)" stroke="#e698ff" stroke-width="4"/><path d="M72 166L52 205Q48 230 68 230H151Q170 226 152 204L129 165" fill="url(#lyraSuit)" stroke="#72eaff" stroke-width="4"/><path d="M86 180L109 212L132 178" fill="none" stroke="#f389fa" stroke-width="8"/><path d="M70 224L65 235M137 224L145 235" stroke="#6deeff" stroke-width="12" stroke-linecap="round"/><ellipse cx="110" cy="111" rx="62" ry="65" fill="#ffd5c6" stroke="#ffbad6" stroke-width="3"/><path d="M44 93Q28 23 105 18Q174 22 176 95Q156 77 150 60Q100 101 44 93" fill="url(#lyraHair)"/><path d="M69 117Q83 103 96 118M124 118Q138 103 151 117" fill="none" stroke="#6b3c88" stroke-width="5" stroke-linecap="round"/><ellipse cx="84" cy="125" rx="9" ry="14" fill="#9f61e9"/><ellipse cx="138" cy="125" rx="9" ry="14" fill="#9f61e9"/><circle cx="87" cy="121" r="3" fill="#fff"/><circle cx="141" cy="121" r="3" fill="#fff"/><path d="M103 145Q111 152 120 145" stroke="#b95b8e" stroke-width="3" fill="none"/><ellipse cx="61" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><ellipse cx="157" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><path d="M47 82L35 161M170 82L183 163" stroke="#c770f5" stroke-width="16" stroke-linecap="round"/><path d="M76 200L109 222L143 200" fill="none" stroke="#72eeff" stroke-width="3"/></symbol>
@@ -772,7 +811,14 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
   <footer class="v7-footer"><span>DESIGNED FOR ONE-THUMB ARCADE PLAY</span><span>TAP TARGETS · CHAIN SLASHES · BREAK SHIELDS</span><span>PHANTOM REBIRTH 7.0</span></footer>
 </div>
 </section>
-<section id="levels" class="overlay hidden"><div class="panel levels-panel"><div class="tag">MISSION ARCHIVE / LEVEL SELECT</div><h2>SELECT A LEVEL</h2><p>Defeat a level boss to unlock the next level. Completed stages stay unlocked.</p><div id="levelGrid" class="level-grid"></div><div class="actions"><button id="levelsBack">← BACK TO HUB</button></div></div></section><section id="howto" class="overlay hidden"><div class="panel tutorial-panel"><div class="tag">QUICK START / 30 SECONDS</div><h2>HOW TO PLAY</h2><p>Tap a target for a precise hit, or drag your finger or mouse to cut through groups. Start gestures away from the screen edges.</p><div class="tutorial-grid"><div><b class="pink">◇ PINK CUBES</b><span>Slash for points and combos.</span></div><div><b class="cyan">▣ BLUE ARMOR</b><span>Break its armor with repeated hits.</span></div><div><b class="green">● GREEN ORBS</b><span>Restore health or energy.</span></div><div><b class="red">✹ RED BOMBS</b><span>Avoid touching them with your blade.</span></div></div><p><strong>Boss protocol:</strong> build Overdrive from enemies, then use PULSE to disable a boss shield. Slash the exposed core before the shield regenerates. Press Space on desktop.</p><div class="actions"><button id="tutorialPlay">▶ START PLAYING</button><button id="tutorialBack">BACK TO MENU</button></div><label class="tutorial-check"><input type="checkbox" id="skipTutorial" checked> Show tutorial only once</label></div></section><section id="shop" class="overlay hidden"><div class="panel"><h2>✦ LYRA ARMORY</h2><div class="wallet" id="shopwallet"></div><div class="shop-grid" id="shopgrid"></div><div class="actions"><button id="shopBack">← HUB</button></div></div></section>
+<section id="levels" class="overlay hidden"><div class="panel levels-panel v7-levels"><div class="tag">◈ MISSION ARCHIVE / CAMPAIGN</div><h2>SECTOR MAP</h2><p>Every defeated boss permanently unlocks the next sector. Select any cleared or available sector to deploy.</p><div id="levelGrid" class="level-grid"></div><div class="actions"><button id="levelsBack">← RETURN TO COMMAND DECK</button></div></div></section><section id="howto" class="overlay hidden"><div class="panel tutorial-panel"><div class="tag">QUICK START / 30 SECONDS</div><h2>HOW TO PLAY</h2><p>Tap a target for a precise hit, or drag your finger or mouse to cut through groups. Start gestures away from the screen edges.</p><div class="tutorial-grid"><div><b class="pink">◇ PINK CUBES</b><span>Slash for points and combos.</span></div><div><b class="cyan">▣ BLUE ARMOR</b><span>Break its armor with repeated hits.</span></div><div><b class="green">● GREEN ORBS</b><span>Restore health or energy.</span></div><div><b class="red">✹ RED BOMBS</b><span>Avoid touching them with your blade.</span></div></div><p><strong>Boss protocol:</strong> build Overdrive from enemies, then use PULSE to disable a boss shield. Slash the exposed core before the shield regenerates. Press Space on desktop.</p><div class="actions"><button id="tutorialPlay">▶ START PLAYING</button><button id="tutorialBack">BACK TO MENU</button></div><label class="tutorial-check"><input type="checkbox" id="skipTutorial" checked> Show tutorial only once</label></div></section><section id="shop" class="overlay hidden"><div class="panel v7-shop">
+  <div class="tag">◈ LYRA DIVISION / SYSTEM UPGRADES</div>
+  <h2>THE ARMORY <span class="v7-armory-glyph">✦</span></h2>
+  <p>Invest Stardust in permanent upgrades. Every sector you unlock stays unlocked—even after a failed run.</p>
+  <div class="v7-shop-wallet"><span>CURRENT STARDUST</span><strong class="wallet" id="shopwallet">✦ 0</strong></div>
+  <div class="shop-grid" id="shopgrid"></div>
+  <div class="actions"><button id="shopBack">← RETURN TO COMMAND DECK</button></div>
+</div></section>
 <section id="side" class="overlay hidden"><div class="panel"><h2>ORBIT & ECHO</h2><p>Side mission portal · Earn a bonus stardust reward when you return. Full cross-game currency exchange requires a shared trusted save/backend.</p><iframe id="portalframe" title="Orbit and Echo Side Game" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-pointer-lock" ></iframe><div class="actions"><button id="sideBack">COLLECT +50 ✦ & RETURN</button></div><p class="hint">Bonus is awarded once per portal visit, maximum 3 times per day. The embedded game may restrict iframe display; use the external link below if necessary.<br><a href="https://eedmond95.github.io/Orbit-and-Echo-Test/" target="_blank" rel="noopener">Open Orbit & Echo in a new tab</a></p></div></section>
 <section id="paused" class="overlay hidden"><div class="panel"><h2>MISSION PAUSED</h2><p>Your run is safe. Tap resume to continue slashing.</p><div class="actions"><button id="resume">▶ RESUME</button><button id="quitPause">QUIT TO HUB</button></div></div></section>
 <section id="warning" class="overlay hidden"><div style="text-align:center"><div class="tag">HOSTILE SIGNATURE DETECTED</div><h1>⚠ WARNING ⚠</h1><h2 id="warninglabel">RIFT SOVEREIGN</h2></div></section>
@@ -786,7 +832,25 @@ const storeKey='neon_echo_lyra_v1';const defaults=()=>({highestUnlocked:1,checkp
 // Campaign progression is stored independently of individual runs.
 save.highestUnlocked=Math.max(1,Math.min(99,Number(save.highestUnlocked)||1));save.checkpoint=Math.max(1,Math.min(save.highestUnlocked,Number(save.checkpoint)||save.highestUnlocked));
 function selectLevel(level){const n=Math.floor(Number(level));if(!Number.isFinite(n)||n<1||n>save.highestUnlocked)return;save.checkpoint=n;persist();resetRun(n)}
-function renderLevels(){const grid=$('levelGrid');grid.textContent='';const max=Math.max(12,Math.min(99,Math.ceil((save.highestUnlocked+3)/12)*12));for(let n=1;n<=max;n++){const button=document.createElement('button');const unlocked=n<=save.highestUnlocked;button.className='level-tile '+(unlocked?'':'locked')+(n===save.checkpoint?' selected':'');button.disabled=!unlocked;button.innerHTML='<span class="level-num">'+(unlocked?'LEVEL '+String(n).padStart(2,'0'):'🔒 LEVEL '+String(n).padStart(2,'0'))+'</span><small>'+(unlocked?(n<save.highestUnlocked?'✓ UNLOCKED':'★ NEW FRONTIER'):'LOCKED')+'</small>';if(unlocked)button.onclick=()=>selectLevel(n);grid.appendChild(button)}}
+function renderLevels(){
+  const grid=$('levelGrid');grid.textContent='';
+  const names=['PHANTOM GATE','NEBULA DRIFT','CRIMSON SIGNAL','CRYSTAL VEIL','SOLAR RELIC','VOID APPROACH','ORBITAL STORM','ECHO PROTOCOL'];
+  const accents=['cyan','rose','aqua','gold'];
+  const max=Math.max(12,Math.min(99,Math.ceil((save.highestUnlocked+3)/12)*12));
+  for(let n=1;n<=max;n++){
+    const unlocked=n<=save.highestUnlocked,cleared=n<save.highestUnlocked;
+    const button=document.createElement('button');
+    button.className='level-tile v7-sector-tile sector-'+accents[(n-1)%4]+(unlocked?' available':' locked')+(n===save.checkpoint?' selected':'');
+    button.disabled=!unlocked;
+    button.setAttribute('aria-label','Sector '+n+', '+(cleared?'cleared':unlocked?'available':'locked'));
+    button.innerHTML='<span class="v7-sector-top"><span>SECTOR '+String(n).padStart(2,'0')+'</span><span>'+(cleared?'✓':unlocked?'▶':'🔒')+'</span></span>'+
+    '<strong>'+names[(n-1)%names.length]+'</strong>'+
+    '<span class="v7-sector-bottom">'+(cleared?'✓ COMPLETED':unlocked?'◉ READY TO DEPLOY':'LOCKED · CLEAR PRIOR SECTOR')+'</span>';
+    if(unlocked)button.onclick=()=>selectLevel(n);
+    grid.appendChild(button)
+  }
+}
+
 function refreshContinue(){if($('menuBest'))$('menuBest').textContent=Number(save.best||0).toLocaleString('en-US');if($('menuSector'))$('menuSector').textContent=String(save.highestUnlocked).padStart(2,'0');const btn=$('continueBtn');$('continueInfo').textContent='LEVEL '+String(save.highestUnlocked).padStart(2,'0');btn.setAttribute('aria-label','Continue from unlocked level '+save.highestUnlocked)}
 
 const rnd=(a,b)=>a+Math.random()*(b-a),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -1013,7 +1077,24 @@ ctx.restore()
 }
 function loop(now){if(!last)last=now;const dt=Math.min(.034,(now-last)/1000);last=now;update(dt);draw();raf=requestAnimationFrame(loop)}raf=requestAnimationFrame(loop);
 const upgrades=[{id:'weapon',name:'PLASMA EDGE',description:'Higher damage; break elite armor.',max:8,base:120},{id:'radius',name:'BLADE REACH',description:'Wider slash collision radius.',max:7,base:100},{id:'hull',name:'HULL MATRIX',description:'+25 maximum HP per upgrade.',max:7,base:110}];function cost(u){return Math.floor(u.base*Math.pow(1.8,save[u.id]-1))}
-function renderShop(){$('wallet').textContent='✦ '+save.stardust+' STARDUST';$('shopwallet').textContent='BALANCE ✦ '+save.stardust;$('shopgrid').innerHTML='';for(const u of upgrades){const box=document.createElement('div');box.className='upgrade';const c=cost(u),maxed=save[u.id]>=u.max;box.innerHTML=`<b>${u.name}</b><br><span>TIER ${save[u.id]} / ${u.max}</span><small>${u.description}</small>`;const btn=document.createElement('button');btn.textContent=maxed?'MAX LEVEL':'UPGRADE · ✦ '+c;btn.disabled=maxed||save.stardust<c;btn.onclick=()=>{if(save.stardust<cost(u)||save[u.id]>=u.max)return;save.stardust-=cost(u);save[u.id]++;persist();sound('ui');renderShop()};box.appendChild(btn);$('shopgrid').appendChild(box)}}
+function renderShop(){
+  $('wallet').textContent='✦ '+save.stardust.toLocaleString('en-US');
+  $('shopwallet').textContent='✦ '+save.stardust.toLocaleString('en-US');
+  $('shopgrid').innerHTML='';
+  const symbols={weapon:'⚔',radius:'◎',hull:'⬡'};
+  for(const u of upgrades){
+    const box=document.createElement('div');box.className='upgrade v7-upgrade';
+    const c=cost(u),maxed=save[u.id]>=u.max,level=save[u.id];
+    box.innerHTML='<div class="v7-upgrade-head"><span class="v7-upgrade-symbol">'+symbols[u.id]+'</span><div><b>'+u.name+'</b><small>UPGRADE / '+u.id.toUpperCase()+'</small></div></div>'+
+    '<p>'+u.description+'</p><div class="v7-upgrade-tiers">'+Array.from({length:u.max},(_,i)=>'<i class="'+(i<level?'owned':'')+'"></i>').join('')+'</div>'+
+    '<div class="v7-upgrade-bottom"><span>LEVEL '+level+' / '+u.max+'</span><strong>'+(maxed?'MAXED':'✦ '+c)+'</strong></div>';
+    const btn=document.createElement('button');
+    btn.textContent=maxed?'✓ FULLY UPGRADED':save.stardust<c?'NEED '+(c-save.stardust)+' MORE STARDUST':'↗ INSTALL UPGRADE';
+    btn.disabled=maxed||save.stardust<c;
+    btn.onclick=()=>{if(save.stardust<cost(u)||save[u.id]>=u.max)return;save.stardust-=cost(u);save[u.id]++;persist();sound('ui');renderShop()};
+    box.appendChild(btn);$('shopgrid').appendChild(box)
+  }
+}
 function openShop(){if(game.mode==='play')return;renderShop();show('shop')}function toHub(){game.feverUntil=0;arcadeFeedbackUntil=arenaHeadingUntil=arenaHeadingPending=0;$('arcadeFeedback').classList.add('hidden');$('arenaHeading').classList.add('hidden');game.pulseUntil=0;game.mode='menu';refreshContinue();game.boss=null;for(const e of entities)e.active=false;for(const p of particles)p.active=false;for(const t of texts)t.active=false;pointer.trail.length=0;pointer.down=false;$('pause').textContent='Ⅱ';renderShop();show('menu')}
 const tutorialKey='neonEchoTutorialSeen_v1';function beginFriendly(){let seen=false;try{seen=localStorage.getItem(tutorialKey)==='yes'}catch(e){}if(seen)resetRun();else show('howto')} $('start').onclick=beginFriendly;$('continueBtn').onclick=()=>selectLevel(save.highestUnlocked);$('levelsBtn').onclick=()=>{renderLevels();show('levels')};$('levelsBack').onclick=toHub;$('howToBtn').onclick=()=>show('howto');$('tutorialBack').onclick=()=>show('menu');$('tutorialPlay').onclick=()=>{try{if($('skipTutorial').checked)localStorage.setItem(tutorialKey,'yes')}catch(e){}resetRun()};$('again').onclick=resetRun;$('home').onclick=toHub;$('shopBtn').onclick=openShop;$('endshop').onclick=openShop;$('shopBack').onclick=toHub;$('pause').onclick=pause;$('resume').onclick=pause;$('quitPause').onclick=toHub;$('pulse').onclick=usePulse;
 // TODO: Embed Orbit & Echo Side-Game Here for Point Generation.
