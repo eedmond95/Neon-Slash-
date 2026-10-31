@@ -59,7 +59,10 @@ if(game.training){copy='TRAINING · FOLLOW LYRA’S INSTRUCTIONS'}
 else if(game.bossAttack){mode='danger';copy='⚠ EMP ACTIVE · SLASH ORANGE SIGNAL NODE'}
 else if(game.laserAttack){mode='danger';copy='⚠ RAGE LASER · CUT REACTOR TWICE'}
 else if(game.boss){
-if(game.boss.shieldDown>0){mode='ready';copy='BOSS EXPOSED · ATTACK CORE · '+Math.ceil(game.boss.shieldDown)+'s'}
+const diag=typeof window.RIFTBREAK_DIAGNOSTICS==='function'?window.RIFTBREAK_DIAGNOSTICS():null;
+if(diag&&diag.laneActive){mode='danger';copy='⚠ INCOMING STRIKE · PARRY OR CUT TELEGRAPH'}
+else if(game.boss.shieldDown>0&&(diag?.shieldNodes||0)>0){mode='danger';copy='BREAK '+diag.shieldNodes+' GLOWING REACTORS · THEN SLASH CORE'}
+else if(game.boss.shieldDown>0){mode='ready';copy='BOSS EXPOSED · ATTACK CORE · '+Math.ceil(game.boss.shieldDown)+'s'}
 else if(game.mp>=100){mode='ready';copy='ULTIMATE READY · TAP LYRA PULSE TO BREACH SHIELD'}
 else copy='BOSS SHIELDED · SLASH MINIONS FOR ENERGY';
 }else if(game.mp>=100){mode='ready';copy='LYRA PULSE READY · CLEAR THE ARENA'}
