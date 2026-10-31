@@ -164,7 +164,7 @@ button:focus-visible{outline:3px solid #b6fffd!important;outline-offset:3px!impo
 #menu .v7-portrait{order:1!important;position:relative!important;right:auto!important;top:auto!important;opacity:1!important;pointer-events:none!important;width:100%!important;min-height:0!important;height:145px!important;margin:10px 0 0!important;overflow:hidden!important;mask-image:linear-gradient(#000 76%,transparent)!important}
 #menu .v7-portrait:before{width:265px!important;left:76%!important;top:-75%!important}
 #menu .v7-portrait:after{display:none!important}
-#menu .v7-portrait svg{position:absolute!important;left:53%!important;top:-80px!important;height:405px!important;width:auto!important;max-width:none!important;opacity:.94!important;transform:none!important}
+#menu .v7-portrait svg{position:absolute!important;left:35%!important;top:-80px!important;height:405px!important;width:auto!important;max-width:none!important;opacity:.94!important;transform:none!important}
 #menu .v7-portrait-glow{opacity:.7!important}
 #menu .v7-pilot-id{display:none!important}
 #menu .v7-portrait-corner{display:none!important}
