@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no,interactive-widget=resizes-content"><meta name="theme-color" content="#080517"><title>NEON ECHO — Lyra's Slash — BOSS SHIELD v4.6</title>
+<style>
+:root{--pink:#ff36d9;--cyan:#55f8ff;--gold:#ffd270;--bg:#080617}*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;background:#04030c;color:white;font-family:Arial,Helvetica,sans-serif;touch-action:none}canvas{display:block;position:absolute;inset:0;width:100%;height:100%;touch-action:none}#ui{position:absolute;inset:0;pointer-events:none;user-select:none}button{cursor:pointer;font:inherit;color:#fff;border:1px solid #b94af3;background:linear-gradient(120deg,#4a146c,#1a123e);padding:12px 19px;letter-spacing:.12em;font-weight:900;text-transform:uppercase;box-shadow:0 0 20px #a91ffb44,inset 0 0 12px #f24ce933}button:hover{border-color:var(--cyan);box-shadow:0 0 24px #58eaff77}button:disabled{opacity:.35;cursor:not-allowed}#top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:calc(10px + env(safe-area-inset-top)) max(10px,2.5vw) 0}.stat{min-width:125px;text-align:center;background:linear-gradient(140deg,#3a0e59e8,#09091cde);clip-path:polygon(0 0,100% 0,100% 85%,92% 100%,8% 100%,0 85%);border-top:3px solid #e74fff;padding:8px 10px 15px;filter:drop-shadow(0 0 12px #bb17fa)}.stat label{font-size:clamp(11px,2vw,22px);letter-spacing:.16em;display:block;font-weight:1000;text-shadow:2px 2px #65005e}.stat strong{font-size:clamp(21px,4vw,43px);display:block;line-height:1.1;color:#ffc378;text-shadow:2px 3px #b92919,0 0 14px #ff682e;font-variant-numeric:tabular-nums}.center{width:min(43vw,460px);text-align:center}.meter{height:12px;border:2px solid #9e38da;background:#100c27;box-shadow:0 0 14px #e84bff88;overflow:hidden}.meter>div{height:100%;width:0%;background:linear-gradient(90deg,#9828fd,#46ecdb,#f3ffe8);transition:width .15s}.center .sub{font-size:clamp(10px,1.55vw,17px);margin-top:9px;letter-spacing:.16em;color:#80ffff;text-shadow:0 0 9px #14eafa;font-weight:bold}.bottom{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom));left:12px;right:12px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}.health{width:min(46vw,340px);font-size:12px;font-weight:900;letter-spacing:.13em;color:#b9ffff}.bar{height:15px;border:1px solid #53f7ff;background:#0d1232;margin:6px 0 12px;box-shadow:0 0 12px #33dff777}.bar>div{height:100%;background:linear-gradient(90deg,#22dfca,#a5fffd);width:100%}.bar.mp{height:8px;border-color:#ef58f9}.bar.mp>div{background:linear-gradient(90deg,#bd32fc,#ff6fd4)}.bottom button{pointer-events:auto;font-size:11px;padding:10px}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:15px;background:#040313aa;backdrop-filter:blur(9px);pointer-events:auto}.hidden{display:none!important}.panel{width:min(95vw,650px);max-height:89vh;overflow:auto;padding:clamp(20px,4vw,35px);background:linear-gradient(150deg,#200c38ef,#070b23f5 62%,#0c2440ef);border:2px solid #b343f8;box-shadow:0 0 55px #d424fb66,inset 0 0 45px #5b20a932;text-align:center}.panel h1{font-size:clamp(29px,7vw,57px);line-height:1.03;letter-spacing:.12em;margin:0 0 10px;color:#fff;text-shadow:0 0 8px #ff1ac4,0 0 35px #ea21ff}.panel h2{font-size:26px;letter-spacing:.14em;color:#86ffff}.panel p{color:#b9c8e6;line-height:1.55}.tag{font-size:11px;color:#7ffcff;letter-spacing:.3em;font-weight:bold;margin-bottom:15px}.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}.actions button{flex:1 1 130px}.wallet{color:#ffd978;font-weight:bold;letter-spacing:.11em}.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:15px 0}.upgrade{padding:14px;border:1px solid #9142c5;background:#110d2b;text-align:left}.upgrade b{color:#8ef9ff}.upgrade small{display:block;min-height:40px;color:#adb6d5;margin:8px 0}.upgrade button{width:100%;font-size:11px;padding:9px 4px}.hint{font-size:12px!important;color:#90a2be!important}#warning{background:#1b0016aa;animation:alert .22s infinite alternate}#warning h1{color:#ff506b;font-size:clamp(38px,10vw,94px)}@keyframes alert{to{background:#300009dd}}#bossbar{position:absolute;top:clamp(100px,13vh,150px);left:21%;width:58%;text-align:center;display:none;color:#ff83dc;font-weight:900;letter-spacing:.17em;text-shadow:0 0 9px #ff15d4}#bossbar .meter{margin-top:6px}#bossbar .meter>div{background:linear-gradient(90deg,#f42a86,#ffb361)}#portalframe{width:100%;height:min(48vh,380px);border:1px solid var(--cyan);background:#050819}a{color:#73faff}#toast{position:absolute;left:50%;top:21%;transform:translateX(-50%);text-align:center;color:#ffeaa8;font-weight:900;letter-spacing:.15em;text-shadow:0 0 15px #ff27df;opacity:0;transition:opacity .15s;white-space:nowrap;font-size:clamp(15px,3vw,30px)}@media(max-width:550px){.stat{min-width:85px;padding:7px 4px 10px}.center{width:35vw}.center .sub{font-size:9px}.bottom{bottom:calc(8px + env(safe-area-inset-bottom))}.health{width:48vw}.bottom button{font-size:10px;padding:9px 8px}}
+<style>
+/* V1.2: reference-inspired luminous arcade cabinet */
+.stat{border:2px solid #ff69ed;box-shadow:inset 0 0 30px #ff54ed45,0 0 26px #c125ff75;background:linear-gradient(145deg,#7d20a5e9,#1c0c38ef 60%,#06091aed)!important;transform:perspective(500px) rotateX(3deg)}
+.stat:before{content:"";position:absolute;inset:5px;border:1px solid #ff8dec88;pointer-events:none}
+.stat strong{color:#ffda77;text-shadow:0 0 6px #fff7cf,0 0 16px #ff6819,3px 4px #93242a!important}
+.stat label{color:#fbedff;text-shadow:0 0 11px #ff28df,2px 2px #380056}
+.center .meter{height:15px;border-color:#d35bff;box-shadow:0 0 24px #e03dff99,inset 0 0 12px #ff42ef55}
+.center .meter>div{background:linear-gradient(90deg,#921bef,#3bf5dd,#eaffff)}
+.center .sub{color:#72fcff;text-shadow:0 0 12px #39e8ff}
+.panel{background:linear-gradient(145deg,#271048f5,#07071af8 62%,#091a39f5);border-color:#d25fff;box-shadow:0 0 70px #b824ee77,inset 0 0 40px #8427d944}
+button{box-shadow:0 0 20px #d12dff55,inset 0 0 16px #ef54ff33}
+#toast{color:#ffedba;text-shadow:0 0 18px #ff7c29,0 0 30px #fc3cff}
+</style><style>
+/* NEON ECHO: REFORGED | bespoke visual identity, not a generic modal */
+:root{--ink:#05050d;--deep:#08091a;--violet:#8b38d6;--fuchsia:#ff32b6;--glacier:#53edfa;--text:#f7f7ff;--muted:#8b9cb4}
+html,body{background:#04040a!important;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+button{border-radius:0;transition:transform .18s,border-color .18s,box-shadow .18s;touch-action:manipulation}
+button:active{transform:scale(.975)}
+#ui{z-index:4}
+.hud-watermark{position:absolute;left:18px;top:51%;writing-mode:vertical-rl;letter-spacing:.35em;font-size:9px;font-weight:800;color:#7e9aff45}
+#top{padding:calc(18px + env(safe-area-inset-top)) max(16px,4vw) 0;align-items:flex-start;gap:16px}
+#top:before{display:none}
+.stat,.stat:last-child{flex:0 0 clamp(142px,20vw,248px);min-height:104px;padding:13px 18px 16px!important;text-align:left;transform:none!important;clip-path:polygon(0 0,94% 0,100% 18%,100% 100%,0 100%)!important;border:1px solid #e947ba88!important;border-left:3px solid #fa5dc2!important;background:linear-gradient(125deg,#230f38ea,#0a0a1eea 68%,#10152ae8)!important;box-shadow:inset 0 0 35px #b422aa24,0 0 28px #e834c633!important;filter:none}
+.stat:last-child{clip-path:polygon(6% 0,100% 0,100% 100%,0 100%,0 18%)!important;text-align:right;border-left:1px solid #e947ba88!important;border-right:3px solid #fa5dc2!important}
+.stat:before,.stat:after{display:none!important}
+.stat-kicker{color:#fd78d4;font-size:9px;font-weight:800;letter-spacing:.18em;opacity:.86;margin-bottom:7px}
+.stat label{display:block;font-family:system-ui,sans-serif;font-style:normal;font-size:clamp(12px,1.8vw,17px);letter-spacing:.31em;font-weight:900;color:#f1e8ff!important;text-shadow:none!important}
+.stat strong{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-style:normal;font-size:clamp(27px,3.6vw,46px);font-weight:900;line-height:1.05;letter-spacing:.005em;color:#ffd48b!important;background:none!important;-webkit-text-fill-color:#ffd48b;filter:none!important;text-shadow:0 0 13px #fc8b4980!important}
+.center{flex:1;max-width:550px;width:auto;min-width:100px;padding:7px 12px 0}
+.center:before,.center:after{display:none}
+.center-label{display:flex;justify-content:space-between;gap:7px;white-space:nowrap;text-transform:uppercase;font-size:9px;letter-spacing:.2em;font-weight:900;color:#c8e4ff;margin-bottom:8px}
+.center-label span{color:#56f7cc}
+.center .meter{height:9px;border:1px solid #7f8ab7;box-shadow:0 0 12px #57eaff35;background:#12152d}
+.center .meter>div{background:linear-gradient(90deg,#ab34ff,#fa4cbd,#6bf7ef)}
+#timeReadout{font-size:clamp(20px,3.4vw,43px);line-height:1.1;font-family:ui-monospace,monospace;font-weight:900;letter-spacing:.06em;margin:9px 0 0;color:#e1faff;text-shadow:0 0 17px #44cfff77}
+#timeReadout .hourglass{color:#58f5ff}
+.center .sub{font-family:ui-monospace,monospace;font-size:clamp(9px,1.05vw,13px);letter-spacing:.12em;margin-top:6px;color:#91dce9;text-shadow:none}
+.bottom{bottom:calc(20px + env(safe-area-inset-bottom));left:max(16px,4vw);right:max(16px,4vw)}
+.syslabel{display:flex;justify-content:space-between;font-size:10px;margin-bottom:11px;color:#9cbbcd}
+.syslabel span{color:#fb76e3}
+.health{padding:18px 20px 7px;background:linear-gradient(100deg,#0b1325e6,#170f2ae6);border-left:3px solid #6cf0ff;box-shadow:0 0 20px #37ddf622;font-size:11px;max-width:420px;width:min(45vw,420px)}
+.bar{height:8px;margin:6px 0 15px}.bar.mp{height:6px}
+#pulse{background:linear-gradient(135deg,#15bfc2,#154b76);border-color:#68ecff;box-shadow:0 0 23px #20dffa44}
+#pause{min-width:50px}
+.overlay{background:#02040ce3;backdrop-filter:blur(13px);padding:0}
+#menu{background:transparent;backdrop-filter:none;overflow:auto;align-items:stretch}
+.menu-shell{position:relative;width:100%;min-height:100%;padding:clamp(16px,3vw,34px) clamp(18px,5vw,76px) 20px;display:flex;flex-direction:column;isolation:isolate;background:linear-gradient(90deg,#050711f7 0%,#090a19ef 45%,#10102780 100%),radial-gradient(ellipse at 75% 48%,#843b8e2e,transparent 60%)}
+.menu-shell:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#050610 4%,transparent 25%),repeating-linear-gradient(0deg,#ffffff04 0px,#ffffff04 1px,transparent 1px,transparent 6px);pointer-events:none}
+.menu-topline{display:flex;align-items:center;gap:22px;padding-bottom:17px;border-bottom:1px solid #7181ac35;font-size:10px;letter-spacing:.18em;color:#a4aeca;font-weight:800}
+.logo-mark{font-size:25px;color:#f8f5ff;letter-spacing:-.08em;font-weight:1000}.logo-mark span{color:#ff4bcb}
+.menu-topline em{font-style:normal;color:#ff6dcb}.online{margin-left:auto;color:#71eacb;white-space:nowrap}.online i{display:inline-block;width:6px;height:6px;background:#70ffc6;border-radius:100%;box-shadow:0 0 11px #70ffc6;margin-right:7px}
+.menu-hero{display:flex;flex:1;align-items:center;padding:32px 0;min-height:410px}.hero-copy{width:min(62%,700px);position:relative;z-index:2}
+.eyebrow{font-size:10px;font-weight:900;letter-spacing:.21em;color:#89edfa}.tiny-square{display:inline-block;width:7px;height:7px;background:#ff47c9;transform:rotate(45deg);margin-right:10px;box-shadow:0 0 11px #ff28bd}.edition{color:#fc70c6;margin-left:15px}
+.hero-title{font-weight:1000;letter-spacing:-.075em;line-height:.84;margin:27px 0 25px;font-size:clamp(75px,11.7vw,188px);text-shadow:0 0 60px #d64cea25}
+.hero-title>span{display:block;color:#fff;font-weight:1000}.hero-title strong{display:block;font-weight:1000;background:linear-gradient(105deg,#fff 0%,#e8d7ff 34%,#ff74cc 78%,#ca33e9);background-clip:text;-webkit-background-clip:text;color:transparent}.title-point{color:#46f5ff;-webkit-text-fill-color:#46f5ff}
+.hero-line{font-size:clamp(12px,1.6vw,20px);letter-spacing:.3em;font-weight:900;color:#fb78cf}.hero-line span{color:#6befff;padding:0 9px}
+.hero-desc{max-width:480px;color:#aebcd1;line-height:1.75;font-size:clamp(12px,1.1vw,15px);margin:20px 0 18px}
+.feature-row{display:flex;flex-wrap:wrap;gap:10px;color:#c6cce0;font-size:9px;letter-spacing:.13em;font-weight:850}.feature-row span{border:1px solid #7183a94d;padding:8px 10px;background:#16203942}
+.hero-actions{display:flex;gap:14px;align-items:stretch;margin-top:29px;max-width:650px}
+.primary-cta{min-height:83px;display:flex;align-items:center;gap:16px;padding:15px 19px;flex:1;max-width:360px;background:linear-gradient(120deg,#f43eab,#c32bc9 65%,#7534ba);border:1px solid #ffb3e9;box-shadow:0 0 35px #f126bc49;font-size:14px;letter-spacing:.08em;text-align:left}
+.primary-cta small{display:block;color:#ffdaf6;font-size:9px;letter-spacing:.17em;margin-top:5px}.cta-symbol{font-size:25px}.cta-arrow{margin-left:auto;font-size:22px}
+.secondary-actions{display:flex;flex:1;flex-direction:column;gap:8px}.secondary-actions button{flex:1;display:flex;justify-content:space-between;align-items:center;background:#101327d9;border:1px solid #64719699;text-align:left;font-size:10px;letter-spacing:.07em;padding:12px}
+.secondary-actions button span{color:#63eff9}
+.hero-currency{margin-top:30px;display:flex;flex-direction:column;align-items:flex-start;gap:5px}.hero-currency>span,.hero-currency small{font-size:9px;letter-spacing:.19em;color:#899bb3;font-weight:800}.hero-currency .wallet{font-size:20px;color:#ffd69d;letter-spacing:.08em;text-shadow:0 0 15px #ffb06d70}
+.hero-graphic{position:absolute;right:4%;top:50%;transform:translateY(-50%);width:min(49vw,650px);aspect-ratio:1;pointer-events:none;z-index:1}
+.halo{position:absolute;border:1px solid #ba62f6a0;inset:8%;border-radius:50%;box-shadow:0 0 23px #a94bee24,inset 0 0 25px #d442eb14;animation:halo-spin 26s linear infinite}.halo-one{border-style:dashed;inset:2%;animation-duration:34s}.halo-two{inset:19%;border-color:#53eefd8c;animation-direction:reverse;animation-duration:18s}.halo-three{inset:30%;border-width:3px;border-color:#ff5bcbb5}
+@keyframes halo-spin{to{transform:rotate(360deg)}}
+.orbital-core{position:absolute;inset:35%;border-radius:50%;background:radial-gradient(circle at 42% 38%,#efffff,#83f3ff 12%,#7f4cf0 33%,#340c66 58%,#050719 77%);box-shadow:0 0 50px #ff35bf9e,0 0 150px #a03cec69,inset 0 0 25px #ffffff69;border:3px solid #e7bbff}
+.core-inner{position:absolute;inset:25%;display:grid;place-items:center;border-radius:50%;border:1px solid #e4ffffbb;color:#f5fdff;font-size:clamp(20px,5vw,62px);font-weight:900;text-shadow:0 0 25px #fff}
+.pilot-tag,.graphic-caption{position:absolute;right:2%;top:16%;border-left:2px solid #53efff;padding:8px 12px;background:#0c1225aa;color:#eaf9ff;font:700 10px/1.6 ui-monospace,monospace;letter-spacing:.12em}.pilot-tag b{color:#6ff4f5}.graphic-caption{top:auto;bottom:16%;right:auto;left:0;border-left-color:#ff54d6;color:#b7bbd5}
+.arc-left,.arc-right{position:absolute;top:49%;width:44%;border-top:1px solid #eb64e8a9;box-shadow:0 0 13px #f14be6}.arc-left{left:-18%;transform:rotate(-28deg)}.arc-right{right:-8%;transform:rotate(20deg)}
+.menu-footer{border-top:1px solid #7181ac35;padding-top:15px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:9px;font-weight:800;letter-spacing:.14em;color:#8190a6}.menu-footer i{font-style:normal;color:#f74cbd}
+#shop .panel,#paused .panel,#end .panel,#side .panel{border:1px solid #9e74c3;clip-path:polygon(0 0,95% 0,100% 8%,100% 100%,0 100%);text-align:left;background:linear-gradient(130deg,#19132df9,#070b19fa 78%);box-shadow:0 0 80px #b047ff3b}
+#shop .panel h2,#paused .panel h2,#side .panel h2{font-size:clamp(25px,5vw,43px);color:#f3f8ff;letter-spacing:-.03em;text-shadow:none}
+#shop .upgrade{border:1px solid #687ba277;border-left:2px solid #f468cf;background:linear-gradient(130deg,#1c1736,#0e1727)}
+#shop .upgrade b{color:#ffe6ff}
+#warning{background:repeating-linear-gradient(0deg,#250617cf 0,#250617cf 7px,#3c0a22e6 8px,#3c0a22e6 10px)!important;animation:alert .18s infinite alternate}
+#warning h1{font-size:clamp(60px,13vw,190px);font-weight:1000;font-style:italic;letter-spacing:-.05em;color:#ff557d;text-shadow:0 0 35px #ff123d,5px 5px #43081f}
+#warning .tag{color:#ffb5c9;font-size:clamp(12px,2vw,25px)}
+#bossbar{top:clamp(145px,17vh,200px);background:#100b21bd;padding:10px 22px;border-top:1px solid #ff71dd88}
+@media(max-width:800px){.menu-hero{min-height:0;padding:34px 0}.hero-copy{width:85%}.hero-graphic{right:-22%;opacity:.5;width:70vw}.hero-title{font-size:clamp(66px,13vw,124px)}.hero-actions{max-width:490px}}
+@media(max-width:620px){#top{padding:calc(7px + env(safe-area-inset-top)) 7px 0;gap:5px}.stat,.stat:last-child{flex:0 0 29%;min-width:0;min-height:68px;padding:7px 8px!important}.stat-kicker{font-size:6px;letter-spacing:.06em;margin-bottom:4px}.stat label{font-size:9px;letter-spacing:.18em}.stat strong{font-size:clamp(19px,5vw,28px)}.center{min-width:0;padding:5px 0 0}.center-label{font-size:6px;letter-spacing:0}.center-label span{display:none}#timeReadout{font-size:17px;margin-top:7px}.center .sub{font-size:8px;letter-spacing:0}.hud-watermark{display:none}.menu-shell{padding:20px 20px 24px;min-height:100svh}.menu-topline{font-size:8px;gap:9px}.menu-topline em{display:none}.online{font-size:7px}.menu-hero{align-items:flex-start;padding:55px 0 30px}.hero-copy{width:100%}.hero-graphic{width:94vw;right:-40%;top:38%;opacity:.32}.eyebrow{font-size:8px;letter-spacing:.07em}.edition{margin-left:5px}.hero-title{font-size:clamp(70px,18vw,116px);margin:22px 0}.hero-line{font-size:11px;letter-spacing:.12em}.hero-desc{font-size:13px;max-width:330px}.feature-row{font-size:8px;gap:6px}.hero-actions{flex-direction:column;margin-top:26px}.primary-cta{max-width:none;min-height:73px}.secondary-actions{flex-direction:row}.secondary-actions button{font-size:9px;padding:11px 9px}.hero-currency{margin-top:21px}.menu-footer{font-size:8px;line-height:1.9}.health{padding:8px 10px 2px;width:51vw;font-size:9px}.syslabel{font-size:8px}.bottom{left:7px;right:7px;bottom:calc(7px + env(safe-area-inset-bottom))}.bottom button{padding:8px;font-size:10px}}
+
+/* V2.0 high fidelity arcade composition */
+:root{--pink:#ff24ec;--cyan:#00f0ff;--gold:#ffe079;--bg:#05020a}
+#top{padding:calc(3px + env(safe-area-inset-top)) max(9px,9vw) 0;gap:0;position:relative;z-index:2}
+#top:before{content:"";position:absolute;z-index:-1;top:17px;left:20%;right:20%;height:84px;clip-path:polygon(0 0,50% 100%,100% 0,100% 24%,50% 100%,0 24%);background:linear-gradient(180deg,#ff00ef70,#59047477 56%,transparent);filter:drop-shadow(0 0 16px #ff18f2);pointer-events:none}
+.stat{transform:skewY(-1deg)!important;min-height:95px;border:3px solid #ff53f0!important;background:linear-gradient(120deg,#1b082b 4%,#5a0b6c 48%,#13051f 95%)!important;box-shadow:0 0 3px #ffadfa,0 0 28px #ed25fbaa,inset 0 0 35px #eb35ff88!important}
+.stat:last-child{transform:skewY(1deg)!important}
+.stat label{color:#ffe9ff!important;font-weight:1000;letter-spacing:.09em;text-shadow:2px 3px #23002d,0 0 8px #ff42e5!important}
+.stat strong{display:block;background:linear-gradient(#fff8bc,#ffcb49 48%,#ff7429 75%,#aa2b12);background-clip:text;-webkit-background-clip:text;color:transparent!important;filter:drop-shadow(0 2px 1px #460c12) drop-shadow(0 0 6px #ff662a);text-shadow:none!important}
+.center .meter{border:3px solid #d93afc;box-shadow:0 0 5px #fff3,0 0 20px #fb25ffb8}
+.center .sub{margin-top:4px;color:#63efff}
+#timeReadout{font-family:monospace;font-weight:900;font-size:clamp(16px,2.9vw,37px);color:#42f4ff;letter-spacing:.08em;text-shadow:0 0 8px #00eaff,0 0 20px #00c6ff}
+.bottom{z-index:3}
+.panel{border:2px solid #f451ff;background:linear-gradient(155deg,#2b0b46f7,#060815fa 60%,#0d1334fa);box-shadow:0 0 50px #ef22ed79,inset 0 0 35px #f04fff29}
+.panel h1{color:white;text-shadow:0 0 9px #f0f,0 0 35px #f0f}
+@media(max-width:620px){#top:before{top:10px;height:40px}.stat{min-height:58px}.stat strong{font-size:clamp(20px,6vw,27px)}.center{width:35vw}#timeReadout{font-size:clamp(14px,4vw,20px)}}
+
+/* Arcade reference fidelity v1.3 */
+html,body{background:#05020a!important}
+#top{padding-top:calc(3px + env(safe-area-inset-top));padding-left:max(11px,10vw);padding-right:max(11px,10vw);gap:2px;align-items:flex-start}
+.stat{position:relative;min-width:clamp(95px,17vw,235px);padding:4px 12px 14px!important;clip-path:polygon(8% 0,96% 0,100% 10%,100% 89%,94% 100%,3% 100%,0 93%,0 12%);background:linear-gradient(155deg,#2b073de8 4%,#a900c4cc 52%,#220537ee 100%)!important;border:2px solid #f837fd!important;box-shadow:0 0 6px #ff20e6,0 0 22px #e100ffad,inset 0 0 28px #ec15ffa0!important;filter:drop-shadow(0 0 8px #ff39f3);transform:none}
+.stat:after{content:'';position:absolute;inset:6px;clip-path:polygon(5% 0,97% 0,100% 13%,100% 90%,95% 100%,3% 100%,0 88%,0 10%);border:1px solid #ffbbff7d;pointer-events:none}
+.stat label{font-family:Impact,'Arial Black',sans-serif;font-style:italic;font-size:clamp(15px,2.5vw,33px);letter-spacing:.11em;color:#f9daff;text-shadow:2px 2px 0 #240027,0 0 11px #ff00ff}
+.stat strong{font-family:Impact,'Arial Black',sans-serif;font-style:italic;font-size:clamp(25px,4.4vw,57px);letter-spacing:.045em;color:#ffd06b;text-shadow:0 2px 0 #a32309,0 5px 0 #62110d,0 0 12px #ffae38,0 0 22px #ff5b26}
+.center{width:min(40vw,440px);padding-top:0}
+.center:before,.center:after{height:11px;top:29px;border-top:4px solid #ff3bfa;box-shadow:0 0 12px #f0f}
+.center .meter{height:22px;border:3px solid #df40f7;background:#13092a;box-shadow:0 0 22px #ed39ffb0,inset 0 0 16px #f6f8}
+.center .meter>div{background:linear-gradient(90deg,#6e0bc1,#28badd 48%,#40f8de 78%,#efffff)}
+.center .sub{font-family:'Courier New',monospace;font-size:clamp(11px,2.3vw,29px);line-height:1;letter-spacing:.1em;color:#42ecff;text-shadow:0 0 13px #00f0ff}
+#timeReadout{font-family:'Courier New',monospace;font-weight:900;font-size:clamp(15px,3vw,40px);color:#00f0ff;text-shadow:0 0 7px #00f0ff,0 0 21px #009eff;margin-top:4px;letter-spacing:.02em}
+#timeReadout .hourglass{font-size:.86em;display:inline-block;transform:rotate(-15deg);margin-right:10px}
+@media(max-width:620px){#top{padding-left:7px;padding-right:7px}.stat{min-width:89px;padding:4px 4px 9px!important}.stat label{font-size:14px}.stat strong{font-size:26px}.center{width:34vw}.center .meter{height:13px;border-width:2px}.center .sub{font-size:9px;letter-spacing:0}#timeReadout{font-size:17px}#timeReadout .hourglass{margin-right:3px}}
+</style></style><style>
+.build-stamp{position:absolute;right:clamp(14px,3vw,38px);bottom:clamp(10px,2vw,24px);font:900 11px ui-monospace,monospace;letter-spacing:.15em;color:#53f6ff;background:#07152be8;border:1px solid #53f6ff;padding:9px 13px;box-shadow:0 0 18px #00eaff77;z-index:20;pointer-events:none}
+
+@media(max-width:620px){.build-stamp{font-size:9px;bottom:10px;right:10px;padding:6px}}
+</style><style>
+/* V3.2 usability and accessible interaction */
+.hero-actions{align-items:stretch}.howto-link{display:flex;gap:15px;justify-content:space-between;align-items:center;margin-top:14px;padding:12px 16px;font-size:12px;letter-spacing:.1em;color:#e9f7ff;background:#16213ce9;border:1px solid #6a91bb;box-shadow:none;min-height:45px}.howto-link span{font-size:10px;color:#68eaff}
+.primary-cta{background:linear-gradient(120deg,#eb36a4,#b322bc);font-size:clamp(15px,1.9vw,20px);border:2px solid #ffc0ee}
+button:focus-visible,a:focus-visible{outline:3px solid #75faff;outline-offset:3px}
+.tutorial-panel{max-width:630px;text-align:left!important}.tutorial-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.tutorial-grid>div{background:#121930;border:1px solid #435478;padding:16px;display:flex;flex-direction:column;gap:8px}.tutorial-grid b{font-size:13px;letter-spacing:.07em}.tutorial-grid span{font-size:12px;color:#c9d7e9;line-height:1.5}.tutorial-grid .pink{color:#ff8be8}.tutorial-grid .cyan{color:#73f4ff}.tutorial-grid .green{color:#69ffc2}.tutorial-grid .red{color:#ff917f}.tutorial-check{display:flex;align-items:center;gap:9px;color:#bbc8e3;font-size:12px;margin-top:15px}.tutorial-check input{width:17px;height:17px;accent-color:#45dfff}
+#toast{background:#070d26ba;border:1px solid #52edff66;padding:9px 16px;max-width:calc(100vw - 30px);white-space:normal;line-height:1.3}
+#pulse{min-width:116px;font-size:11px;font-weight:900}
+@media(max-width:620px){.hero-title{font-size:clamp(61px,17vw,100px)}.hero-actions{margin-top:17px}.hero-desc{margin:14px 0}.menu-hero{padding-top:38px}.menu-footer{padding-top:9px}.tutorial-grid{grid-template-columns:1fr 1fr;gap:7px}.tutorial-grid>div{padding:11px}.tutorial-panel{padding:22px}.tutorial-grid b{font-size:11px}.tutorial-grid span{font-size:11px}#pulse{min-width:103px}}
+@media(max-height:740px){.menu-hero{padding-top:15px;padding-bottom:12px}.hero-title{margin:12px 0}.hero-desc{margin:10px 0}.hero-actions{margin-top:14px}.hero-currency{margin-top:10px}}
+</style><style>
+/* v3.3: strict stacking and no-overlap responsive layout */
+#ui{z-index:3}#top{position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,1.5fr) minmax(0,1fr);gap:clamp(8px,1.5vw,22px);align-items:start;max-width:1200px;margin:auto;box-sizing:border-box}
+.stat,.stat:last-child{width:100%;min-width:0;max-width:none;flex:none;overflow:hidden}
+.stat strong{font-size:clamp(24px,3.2vw,43px);white-space:nowrap}
+.center{width:100%;max-width:none;min-width:0;flex:none}
+#bossbar{top:clamp(148px,20vh,205px);left:25%;width:50%;z-index:2;pointer-events:none}
+#toast{top:29%;max-width:min(620px,90vw);z-index:2}
+.bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;pointer-events:none}
+.bottom>div:last-child{display:flex;flex-shrink:0;align-items:center;gap:8px;pointer-events:auto}
+.health{flex:0 1 360px;min-width:0}
+.menu-shell{overflow-x:hidden}
+.menu-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.75fr);gap:28px;align-items:center;min-height:0}
+.hero-copy{width:100%;min-width:0}
+.hero-graphic{position:relative;top:auto;right:auto;transform:none;width:100%;max-width:560px;justify-self:center;min-width:0}
+.hero-title{font-size:clamp(66px,9vw,145px);overflow:visible;line-height:.94;white-space:nowrap}
+.hero-actions{max-width:100%;flex-wrap:wrap}
+.menu-footer{position:relative;z-index:3;padding-right:160px}
+.build-stamp{position:fixed;bottom:8px;right:12px}
+#howto,#shop,#side,#paused,#end{overflow-y:auto;padding:24px 12px;align-items:safe center}
+#howto .panel,#shop .panel,#side .panel,#paused .panel,#end .panel{max-height:calc(100dvh - 48px);min-width:0}
+@media(max-width:900px){
+.menu-hero{grid-template-columns:minmax(0,1fr)}
+.hero-copy{position:relative;z-index:2}
+.hero-graphic{position:absolute;right:-12%;top:9%;width:65%;max-width:530px;opacity:.24;z-index:0}
+.hero-title{font-size:clamp(64px,12vw,112px)}
+.menu-footer{padding-right:0;padding-bottom:30px}
+.build-stamp{position:absolute;bottom:7px;right:12px}
+}
+@media(max-width:620px){
+#top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.04fr) minmax(0,1fr);gap:4px;padding:calc(8px + env(safe-area-inset-top)) 7px 0}
+.stat,.stat:last-child{width:100%;min-width:0;min-height:66px;padding:7px 5px!important}
+.stat strong{font-size:clamp(17px,5vw,26px)}
+.stat-kicker{display:none}.stat label{font-size:10px}
+.center{min-width:0;padding:5px 0 0}.center-label{display:none}#timeReadout{font-size:clamp(13px,4vw,18px);white-space:nowrap;text-align:center}.center .sub{font-size:8px;white-space:normal;line-height:1.3}
+#bossbar{top:calc(105px + env(safe-area-inset-top));left:12%;width:76%;font-size:12px}
+#toast{top:23%;font-size:15px}
+.bottom{left:8px;right:8px;bottom:calc(9px + env(safe-area-inset-bottom));gap:8px}
+.health{flex:1 1 auto;width:auto;max-width:56%;padding:8px 10px 1px;font-size:9px}
+.syslabel{display:none}
+.bottom>div:last-child{flex:0 0 auto;gap:5px}
+#pulse{min-width:0;max-width:110px;font-size:9px;padding:10px 7px;white-space:normal;line-height:1.2}
+#pause{min-width:36px;padding:10px 8px}
+.menu-shell{padding:18px 18px 40px;min-height:100dvh}
+.menu-hero{display:block;padding:30px 0 12px}
+.hero-copy{width:100%}
+.hero-graphic{right:-37%;top:18%;width:98%;opacity:.18}
+.hero-title{font-size:clamp(62px,17vw,103px);white-space:nowrap}
+.hero-actions{display:flex;flex-direction:column;gap:9px}
+.primary-cta{min-height:65px;width:100%;max-width:none}
+.secondary-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%}
+.secondary-actions button{min-width:0;white-space:normal;overflow-wrap:anywhere}
+.hero-desc{max-width:100%}
+.feature-row{gap:5px}
+.feature-row span{font-size:7px;letter-spacing:0}
+.menu-footer{padding:8px 0 27px;gap:6px;font-size:7px}
+.build-stamp{font-size:8px;bottom:8px;right:10px}
+.tutorial-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:380px){.hero-title{font-size:16.3vw}.hero-line{font-size:9px}.secondary-actions{grid-template-columns:1fr}.stat strong{font-size:17px}#timeReadout{font-size:13px}.bottom{gap:4px}#pulse{max-width:82px}}
+@media(max-height:650px) and (min-width:621px){.menu-shell{overflow-y:auto}.menu-hero{padding:16px 0}.hero-title{font-size:clamp(55px,8vw,105px);margin:10px 0}.hero-desc{margin:10px 0}.hero-actions{margin-top:12px}.hero-currency{margin-top:12px}.hero-graphic{max-width:380px}.bottom{bottom:8px}#toast{top:26%}}
+</style><style>
+/* v3.4 hard separation: content-driven rather than overlapping absolute decor */
+#menu{position:absolute;inset:0;overflow-y:auto!important;overflow-x:hidden!important;display:block!important}
+#menu.hidden{display:none!important}
+#menu .menu-shell{display:flex!important;min-height:100%;height:auto!important;overflow:visible!important;box-sizing:border-box;padding:20px clamp(16px,4vw,54px) 26px!important}
+#menu .menu-topline{flex:0 0 auto}
+#menu .menu-hero{display:block!important;position:relative;min-height:0!important;padding:clamp(22px,5vh,60px) 0 20px!important}
+#menu .hero-copy{width:min(100%,650px)!important;max-width:100%!important;position:relative;z-index:3;min-width:0}
+#menu .hero-graphic{display:none!important}
+#menu .hero-title{font-size:clamp(56px,10vw,126px)!important;white-space:normal!important;overflow-wrap:normal!important;line-height:.98!important;margin:20px 0!important}
+#menu .hero-desc{max-width:550px!important}
+#menu .hero-actions{display:grid!important;grid-template-columns:minmax(0,1fr);gap:10px;width:min(100%,550px)!important}
+#menu .primary-cta{width:100%;max-width:none!important;min-height:68px}
+#menu .secondary-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px;width:100%}
+#menu .secondary-actions button{width:100%;min-width:0;min-height:55px;overflow-wrap:break-word;white-space:normal}
+#menu .howto-link{max-width:550px;width:100%;min-height:48px}
+#menu .hero-currency{margin-top:18px!important}
+#menu .menu-footer{position:relative!important;display:flex!important;gap:10px;flex-wrap:wrap;padding:15px 0 34px!important;margin-top:auto}
+#menu .build-stamp{position:static!important;display:inline-block;align-self:flex-end;flex-shrink:0;margin-top:8px;font-size:9px!important}
+#top{width:100%;max-width:none!important;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr)!important;gap:8px!important;padding:calc(10px + env(safe-area-inset-top)) clamp(8px,2vw,28px) 0!important}
+#top .stat,#top .stat:last-child{min-width:0!important;width:100%!important;overflow:hidden!important;clip-path:none!important;border:1px solid #df5dc4!important;min-height:0!important;max-height:120px}
+#top .stat strong{font-size:clamp(18px,3.4vw,42px)!important;white-space:nowrap;overflow:hidden;text-overflow:clip}
+#top .center{min-width:0!important;padding:0!important}
+#top .center .sub{white-space:normal!important;overflow-wrap:anywhere}
+#bossbar{top:calc(146px + env(safe-area-inset-top))!important;left:20%!important;width:60%!important}
+#toast{top:35%!important;max-width:85vw}
+.bottom{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:end;gap:10px!important}
+.bottom .health{width:100%!important;max-width:340px;min-width:0!important}
+.bottom>div:last-child{display:flex;flex-wrap:nowrap;gap:6px}
+#pulse{min-width:0!important;max-width:125px;white-space:normal}
+@media(max-width:620px){
+#menu .menu-shell{padding:15px 17px 22px!important}
+#menu .menu-hero{padding:24px 0 12px!important}
+#menu .hero-title{font-size:clamp(54px,17vw,90px)!important;line-height:.92!important;margin:16px 0!important}
+#menu .hero-desc{font-size:12px}
+#menu .secondary-actions{grid-template-columns:1fr 1fr!important}
+#menu .secondary-actions button{font-size:10px;min-height:48px}
+#menu .menu-footer{padding-bottom:10px!important}
+#menu .build-stamp{font-size:8px!important}
+#top{grid-template-columns:minmax(0,1fr) minmax(0,1.08fr) minmax(0,1fr)!important;gap:4px!important;padding:calc(6px + env(safe-area-inset-top)) 5px 0!important}
+#top .stat,#top .stat:last-child{padding:5px 3px!important;min-height:60px!important}
+#top .stat label{font-size:9px!important;letter-spacing:.08em}
+#top .stat strong{font-size:clamp(15px,4.6vw,23px)!important}
+#top .center-label{display:none}
+#timeReadout{font-size:clamp(12px,3.9vw,18px)!important;letter-spacing:0!important;margin:6px 0 0!important}
+#timeReadout .hourglass{margin-right:1px!important}
+#top .center .sub{font-size:7px!important;line-height:1.2!important;letter-spacing:0!important}
+#bossbar{top:calc(95px + env(safe-area-inset-top))!important;left:10%!important;width:80%!important}
+#toast{top:26%!important}
+.bottom{left:5px!important;right:5px!important;gap:5px!important}
+.bottom .health{padding:6px 7px!important;font-size:9px!important}
+#pulse{max-width:90px!important;font-size:9px!important;padding:9px 5px!important}
+#pause{min-width:32px!important;padding:9px 6px!important}
+}
+@media(max-width:360px){#menu .hero-title{font-size:16vw!important}#menu .secondary-actions{grid-template-columns:1fr!important}#top .stat strong{font-size:14px!important}}
+@media(max-height:550px) and (orientation:landscape){#menu .menu-hero{padding:8px 0!important}#menu .hero-title{font-size:60px!important}#menu .hero-desc{margin:8px 0!important}#menu .hero-actions{margin-top:9px!important}#menu .hero-currency{margin-top:9px!important}.bottom .health{padding:3px 6px!important}}
+</style><style>
+/* ORBIT & ECHO shared UI language — v4.0. Scoped late overrides to avoid old design conflicts. */
+:root{--orbit-cyan:#80eeff;--orbit-purple:#b197ff;--orbit-surface:#101b33;--orbit-muted:#a8bdd7}
+html,body{color:#e8f8ff;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+button{border-radius:13px!important;text-transform:none!important;letter-spacing:.025em!important;font-weight:800!important;background:linear-gradient(135deg,#20385d,#282047)!important;border:1px solid #8ceaff77!important;box-shadow:0 5px 19px #0007!important;color:#f3fbff!important}
+button:hover{border-color:#98eeff!important;box-shadow:0 0 20px #60d9ff55!important}
+#menu{position:absolute;inset:0;overflow:auto!important;background:#030710b5!important;backdrop-filter:blur(7px)}
+#menu .orbit-hub{width:min(100%,980px)!important;min-height:0!important;height:auto!important;margin:auto;padding:20px clamp(16px,4vw,38px) 22px!important;border:1px solid #6be9ff45;border-radius:24px!important;background:linear-gradient(154deg,#15233de8,#0b1128ed 55%,#1b1130eb)!important;box-shadow:0 0 65px #6255ff38!important;overflow:visible!important;display:flex!important;flex-direction:column!important;gap:16px!important}
+#menu .orbit-hub:after,#menu .orbit-hub:before{display:none!important}
+#menu .menu-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 0 14px;border-bottom:1px solid #93baff2c}
+#menu .logo-mark{font-size:clamp(16px,2.3vw,23px);font-weight:900;letter-spacing:.01em;color:#85efff}
+#menu .logo-mark span{color:#eafaff}
+#menu .hub-mode{font-size:10px;letter-spacing:.13em;color:#a9bbd8}
+#menu .hub-mode em{color:#b7a5ec}
+#menu .online{color:#78ffcc;font-size:10px;letter-spacing:.08em}
+#menu .menu-hero{display:block!important;position:relative;min-height:0!important;padding:clamp(10px,3vh,28px) 0!important}
+#menu .hero-copy{width:100%!important;max-width:680px!important;margin:auto;z-index:2}
+#menu .eyebrow{font-size:11px;font-weight:800;letter-spacing:.1em;color:#75f6ff}
+#menu .edition{color:#b9a8e9}
+#menu .hero-title{font-size:clamp(54px,10vw,105px)!important;letter-spacing:-.065em;line-height:.86!important;margin:22px 0 16px!important;white-space:normal!important;text-shadow:0 0 38px #5db7ff20}
+#menu .hero-title>span{color:#effaff}
+#menu .hero-title strong{background:linear-gradient(95deg,#71f7ff,#e1a1ff);background-clip:text;-webkit-background-clip:text;color:transparent}
+#menu .title-point{-webkit-text-fill-color:#82f6ff;color:#82f6ff}
+#menu .hero-line{font-size:15px;letter-spacing:.15em;color:#c4b5ef}
+#menu .hero-desc{font-size:14px;max-width:550px;line-height:1.55;color:#b4c6db;margin:14px 0}
+#menu .feature-row{gap:8px}
+#menu .feature-row span{border:1px solid #81ccfa3b;border-radius:100px;padding:8px 12px;background:#1229449c;font-size:10px;color:#d5f5ff;letter-spacing:.02em}
+#menu .hero-actions{display:grid!important;grid-template-columns:1fr;gap:10px;max-width:550px!important;margin-top:22px!important}
+#menu .primary-cta{width:100%;max-width:none!important;min-height:68px;border-radius:16px!important;background:linear-gradient(110deg,#158baa,#6151c6)!important;border:1px solid #b0f5ff88!important;box-shadow:0 0 27px #49d9ff33!important;font-size:17px;justify-content:space-between}
+#menu .primary-cta small{color:#d8f5ff;font-size:10px}
+#menu .secondary-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px;width:100%}
+#menu .secondary-actions button{width:100%;min-width:0;min-height:54px;font-size:12px;background:linear-gradient(125deg,#20345b,#2c2250)!important;text-align:left}
+#menu .howto-link{max-width:550px;width:100%;margin:12px 0 0;min-height:46px;border-radius:13px!important;font-size:12px;background:#0e1b30f2!important}
+#menu .howto-link span{font-size:10px;color:#94effa}
+#menu .hero-currency{margin-top:19px!important;border-top:1px solid #93baff28;padding-top:13px}
+#menu .hero-currency>span,#menu .hero-currency small{color:#9fb1ca}
+#menu .hero-currency .wallet{font-size:19px;color:#ffdea2}
+#menu .menu-footer{display:flex!important;justify-content:space-between;gap:10px;position:static!important;margin-top:0!important;padding:12px 0 0!important;border-top:1px solid #93baff28;color:#a3b5d1;font-size:10px}
+#menu .build-stamp,#menu .hero-graphic{display:none!important}
+#howto .panel,#shop .panel,#paused .panel,#end .panel,#side .panel{border-radius:23px!important;clip-path:none!important;max-width:650px;border:1px solid #78eaff66!important;background:linear-gradient(154deg,#14213d,#0c1025 55%,#160f2c)!important;box-shadow:0 0 65px #6c59ff33!important;text-align:left}
+#howto .panel:before,#shop .panel:before,#paused .panel:before,#end .panel:before,#side .panel:before{display:none}
+#howto .panel h2,#shop .panel h2,#paused .panel h2,#end .panel h1,#side .panel h2{color:#8ff2ff!important;text-shadow:none!important;letter-spacing:.01em!important}
+#shop .upgrade,.tutorial-grid>div{border-radius:14px;border:1px solid #78daff35;background:#10203a}
+#shop .upgrade button{border-radius:10px!important}
+#top{max-width:1200px!important}
+#top .stat,#top .stat:last-child{border-radius:15px!important;clip-path:none!important;background:linear-gradient(145deg,#11213bdc,#231337dc)!important;border:1px solid #81eaff60!important;border-left:1px solid #81eaff60!important;border-right:1px solid #81eaff60!important;box-shadow:0 0 20px #4cb5ff22!important}
+#top .stat-kicker{color:#84eafa}
+#top .stat strong{color:#ffe0aa!important;-webkit-text-fill-color:#ffe0aa;filter:none!important}
+#top .center .meter{border-radius:100px;border-color:#81eaff67;box-shadow:0 0 12px #60dfff36}
+#top .center .meter>div{background:linear-gradient(90deg,#5df9ff,#b076ff)}
+#timeReadout{color:#94f8ff;text-shadow:0 0 12px #5fc9ff65}
+.bottom .health{border-radius:15px;border:1px solid #6ce8ff60;border-left:1px solid #6ce8ff60;background:#10223ad9;box-shadow:0 0 18px #6ceaff22}
+#pulse{background:linear-gradient(115deg,#188fa9,#6153c3)!important}
+#toast{border-radius:14px!important;background:#0c2039e9;border:1px solid #7cecff77}
+#bossbar{border-radius:14px;border:1px solid #f77bb366;background:#22122dcc}
+@media(max-width:620px){
+#menu .orbit-hub{padding:16px!important;gap:8px!important;border-radius:0!important;min-height:100dvh!important}
+#menu .menu-topline{gap:5px}
+#menu .hub-mode{display:none}
+#menu .hero-title{font-size:clamp(58px,17vw,88px)!important;margin:14px 0!important}
+#menu .hero-desc{font-size:12px}
+#menu .feature-row span{font-size:9px;padding:7px 9px}
+#menu .secondary-actions{grid-template-columns:1fr 1fr!important}
+#menu .secondary-actions button{font-size:10px;padding:10px}
+#menu .menu-footer{font-size:8px;flex-wrap:wrap}
+#menu .hero-currency{margin-top:11px!important}
+#top .stat,#top .stat:last-child{border-radius:9px!important}
+#howto .panel,#shop .panel,#paused .panel,#end .panel,#side .panel{border-radius:18px!important}
+}
+</style><style>
+/* Persistent stage campaign: Orbit & Echo style cards */
+#menu .hero-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#menu #continueBtn{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:16px;width:100%;background:linear-gradient(115deg,#117f9c,#6853be)!important;color:#fff!important;border-color:#82ffff!important}
+#menu #continueBtn small{font-size:11px;color:#d2fbff}
+#menu #levelsBtn{grid-column:1/-1;min-height:48px;background:#172d48!important;border-color:#79cefa88!important}
+#menu #start{grid-column:1/-1;min-height:52px;background:linear-gradient(115deg,#253a5d,#312454)!important;font-size:14px}
+#menu .secondary-actions{grid-column:1/-1}
+.levels-panel{max-width:700px!important;max-height:88dvh!important;overflow-y:auto!important}
+.levels-panel h2{font-size:clamp(25px,5vw,35px);color:#8ff2ff}
+.level-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}
+.level-tile{min-height:81px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:9px;padding:12px 14px!important;border-radius:14px!important;text-align:left;background:linear-gradient(130deg,#173950,#222450)!important;border:1px solid #78eaff99!important}
+.level-tile small{font-size:9px;color:#9ffbe9;letter-spacing:.05em}
+.level-tile .level-num{font-size:14px;color:#efffff;font-weight:900}
+.level-tile.selected{box-shadow:inset 0 0 20px #60eeff33,0 0 17px #3cf2ff44!important}
+.level-tile.locked{opacity:.43;background:#101726!important;border-color:#54637a!important;cursor:not-allowed}
+.level-tile.locked small{color:#bdc8d8}
+@media(max-width:620px){.level-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.level-tile{min-height:73px;padding:10px!important}.level-tile .level-num{font-size:11px}.levels-panel{padding:19px!important}#menu #continueBtn{min-height:58px}#menu #start{min-height:45px}}
+</style><style>
+/* Focus gameplay away from browser / home gesture strips; actual OS gestures cannot be disabled in Safari. */
+#game{touch-action:none!important;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+html,body{overscroll-behavior:none!important;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#game::selection{background:transparent}
+@media(pointer:coarse){.bottom{bottom:calc(24px + env(safe-area-inset-bottom))!important}#menu button,.overlay button{touch-action:manipulation}}
+</style><style>
+/* Room for thumb input: visually mark the hazardous iOS browser swipe strips. */
+@media(pointer:coarse){
+  #game{touch-action:none!important}
+  body:has(#ui:not(.hidden))::after{content:'TAP TARGETS OR SLASH IN THE CENTER';position:fixed;bottom:calc(136px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:5;pointer-events:none;border-radius:999px;padding:6px 12px;background:#07192bbf;border:1px solid #6ceeff35;color:#a1dbe7;font:700 9px system-ui;white-space:nowrap;letter-spacing:.08em;opacity:.7}
+}
+</style><style>/* v4.5: Hide all decorative HUD watermark labels, keep score/timer/combo legible. */#ui .hud-watermark,#ui .hud-build,#ui .build-stamp{display:none!important}#top{isolation:isolate}</style><style>#bossHint{position:absolute;top:calc(158px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(88vw,560px);z-index:12;padding:9px 13px;border:1px solid #59eaffaa;border-radius:13px;background:#061c31e9;color:#a6fbff;box-shadow:0 0 17px #00caff55;text-align:center;pointer-events:none;font:800 clamp(10px,2.6vw,15px) system-ui;letter-spacing:.03em}#bossHint.exposed{color:#ffe6aa;border-color:#ffcb74;background:#311727ed;box-shadow:0 0 20px #ffad6955}@media(max-width:620px){#bossHint{top:calc(115px + env(safe-area-inset-top));padding:8px 6px}}</style></head><body><canvas id="game"></canvas><div id="ui" class="hidden" aria-hidden="true"><div class="hud-watermark">N/E // ASTRAL DIVISION</div><div id="top"><div class="stat stat-score"><div class="stat-kicker">MISSION TELEMETRY / 01</div><label>SCORE</label><strong id="score">000000</strong></div><div class="center"><div class="center-label">SECTOR CONTROL <span>● LIVE SIGNAL</span></div><div class="meter"><div id="progress"></div></div><div id="timeReadout"><span class="hourglass">⌛</span><span id="timeValue">-60.00</span></div><div class="sub" id="state">LEVEL 01 · TIER 1 · ×1</div></div><div class="stat stat-combo"><div class="stat-kicker">CHAIN REACTOR / 02</div><label>COMBO</label><strong id="combo">0000</strong></div></div><div id="bossHint" class="hidden" role="status" aria-live="off"></div><div id="bossbar">RIFT SOVEREIGN<div class="meter"><div id="bosshealth"></div></div></div><div id="toast"></div><div class="bottom"><div class="health"><div class="syslabel">PILOT STATUS <span>LYRA // UNIT 07</span></div>LYRA // HULL <span id="hptext">100 / 100</span><div class="bar"><div id="hpbar"></div></div>OVERDRIVE <span id="mptext">0%</span><div class="bar mp"><div id="mpbar"></div></div></div><div style="display:flex;gap:6px"><button id="pulse">⚡ PULSE</button><button id="pause">Ⅱ</button></div></div></div>
+<section id="menu" class="overlay"><div class="menu-shell orbit-hub">
+<div class="menu-topline"><span class="logo-mark">◈ <span>NEON</span> ECHO</span><span class="hub-mode">LYRA'S SLASH <em>· ARCADE MODE</em></span><span class="online"><i></i> READY</span></div>
+<main class="menu-hero"><div class="hero-copy">
+<div class="eyebrow">◉ ORBIT ARCADE UNIVERSE <span class="edition">SIDE MODE / 02</span></div>
+<div class="hero-title"><span>NEON</span><strong>ECHO<span class="title-point">.</span></strong></div>
+<div class="hero-line">LYRA'S SLASH</div>
+<p class="hero-desc">Swipe to slice neon cubes, dodge bombs, and defeat bosses. Earn Stardust to power up your blade.</p>
+<div class="feature-row"><span>◇ SLASH PINK</span><span>✦ COLLECT GREEN</span><span>✕ AVOID RED</span></div>
+<div class="hero-actions"><button id="continueBtn" class="primary-cta continue-cta">▶ CONTINUE <small id="continueInfo">LEVEL 01</small></button><button id="levelsBtn" class="level-menu-cta">▦ LEVEL SELECT</button><button id="start" class="primary-cta"><span class="cta-symbol">▶</span><span>PLAY NOW<small>START YOUR RUN</small></span><span class="cta-arrow">→</span></button>
+<div class="secondary-actions"><button id="shopBtn">✦ UPGRADE SHOP <span>↗</span></button><button id="sideBtn">◎ ORBIT & ECHO <span>↗</span></button></div></div>
+<button id="howToBtn" class="howto-link">? HOW TO PLAY <span>SWIPE CONTROLS</span></button>
+<div class="hero-currency"><span>YOUR STARDUST</span><strong class="wallet" id="wallet">✦ 0 STARDUST</strong><small>UPGRADES SAVE AUTOMATICALLY</small></div>
+</div></main>
+<div class="menu-footer"><span>DRAG TO SLASH</span><span>SPACE / PULSE FOR SPECIAL</span><span>ORBIT UI V4.0</span></div>
+</div></section>
+<section id="levels" class="overlay hidden"><div class="panel levels-panel"><div class="tag">MISSION ARCHIVE / LEVEL SELECT</div><h2>SELECT A LEVEL</h2><p>Defeat a level boss to unlock the next level. Completed stages stay unlocked.</p><div id="levelGrid" class="level-grid"></div><div class="actions"><button id="levelsBack">← BACK TO HUB</button></div></div></section><section id="howto" class="overlay hidden"><div class="panel tutorial-panel"><div class="tag">QUICK START / 30 SECONDS</div><h2>HOW TO PLAY</h2><p>Hold and drag your finger or mouse to slash objects. Release to stop slashing.</p><div class="tutorial-grid"><div><b class="pink">◇ PINK CUBES</b><span>Slash for points and combos.</span></div><div><b class="cyan">▣ BLUE ARMOR</b><span>Swipe multiple times to break.</span></div><div><b class="green">● GREEN ORBS</b><span>Restore health or energy.</span></div><div><b class="red">✹ RED BOMBS</b><span>Avoid touching them with your blade.</span></div></div><p>Fill the Overdrive meter, then tap PULSE to unleash Lyra’s special attack. On desktop, press Space.</p><div class="actions"><button id="tutorialPlay">▶ START PLAYING</button><button id="tutorialBack">BACK TO MENU</button></div><label class="tutorial-check"><input type="checkbox" id="skipTutorial" checked> Show tutorial only once</label></div></section><section id="shop" class="overlay hidden"><div class="panel"><h2>✦ LYRA ARMORY</h2><div class="wallet" id="shopwallet"></div><div class="shop-grid" id="shopgrid"></div><div class="actions"><button id="shopBack">← HUB</button></div></div></section>
+<section id="side" class="overlay hidden"><div class="panel"><h2>ORBIT & ECHO</h2><p>Side mission portal · Earn a bonus stardust reward when you return. Full cross-game currency exchange requires a shared trusted save/backend.</p><iframe id="portalframe" title="Orbit and Echo Side Game" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-pointer-lock" ></iframe><div class="actions"><button id="sideBack">COLLECT +50 ✦ & RETURN</button></div><p class="hint">Bonus is awarded once per portal visit, maximum 3 times per day. The embedded game may restrict iframe display; use the external link below if necessary.<br><a href="https://eedmond95.github.io/Orbit-and-Echo-Test/" target="_blank" rel="noopener">Open Orbit & Echo in a new tab</a></p></div></section>
+<section id="paused" class="overlay hidden"><div class="panel"><h2>MISSION PAUSED</h2><p>Your run is safe. Tap resume to continue slashing.</p><div class="actions"><button id="resume">▶ RESUME</button><button id="quitPause">QUIT TO HUB</button></div></div></section>
+<section id="warning" class="overlay hidden"><div style="text-align:center"><div class="tag">HOSTILE SIGNATURE DETECTED</div><h1>⚠ WARNING ⚠</h1><h2 id="warninglabel">RIFT SOVEREIGN</h2></div></section>
+<section id="end" class="overlay hidden"><div class="panel"><div class="tag" id="endtag">SIGNAL LOST</div><h1 id="endtitle">GAME OVER</h1><h2 id="endstats"></h2><p id="endmessage"></p><div class="wallet" id="endreward"></div><div class="actions"><button id="again">RETRY</button><button id="endshop">ARMORY</button><button id="home">HUB</button></div></div></section>
+<script>
+'use strict';
+// NEON ECHO — single-file Canvas arcade engine. No external runtime dependencies.
+const $=id=>document.getElementById(id), canvas=$('game'),ctx=canvas.getContext('2d',{alpha:false});let W=0,H=0,DPR=1,clock=0,last=0,raf=0;
+function resize(){DPR=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0)}addEventListener('resize',resize);resize();
+const storeKey='neon_echo_lyra_v1';const defaults=()=>({highestUnlocked:1,checkpoint:1,stardust:0,best:0,weapon:1,radius:1,hull:1,visits:{day:'',count:0}});let save;try{save={...defaults(),...JSON.parse(localStorage.getItem(storeKey)||'{}')}}catch{save=defaults()}const persist=()=>{try{localStorage.setItem(storeKey,JSON.stringify(save))}catch{}};
+// Campaign progression is stored independently of individual runs.
+save.highestUnlocked=Math.max(1,Math.min(99,Number(save.highestUnlocked)||1));save.checkpoint=Math.max(1,Math.min(save.highestUnlocked,Number(save.checkpoint)||save.highestUnlocked));
+function selectLevel(level){const n=Math.floor(Number(level));if(!Number.isFinite(n)||n<1||n>save.highestUnlocked)return;save.checkpoint=n;persist();resetRun(n)}
+function renderLevels(){const grid=$('levelGrid');grid.textContent='';const max=Math.max(12,Math.min(99,Math.ceil((save.highestUnlocked+3)/12)*12));for(let n=1;n<=max;n++){const button=document.createElement('button');const unlocked=n<=save.highestUnlocked;button.className='level-tile '+(unlocked?'':'locked')+(n===save.checkpoint?' selected':'');button.disabled=!unlocked;button.innerHTML='<span class="level-num">'+(unlocked?'LEVEL '+String(n).padStart(2,'0'):'🔒 LEVEL '+String(n).padStart(2,'0'))+'</span><small>'+(unlocked?(n<save.highestUnlocked?'✓ UNLOCKED':'★ NEW FRONTIER'):'LOCKED')+'</small>';if(unlocked)button.onclick=()=>selectLevel(n);grid.appendChild(button)}}
+function refreshContinue(){const btn=$('continueBtn');$('continueInfo').textContent='LEVEL '+String(save.highestUnlocked).padStart(2,'0');btn.setAttribute('aria-label','Continue from unlocked level '+save.highestUnlocked)}
+
+const rnd=(a,b)=>a+Math.random()*(b-a),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+// Pool allocations reused for every frame, avoiding high-level particle GC bursts.
+function pool(n,init){return Array.from({length:n},()=>({active:false,...init}))}const particles=pool(1450,{x:0,y:0,vx:0,vy:0,life:0,max:1,size:2,color:'#fff'}),texts=pool(90,{x:0,y:0,life:0,value:'',color:'#fff'}),entities=pool(110,{type:'cube',x:0,y:0,z:0,hp:1,maxHp:1,age:0,sway:0,angle:0,rot:0,size:25,hitCooldown:0,vx:0,vy:0,pattern:0});
+function spawnParticle(x,y,color,count=12,power=1){const total=Math.min(115,Math.round(count*3.8));for(let k=0;k<total;k++){const p=particles.find(q=>!q.active);if(!p)break;let ang=rnd(0,Math.PI*2),v=rnd(75,450)*power;Object.assign(p,{active:true,x,y,vx:Math.cos(ang)*v,vy:Math.sin(ang)*v,life:rnd(.22,.87),max:1,size:rnd(1,4.5),color:k%6===0?'#ffffff':k%4===0?'#ffb27c':color})}}
+function floatText(x,y,value,color='#fff'){let p=texts.find(q=>!q.active);if(p)Object.assign(p,{active:true,x,y,value:String(value),color,life:1})}
+let audio=null;function sound(type){try{audio??=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const t=audio.currentTime,o=audio.createOscillator(),g=audio.createGain();o.connect(g);g.connect(audio.destination);o.type=type==='hit'?'sawtooth':type==='bad'?'square':'triangle';let f=type==='slash'?600:type==='hit'?155:type==='bad'?95:type==='boss'?60:390;o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(type==='slash'?140:Math.max(40,f*.42),t+.11);g.gain.setValueAtTime(type==='hit'?.09:.045,t);g.gain.exponentialRampToValueAtTime(.001,t+.14);o.start(t);o.stop(t+.15)}catch{}}
+const stars=Array.from({length:190},()=>({x:Math.random(),y:Math.random(),a:rnd(.1,.8),r:rnd(.35,1.8),speed:rnd(.002,.024)}));
+const game={mode:'menu',level:1,score:0,combo:0,hp:100,maxHp:100,mp:0,progress:0,elapsed:0,spawnTimer:0,boss:null,bossShots:0,warning:0,shake:0,levelQuota:18,earned:0,runHits:0,misses:0};
+const pointer={x:0,y:0,down:false,id:null,prevX:0,prevY:0,trail:[],lastMove:0};
+function resetRun(startLevel=1){startLevel=Math.max(1,Math.min(save.highestUnlocked,Math.floor(Number(startLevel)||1)));Object.assign(game,{mode:'play',level:startLevel,score:0,combo:0,hp:100+(save.hull-1)*25,maxHp:100+(save.hull-1)*25,mp:0,progress:0,elapsed:0,spawnTimer:.4,boss:null,bossShots:0,warning:0,shake:0,levelQuota:18+startLevel*5,earned:0,runHits:0,misses:0});for(const e of entities)e.active=false;for(const p of particles)p.active=false;pointer.trail.length=0;pointer.down=false;$('pause').textContent='Ⅱ';updateHUD();show('');sound('ui')}
+function show(id){for(const name of ['menu','levels','howto','shop','side','warning','end','paused'])$(name).classList.toggle('hidden',name!==id);const gameplayVisible=!id;$('ui').classList.toggle('hidden',!gameplayVisible);$('ui').setAttribute('aria-hidden',String(!gameplayVisible));$('bossbar').style.display=gameplayVisible&&game.boss?'block':'none'}
+function popup(message){$('toast').textContent=message;$('toast').style.opacity=1;game.toastTime=1.3}
+function giveScore(points,x,y){const amount=Math.floor(points*(1+Math.min(5,Math.floor(game.combo/10))*.5));game.score+=amount;game.earned+=Math.max(1,Math.floor(amount/15));floatText(x,y,'+'+amount,'#ffe67b')}
+function makeEntity(type,x,y,opt={}){const e=entities.find(q=>!q.active);if(!e)return;const armor=type==='armor';Object.assign(e,{active:true,type,x,y,baseX:x,baseY:y,z:.12,age:0,hp:armor?2+Math.floor(game.level/3):1,maxHp:armor?2+Math.floor(game.level/3):1,angle:rnd(0,7),rot:rnd(-2,2),size:type==='bomb'?25:type==='orb'?21:armor?34:29,sway:rnd(0,6),hitCooldown:0,vx:opt.vx||0,vy:opt.vy||0,pattern:opt.pattern||0});return e}
+function difficulty(){return 1+game.level*.095}
+function wave(){const rand=Math.random(),count=game.level>3&&rand<.27?3:1;const lane=rnd(.16,.84);for(let j=0;j<count;j++){let x=W*clamp(lane+(j-(count-1)/2)*.13,.12,.88),y=H*rnd(.22,.77);let r=Math.random();let type=r<.055?'bomb':r<.13?'orb':r<Math.min(.42,.17+game.level*.025)?'armor':'cube';makeEntity(type,x,y,{vx:rnd(-15,15),vy:rnd(-14,14),pattern:game.level>4?1:0})}}
+function enterWarning(){game.mode='warning';game.warning=2.0;game.boss=null;$('warninglabel').textContent=['RIFT SOVEREIGN','VOID HARBINGER','CHROME LEVIATHAN','ECHO TYRANT'][(game.level-1)%4];show('warning');sound('boss')}
+function beginBoss(){game.mode='play';const hp=23+game.level*8;game.boss={hp,maxHp:hp,x:W/2,y:H*.30,t:0,cool:0,phase:0,shieldDown:0,shieldCooldown:0,hintCooldown:0,name:$('warninglabel').textContent};show('');popup('SHIELD ACTIVE · CHARGE PULSE ON MINIONS!')}
+function levelUp(){const nextLevel=game.level+1;save.highestUnlocked=Math.max(save.highestUnlocked,nextLevel);save.checkpoint=nextLevel;persist();game.level++;game.progress=0;game.levelQuota=18+game.level*5;game.hp=Math.min(game.maxHp,game.hp+12);game.mp=Math.min(100,game.mp+20);for(const e of entities)e.active=false;game.boss=null;game.mode='play';game.spawnTimer=1.5;show('');popup('LEVEL '+game.level+' · +12 HULL');sound('ui')}
+function finish(){game.mode='end';game.boss=null;save.stardust+=game.earned;save.best=Math.max(save.best,game.score);persist();$('endtag').textContent='LYRA // MISSION REPORT';$('endtitle').textContent='SIGNAL LOST';$('endstats').textContent='SCORE '+game.score.toLocaleString()+' · LEVEL '+game.level;$('endmessage').textContent='Targets sliced: '+game.runHits+' · Missed: '+game.misses+' · Best: '+save.best.toLocaleString();$('endreward').textContent='✦ +'+game.earned+' STARDUST BANKED';show('end')}
+function hitPlayer(damage){game.hp=Math.max(0,game.hp-damage);game.combo=0;game.shake=Math.max(game.shake,11);sound('bad');if(game.hp<=0)finish()}
+function destroyEntity(e){e.active=false;game.combo++;game.runHits++;game.mp=clamp(game.mp+4,0,100);spawnParticle(e.x,e.y,e.type==='armor'?'#70ffff':'#ff47f2',e.type==='armor'?23:16,1.1);giveScore(e.type==='armor'?170:100,e.x,e.y);sound('hit');if(!game.boss){game.progress++;if(game.progress>=game.levelQuota)enterWarning()}}
+function sliceEntity(e){if(!e.active||e.hitCooldown>0)return;e.hitCooldown=.16;if(e.type==='bomb'){e.active=false;spawnParticle(e.x,e.y,'#ff593b',26,1.4);floatText(e.x,e.y,'-22 HULL','#ff614b');hitPlayer(22);return}if(e.type==='orb'){e.active=false;game.hp=Math.min(game.maxHp,game.hp+22);game.mp=Math.min(100,game.mp+17);spawnParticle(e.x,e.y,'#42ffad',22);floatText(e.x,e.y,'+22 HP · +17 MP','#77ffc9');sound('ui');return}let damage=save.weapon;if(e.type==='armor')damage=Math.max(.5,save.weapon-(Math.floor(game.level/3))*.6);e.hp-=damage;if(e.hp<=0)destroyEntity(e);else{spawnParticle(e.x,e.y,'#6ffaff',8,.6);floatText(e.x,e.y,'ARMOR '+Math.ceil(e.hp),'#6fffff');sound('slash')}}
+function segmentDistance(px,py,ax,ay,bx,by){let vx=bx-ax,vy=by-ay,t=clamp(((px-ax)*vx+(py-ay)*vy)/(vx*vx+vy*vy||1),0,1);return Math.hypot(px-(ax+t*vx),py-(ay+t*vy))}
+function slash(ax,ay,bx,by){if(game.mode!=='play')return;const distance=Math.hypot(bx-ax,by-ay);if(distance<5)return;const steps=Math.max(1,Math.ceil(distance/100));for(let k=0;k<steps;k++){let sx=ax+(bx-ax)*k/steps,sy=ay+(by-ay)*k/steps,ex=ax+(bx-ax)*(k+1)/steps,ey=ay+(by-ay)*(k+1)/steps;for(const e of entities){if(!e.active)continue;const radius=(e.size*(.5+e.z*1.15)+9+(save.radius-1)*8);if(segmentDistance(e.x,e.y,sx,sy,ex,ey)<radius)sliceEntity(e)}if(game.boss){const b=game.boss;if(Math.hypot((sx+ex)/2-b.x,(sy+ey)/2-b.y)<Math.max(58,Math.min(W,H)*.105)&&b.cool<=0){if(b.shieldDown<=0){b.cool=.32;if(b.hintCooldown<=0){popup(game.mp>=100?'SHIELD UP! TAP ⚡ PULSE NOW':'SHIELD UP! SLASH MINIONS TO CHARGE ⚡');b.hintCooldown=2.2}spawnParticle(b.x,b.y,'#44eaff',12,.6);continue}b.hp-=Math.max(.5,save.weapon*1.15);b.cool=.27;game.mp=clamp(game.mp+3,0,100);game.combo++;game.runHits++;spawnParticle(b.x,b.y,'#ff67c8',19,1.3);giveScore(210,b.x,b.y);game.shake=5;sound('hit');if(b.hp<=0){giveScore(2500,b.x,b.y);spawnParticle(b.x,b.y,'#fe71f4',110,2);levelUp();break}}}}if(Math.random()<.65)sound('slash')}
+function usePulse(){if(game.mode!=='play'||game.mp<100)return;game.mp=0;game.shake=15;popup('LYRA OVERDRIVE // NOVA PULSE');for(const e of entities)if(e.active&&e.type!=='bomb'){if(e.type==='orb')sliceEntity(e);else{e.hp=0;destroyEntity(e)}if(game.mode!=='play')break}if(game.boss&&game.mode==='play'){const b=game.boss;if(b.shieldDown<=0){b.shieldDown=7.5;b.cool=0;spawnParticle(b.x,b.y,'#71ffff',90,1.4);popup('SHIELD BROKEN! SLASH THE CORE · 7 SECONDS!')}else{b.shieldDown=Math.max(b.shieldDown,5);popup('SHIELD DOWN · KEEP SLASHING!')} }for(let i=0;i<12;i++)spawnParticle(W/2,H/2,'#5affff',25,2);sound('boss')}
+// iOS Safari reserves the very edges for Home, app switching and browser navigation.
+// Avoid starting a gesture there; use the safe, central playfield for slashes.
+const coarseTouch=()=>matchMedia('(pointer:coarse)').matches;
+function safeSlashBounds(){const touch=coarseTouch(),side=touch?Math.min(32,Math.max(20,W*.055)):0,top=touch?Math.max(38,H*.055):0,bottom=touch?Math.max(75,H*.105):0;return {left:side,right:W-side,top,bottom:H-bottom}}
+function inSafeSlashArea(x,y){const b=safeSlashBounds();return x>=b.left&&x<=b.right&&y>=b.top&&y<=b.bottom}
+function insideSlashArea(x,y){const b=safeSlashBounds();return {x:clamp(x,b.left,b.right),y:clamp(y,b.top,b.bottom)}}
+function tapSlash(x,y){if(game.mode!=='play')return;let nearest=null,best=Infinity;for(const target of entities){if(!target.active)continue;const d=Math.hypot(x-target.x,y-target.y);const reach=Math.max(30,target.size*(.5+target.z*1.15)+18+(save.radius-1)*8);if(d<reach&&d<best){nearest=target;best=d}}if(nearest){sliceEntity(nearest);spawnParticle(x,y,'#8efaff',5,.5);return}if(game.boss){const b=game.boss;if(Math.hypot(x-b.x,y-b.y)<Math.max(75,Math.min(W,H)*.15)){slash(x-45,y,x+45,y);return}}}
+function down(e){if(game.mode!=='play')return;if(e.pointerType==='mouse'&&e.button!==0)return;
+  if(e.pointerType!=='mouse'&&!inSafeSlashArea(e.clientX,e.clientY))return;
+  if(pointer.down)return;
+  const p=insideSlashArea(e.clientX,e.clientY);pointer.down=true;pointer.id=e.pointerId;
+  pointer.x=pointer.prevX=p.x;pointer.y=pointer.prevY=p.y;pointer.trail.push({x:p.x,y:p.y,t:clock});
+  if(e.pointerType!=='mouse')tapSlash(p.x,p.y);
+  try{canvas.setPointerCapture(e.pointerId)}catch{}e.preventDefault()
+}
+function move(e){if(!pointer.down||e.pointerId!==pointer.id)return;
+  const p=insideSlashArea(e.clientX,e.clientY);const x=p.x,y=p.y;
+  slash(pointer.x,pointer.y,x,y);pointer.prevX=pointer.x;pointer.prevY=pointer.y;pointer.x=x;pointer.y=y;
+  pointer.trail.push({x,y,t:clock});if(pointer.trail.length>28)pointer.trail.shift();e.preventDefault()
+}
+function up(e){if(e.pointerId!==pointer.id)return;pointer.down=false;pointer.id=null;e.preventDefault()}
+// Pointer Events are preferred; older mobile Safari gets a touch fallback.
+if(window.PointerEvent){canvas.addEventListener('pointerdown',down,{passive:false});canvas.addEventListener('pointermove',move,{passive:false});canvas.addEventListener('pointerup',up,{passive:false});canvas.addEventListener('pointercancel',up,{passive:false})}
+else{
+ const touch=(t,id)=>({pointerId:id,pointerType:'touch',clientX:t.clientX,clientY:t.clientY,preventDefault(){}});
+ canvas.addEventListener('touchstart',e=>{if(pointer.down)return;let t=e.changedTouches[0];if(t){down(touch(t,t.identifier));e.preventDefault()}},{passive:false});
+ canvas.addEventListener('touchmove',e=>{for(let t of e.changedTouches)if(t.identifier===pointer.id){move(touch(t,t.identifier));e.preventDefault();break}},{passive:false});
+ const touchEnd=e=>{for(let t of e.changedTouches)if(t.identifier===pointer.id){up(touch(t,t.identifier));e.preventDefault();break}};
+ canvas.addEventListener('touchend',touchEnd,{passive:false});canvas.addEventListener('touchcancel',touchEnd,{passive:false});
+ let mouseDown=false;canvas.addEventListener('mousedown',e=>{mouseDown=true;down({pointerId:-1,pointerType:'mouse',button:e.button,clientX:e.clientX,clientY:e.clientY,preventDefault(){}})});
+ addEventListener('mousemove',e=>{if(mouseDown)move({pointerId:-1,clientX:e.clientX,clientY:e.clientY,preventDefault(){}})});
+ addEventListener('mouseup',()=>{mouseDown=false;up({pointerId:-1,preventDefault(){}})})
+}
+// Mobile browser chrome can briefly steal focus during every slash.
+// Never turn this into an unwanted pause overlay.
+addEventListener('blur',()=>{pointer.down=false;pointer.id=null});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){pointer.down=false;pointer.id=null}});
+// Cancel native scrolling on the active playfield while a touch is in progress.
+canvas.addEventListener('touchmove',e=>{if(game.mode==='play'&&e.cancelable)e.preventDefault()},{passive:false});
+// A second path supports old iOS browsers that don't honor pointer capture.
+// Native page overscroll is kept disabled while play is active.
+document.documentElement.style.overscrollBehavior='none';
+canvas.addEventListener('touchstart',e=>{if(game.mode==='play'&&e.cancelable)e.preventDefault()},{passive:false});addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();usePulse()}else if(e.key==='p'||e.key==='P'||e.key==='Escape')pause()});
+function pause(){if(game.mode==='play'){game.mode='paused';pointer.down=false;show('paused');$('pause').textContent='▶'}else if(game.mode==='paused'){game.mode='play';show('');$('toast').style.opacity=0;$('pause').textContent='Ⅱ'}}
+function update(dt){clock+=dt;for(const s of stars){s.y+=s.speed*dt;if(s.y>1)s.y-=1}for(const p of particles)if(p.active){p.life-=dt;if(p.life<=0)p.active=false;else{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=Math.max(.4,1-6.1*dt);p.vy=p.vy*Math.max(.4,1-5.4*dt)+90*dt}}for(const t of texts)if(t.active){t.life-=dt;t.y-=38*dt;if(t.life<=0)t.active=false}pointer.trail=pointer.trail.filter(p=>clock-p.t<.24);if(game.toastTime>0){game.toastTime-=dt;if(game.toastTime<=0)$('toast').style.opacity=0}game.shake=Math.max(0,game.shake-45*dt);if(game.mode==='warning'){game.warning-=dt;if(game.warning<=0)beginBoss();return}if(game.mode!=='play')return;game.elapsed+=dt;if(game.boss){const b=game.boss;b.t+=dt;b.cool=Math.max(0,b.cool-dt);b.hintCooldown=Math.max(0,b.hintCooldown-dt);if(b.shieldDown>0){b.shieldDown=Math.max(0,b.shieldDown-dt);if(b.shieldDown===0){popup('SHIELD REGENERATED · CHARGE ⚡ PULSE!');spawnParticle(b.x,b.y,'#60eeff',55,.9)}}b.x=W/2+Math.sin(b.t*1.22)*W*.25;b.y=H*.3+Math.cos(b.t*1.7)*H*.06;game.spawnTimer-=dt;if(game.spawnTimer<=0){game.spawnTimer=Math.max(.32,1.2/game.level+.22);let n=game.level>3?3:2;for(let i=0;i<n;i++){const angle=(b.t*2+i*2*Math.PI/n);makeEntity(Math.random()<.19?'bomb':Math.random()<.48?'armor':'cube',b.x+Math.cos(angle)*70,b.y+Math.sin(angle)*50,{vx:Math.cos(angle)*100,vy:Math.sin(angle)*130})}}}else{game.spawnTimer-=dt;if(game.spawnTimer<=0){wave();game.spawnTimer=Math.max(.22,.97/difficulty())*rnd(.7,1.2)}}for(const e of entities)if(e.active){e.age+=dt;e.z+=dt*(.28+game.level*.021);e.hitCooldown=Math.max(0,e.hitCooldown-dt);e.angle+=e.rot*dt;e.baseX=(e.baseX??e.x)+e.vx*dt*.5;e.baseY=(e.baseY??e.y)+e.vy*dt*.5;const proj=.10+Math.pow(Math.max(.02,e.z)/1.8,1.32)*2.25;e.x=W*.5+(e.baseX-W*.5)*proj;e.y=H*.49+(e.baseY-H*.49)*proj;if(e.pattern)e.x+=Math.sin(e.age*2+e.sway)*18*dt;if(e.z>1.9||e.x<-90||e.x>W+90||e.y<-90||e.y>H+90){e.active=false;if(e.type==='cube'||e.type==='armor'){game.misses++;hitPlayer(e.type==='armor'?16:10);if(game.mode!=='play')break}}}updateHUD()}
+function updateHUD(){const pulseButton=$('pulse');pulseButton.textContent=game.mp>=100?'⚡ PULSE READY':'⚡ PULSE '+Math.floor(game.mp)+'%';const timeNode=$('timeValue');if(timeNode)timeNode.textContent='-'+Math.max(0,60-(game.elapsed%60)).toFixed(2);$('score').textContent=String(game.score).padStart(6,'0');$('combo').textContent=String(game.combo).padStart(4,'0');$('progress').style.width=((game.boss?game.boss.hp/game.boss.maxHp:game.progress/game.levelQuota)*100)+'%';$('state').textContent='LEVEL '+String(game.level).padStart(2,'0')+' · TIER '+save.weapon+' · ×'+(1+Math.min(5,Math.floor(game.combo/10))*.5);const hint=$('bossHint');if(hint){const b=game.boss;hint.classList.toggle('hidden',!b||game.mode!=='play');if(b){hint.textContent=b.shieldDown>0?'⚡ SHIELD DOWN '+Math.ceil(b.shieldDown)+'s · SLASH BOSS NOW':game.mp>=100?'🛡 SHIELD ACTIVE · TAP ⚡ PULSE TO BREAK':'🛡 BOSS SHIELDED · SLASH MINIONS FOR ⚡ '+Math.floor(game.mp)+'%';hint.classList.toggle('exposed',b.shieldDown>0)}}$('hptext').textContent=Math.ceil(game.hp)+' / '+game.maxHp;$('hpbar').style.width=(game.hp/game.maxHp*100)+'%';$('mptext').textContent=Math.floor(game.mp)+'%';$('mpbar').style.width=game.mp+'%';$('pulse').disabled=game.mp<100;$('bosshealth').style.width=(game.boss?Math.max(0,game.boss.hp/game.boss.maxHp)*100:0)+'%';$('bossbar').style.display=game.boss?'block':'none'}
+
+// Precomputed ambient scene objects: no per-frame allocations in hot drawing loops.
+const visualDust=Array.from({length:155},(_,i)=>({a:(i*2.3999632297)%(Math.PI*2),r:Math.sqrt((i+.5)/155),phase:(i*.618)%1,size:.5+(i%7)*.19}));
+function line(x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
+function cubeArt(x,y,size,rotation,color,opacity=1){
+ctx.save();ctx.translate(x,y);ctx.rotate(rotation);ctx.globalAlpha*=opacity;
+const d=size*.31;
+ctx.shadowColor=color;ctx.shadowBlur=Math.min(30,8+size*.26);ctx.strokeStyle=color;ctx.lineWidth=Math.max(1.15,Math.min(3.5,size*.042));
+ctx.fillStyle='rgba(15,2,32,.11)';ctx.fillRect(-size/2,-size/2,size,size);
+ctx.strokeRect(-size/2,-size/2,size,size);ctx.strokeRect(-size/2+d,-size/2-d,size,size);
+ctx.beginPath();for(const q of [[-1,-1],[1,-1],[1,1],[-1,1]]){const sx=q[0]*size/2,sy=q[1]*size/2;ctx.moveTo(sx,sy);ctx.lineTo(sx+d,sy-d)}ctx.stroke();
+ctx.restore()
+}
+function lens(x,y,power){
+ctx.save();ctx.globalCompositeOperation='screen';
+const r=Math.min(W,H)*.23*power;let g=ctx.createRadialGradient(x,y,0,x,y,r);
+g.addColorStop(0,'rgba(255,255,245,.93)');g.addColorStop(.032,'rgba(205,247,255,.76)');g.addColorStop(.12,'rgba(69,191,255,.35)');g.addColorStop(.38,'rgba(128,73,255,.11)');g.addColorStop(1,'rgba(0,0,0,0)');
+ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2);
+ctx.strokeStyle='rgba(108,201,255,.19)';ctx.shadowColor='#62cfff';ctx.shadowBlur=22;
+line(x-r*2.2,y,x+r*2.2,y);line(x,y-r*1.15,x,y+r*1.15);
+ctx.restore()
+}
+
+function background(){
+  // Atmospheric scenery only. No decorative wireframe cubes: cubes are reserved for gameplay.
+  const cx=W*.51,cy=H*.49,M=Math.min(W,H),T=clock;
+  ctx.fillStyle='#05020a';ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(cx,cy,4,cx,cy,Math.max(W,H)*.78);
+  g.addColorStop(0,'#30205b');g.addColorStop(.16,'#17163f');g.addColorStop(.49,'#0b1131');g.addColorStop(.78,'#08091c');g.addColorStop(1,'#05020a');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalCompositeOperation='screen';
+  for(const d of visualDust){
+    const x=cx+Math.cos(d.a+T*.003)*d.r*W*.81,y=cy+Math.sin(d.a+T*.003)*d.r*H*.78;
+    ctx.globalAlpha=.12+.24*(1-d.r);ctx.fillStyle=d.size>1.3?'#b2baff':'#f2b4f1';
+    ctx.fillRect(x,y,d.size,d.size);
+  }
+  ctx.globalAlpha=1;
+  for(let i=0;i<20;i++){
+    const angle=i*Math.PI/10+T*.016;ctx.strokeStyle=i%2?'#d64ca70d':'#70cfff14';
+    ctx.lineWidth=i%6===0?2:1;line(cx,cy,cx+Math.cos(angle)*W*.85,cy+Math.sin(angle)*H*.9);
+  }
+  // Warm plasma spiral and fine light debris, deliberately not square or box-shaped.
+  for(let i=0;i<190;i++){
+    const f=(i*.75487766+T*.067)%1,angle=i*2.39996323+f*7.8+T*.12;
+    const rad=(1-f)*M*.46,x=cx+Math.cos(angle)*rad,y=cy+Math.sin(angle)*rad*.68;
+    ctx.globalAlpha=(1-f)*.70;ctx.strokeStyle=i%7?'#ff9168':'#ffd0a8';
+    ctx.lineWidth=i%4===0?1.5:.7;ctx.shadowBlur=i%7===0?9:3;ctx.shadowColor='#ff754e';
+    const length=1.2+(1-f)*4;line(x,y,x+Math.cos(angle+.4)*length,y+Math.sin(angle+.4)*length);
+  }
+  ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.restore();
+  ctx.save();ctx.strokeStyle='#8e27fb0c';ctx.lineWidth=1;
+  for(let i=-12;i<=12;i++)line(cx,cy,cx+i*W*.12,H);
+  for(let i=0;i<7;i++){const t=(i/7+T*.075)%1,y=H*.79+H*.21*t*t;line(0,y,W,y)}ctx.restore();
+  lens(W*.68,H*.83,.65);
+  const vign=ctx.createRadialGradient(cx,cy,M*.17,cx,cy,Math.max(W,H)*.8);
+  vign.addColorStop(0,'rgba(0,0,0,0)');vign.addColorStop(1,'rgba(0,0,0,.43)');
+  ctx.fillStyle=vign;ctx.fillRect(0,0,W,H);
+}
+function drawCube(e){
+const p=.18+Math.pow(Math.max(.05,e.z)/1.8,1.55)*2.65;
+const size=e.size*p;
+if(e.type==='cube'){cubeArt(e.x,e.y,size,e.angle,'#ff30e9');return}
+if(e.type==='armor'){cubeArt(e.x,e.y,size,e.angle,'#00f0ff');ctx.save();ctx.fillStyle='#bffcff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='#00f0ff';ctx.shadowBlur=12;ctx.font='bold '+Math.max(11,size*.33)+'px monospace';ctx.fillText(Math.ceil(e.hp),e.x,e.y);ctx.restore();return}
+ctx.save();ctx.translate(e.x,e.y);ctx.rotate(e.angle);ctx.shadowBlur=26;
+if(e.type==='orb'){ctx.strokeStyle='#66ffc9';ctx.shadowColor='#00ffc8';ctx.lineWidth=2.3;ctx.fillStyle='#38ffaa16';ctx.beginPath();ctx.arc(0,0,size*.65,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.beginPath();ctx.arc(0,0,size*.3,0,Math.PI*2);ctx.stroke()}
+else {ctx.strokeStyle='#ff6b3c';ctx.shadowColor='#ff301c';ctx.lineWidth=2.3;ctx.beginPath();for(let i=0;i<12;i++){const a=i*6.283185/12,r=size*(i%2?.56:1);i?ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r):ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.stroke();line(-size*.33,-size*.33,size*.33,size*.33);line(size*.33,-size*.33,-size*.33,size*.33)}
+ctx.restore()
+}
+function drawBoss(b){
+ctx.save();ctx.translate(b.x,b.y);const r=Math.min(W,H)*.12;ctx.rotate(b.t*.25);ctx.shadowBlur=37;ctx.shadowColor='#ff1dd0';ctx.lineWidth=4;ctx.strokeStyle='#ff67df';
+for(let n=0;n<4;n++){ctx.save();ctx.rotate(n*Math.PI/2);ctx.beginPath();ctx.moveTo(0,-r*.22);ctx.lineTo(-r*.84,-r*1.1);ctx.lineTo(0,-r*.71);ctx.lineTo(r*.84,-r*1.1);ctx.lineTo(0,-r*.22);ctx.stroke();ctx.restore()}
+if(b.shieldDown<=0){ctx.save();ctx.rotate(-b.t*.9);ctx.lineWidth=4;ctx.shadowColor='#55faff';ctx.shadowBlur=27;ctx.strokeStyle='#70f8ff';ctx.fillStyle='#35dcff12';ctx.beginPath();ctx.arc(0,0,r*1.43,0,Math.PI*2);ctx.fill();ctx.stroke();for(let i=0;i<6;i++){const a=i*Math.PI/3;ctx.beginPath();ctx.arc(0,0,r*1.43,a+.1,a+.78);ctx.stroke()}ctx.restore()}else{ctx.save();ctx.strokeStyle='#ffdd89';ctx.shadowColor='#ff924e';ctx.shadowBlur=18;ctx.lineWidth=2;ctx.setLineDash([8,14]);ctx.beginPath();ctx.arc(0,0,r*1.38,0,Math.PI*2);ctx.stroke();ctx.restore()}ctx.rotate(-b.t*1.45);ctx.strokeStyle='#8ffcff';ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,q=i%2?r*.42:r*.62;if(i)ctx.lineTo(Math.cos(a)*q,Math.sin(a)*q);else ctx.moveTo(Math.cos(a)*q,Math.sin(a)*q)}ctx.closePath();ctx.stroke();ctx.fillStyle='#ff45ad99';ctx.beginPath();ctx.arc(0,0,r*.26,0,Math.PI*2);ctx.fill();ctx.restore()}
+function draw(){
+ctx.save();if(game.shake>0)ctx.translate(rnd(-game.shake,game.shake),rnd(-game.shake,game.shake));
+background();
+const showCombat=game.mode==='play'||game.mode==='warning';
+if(showCombat){const ordered=entities.filter(e=>e.active).sort((a,b)=>a.z-b.z);for(const e of ordered)drawCube(e);if(game.boss)drawBoss(game.boss);}
+ctx.save();ctx.globalCompositeOperation='lighter';
+for(const p of particles)if(showCombat&&p.active){let alpha=Math.min(1,p.life*2.2);ctx.globalAlpha=alpha;ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=p.size>3?14:7;
+ctx.save();ctx.translate(p.x,p.y);ctx.rotate((p.vx-p.vy)*.01);if(p.size>3.1){ctx.beginPath();ctx.moveTo(-p.size,-p.size*.48);ctx.lineTo(p.size,0);ctx.lineTo(-p.size*.4,p.size*.76);ctx.closePath();ctx.fill()}else ctx.fillRect(0,0,p.size,p.size);ctx.restore()}
+ctx.globalAlpha=1;ctx.restore();
+ctx.save();ctx.font='900 23px Arial';ctx.textAlign='center';for(const t of texts)if(showCombat&&t.active){ctx.globalAlpha=Math.max(0,t.life);ctx.fillStyle=t.color;ctx.shadowColor=t.color;ctx.shadowBlur=22;ctx.fillText(t.value,t.x,t.y)}ctx.restore();
+const tr=pointer.trail;if(showCombat&&tr.length>1){ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.globalCompositeOperation='lighter';
+for(let i=1;i<tr.length;i++){const a=tr[i-1],b=tr[i],alpha=clamp(1-(clock-b.t)/.24,0,1),w=3+12*i/tr.length;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+ctx.shadowColor='#ff00f0';ctx.shadowBlur=32;ctx.strokeStyle='rgba(255,0,245,'+alpha*.28+')';ctx.lineWidth=w*2;ctx.stroke();
+ctx.shadowColor='#00f0ff';ctx.shadowBlur=21;ctx.strokeStyle='rgba(0,243,255,'+alpha*.9+')';ctx.lineWidth=w;ctx.stroke();
+ctx.shadowColor='white';ctx.shadowBlur=12;ctx.strokeStyle='rgba(255,255,255,'+alpha+')';ctx.lineWidth=Math.max(1.5,w*.2);ctx.stroke()}
+ctx.restore()}
+ctx.restore()
+}
+function loop(now){if(!last)last=now;const dt=Math.min(.034,(now-last)/1000);last=now;update(dt);draw();raf=requestAnimationFrame(loop)}raf=requestAnimationFrame(loop);
+const upgrades=[{id:'weapon',name:'PLASMA EDGE',description:'Higher damage; break elite armor.',max:8,base:120},{id:'radius',name:'BLADE REACH',description:'Wider slash collision radius.',max:7,base:100},{id:'hull',name:'HULL MATRIX',description:'+25 maximum HP per upgrade.',max:7,base:110}];function cost(u){return Math.floor(u.base*Math.pow(1.8,save[u.id]-1))}
+function renderShop(){$('wallet').textContent='✦ '+save.stardust+' STARDUST';$('shopwallet').textContent='BALANCE ✦ '+save.stardust;$('shopgrid').innerHTML='';for(const u of upgrades){const box=document.createElement('div');box.className='upgrade';const c=cost(u),maxed=save[u.id]>=u.max;box.innerHTML=`<b>${u.name}</b><br><span>TIER ${save[u.id]} / ${u.max}</span><small>${u.description}</small>`;const btn=document.createElement('button');btn.textContent=maxed?'MAX LEVEL':'UPGRADE · ✦ '+c;btn.disabled=maxed||save.stardust<c;btn.onclick=()=>{if(save.stardust<cost(u)||save[u.id]>=u.max)return;save.stardust-=cost(u);save[u.id]++;persist();sound('ui');renderShop()};box.appendChild(btn);$('shopgrid').appendChild(box)}}
+function openShop(){if(game.mode==='play')return;renderShop();show('shop')}function toHub(){game.mode='menu';refreshContinue();game.boss=null;for(const e of entities)e.active=false;for(const p of particles)p.active=false;for(const t of texts)t.active=false;pointer.trail.length=0;pointer.down=false;$('pause').textContent='Ⅱ';renderShop();show('menu')}
+const tutorialKey='neonEchoTutorialSeen_v1';function beginFriendly(){let seen=false;try{seen=localStorage.getItem(tutorialKey)==='yes'}catch(e){}if(seen)resetRun();else show('howto')} $('start').onclick=beginFriendly;$('continueBtn').onclick=()=>selectLevel(save.highestUnlocked);$('levelsBtn').onclick=()=>{renderLevels();show('levels')};$('levelsBack').onclick=toHub;$('howToBtn').onclick=()=>show('howto');$('tutorialBack').onclick=()=>show('menu');$('tutorialPlay').onclick=()=>{try{if($('skipTutorial').checked)localStorage.setItem(tutorialKey,'yes')}catch(e){}resetRun()};$('again').onclick=resetRun;$('home').onclick=toHub;$('shopBtn').onclick=openShop;$('endshop').onclick=openShop;$('shopBack').onclick=toHub;$('pause').onclick=pause;$('resume').onclick=pause;$('quitPause').onclick=toHub;$('pulse').onclick=usePulse;
+// TODO: Embed Orbit & Echo Side-Game Here for Point Generation.
+// Integration adapter: replace this iframe with a shared-origin mini-game bridge.
+// For secure real currency exchange use signed server-side achievements, not iframe messages alone.
+class OrbitEchoBridge{constructor(url){this.url=url}open(){if(game.mode==='play')return;game.mode='side';$('portalframe').src=this.url;show('side')}claim(){const date=new Date().toLocaleDateString('en-CA');if(save.visits?.day!==date)save.visits={day:date,count:0};if(save.visits.count<3){save.visits.count++;save.stardust+=50;persist();popup('✦ +50 SIDE MISSION STARDUST')}this.close()}close(){$('portalframe').src='about:blank';toHub()}}
+const sideGame=new OrbitEchoBridge('https://eedmond95.github.io/Orbit-and-Echo-Test/');$('sideBtn').onclick=()=>sideGame.open();$('sideBack').onclick=()=>sideGame.claim();
+renderShop();refreshContinue();updateHUD();show('menu');
+</script></body></html>
