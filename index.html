@@ -1107,7 +1107,23 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 </div></section>
 <section id="paused" class="overlay hidden"><div class="panel"><h2>MISSION PAUSED</h2><p>Your run is safe. Tap resume to continue slashing.</p><div class="actions"><button id="resume">▶ RESUME</button><button id="quitPause">QUIT TO HUB</button></div></div></section>
 <section id="warning" class="overlay hidden"><div class="v10-boss-intro-art" aria-hidden="true"><div class="v10-rune-outer"></div><div class="v10-rune-inner">◈</div><div class="v10-rune-rays"></div></div><div style="text-align:center"><div class="tag">HOSTILE SIGNATURE DETECTED</div><h1>⚠ WARNING ⚠</h1><h2 id="warninglabel">RIFT SOVEREIGN</h2><p id="warningAttack" class="v8-warning-attack">RADIAL ATTACKS · SHIELD BREACH REQUIRED</p><div class="v8-warning-progress"><i></i></div></div></section>
-<section id="end" class="overlay hidden"><div class="panel"><div class="tag" id="endtag">SIGNAL LOST</div><h1 id="endtitle">GAME OVER</h1><h2 id="endstats"></h2><p id="endmessage"></p><div class="wallet" id="endreward"></div><div class="actions"><button id="again">RETRY</button><button id="endshop">ARMORY</button><button id="home">HUB</button></div></div></section>
+<section id="end" class="overlay hidden">
+<div class="v13-results">
+ <div class="v13-result-eyebrow"><span>◈ LYRA / COMBAT DEBRIEF</span><span id="endtag">MISSION REPORT</span></div>
+ <div class="v13-report-hero">
+   <div class="v13-report-rank"><small>COMBAT GRADE</small><strong id="v13Grade">A</strong><span id="v13GradeLabel">EXCELLENT</span></div>
+   <div class="v13-report-summary"><small>OPERATION COMPLETE // UNIT 07</small><h1 id="endtitle">MISSION REPORT</h1><h2 id="endstats">SCORE 0</h2><p id="endmessage">Combat record verified.</p><span id="v13PersonalBest" class="hidden">✦ NEW PERSONAL BEST</span></div>
+ </div>
+ <div class="v13-stat-strip">
+   <div><small>ENEMIES CUT</small><strong id="v13StatKills">0</strong></div>
+   <div><small>BEST COMBO</small><strong id="v13StatCombo">0</strong></div>
+   <div><small>COUNTERS</small><strong id="v13StatCounters">0</strong></div>
+   <div><small>ATTACKS MISSED</small><strong id="v13StatMisses">0</strong></div>
+ </div>
+ <div class="v13-report-reward"><span>STARDUST EXTRACTED</span><strong class="wallet" id="endreward">✦ +0</strong><span id="v13RunTime">TIME 00:00</span></div>
+ <div class="v13-report-actions"><button id="again">↻ PLAY AGAIN</button><button id="shareRunBtn">↗ SHARE SCORE</button><button id="endshop">✦ ARMORY</button><button id="home">⌂ HOME</button></div>
+ <p class="v13-end-footer" id="v13ShareStatus">EVERY SLASH COUNTS. YOUR NEXT RUN CAN BE BETTER.</p>
+</div></section>
 <script>
 'use strict';
 // NEON ECHO — single-file Canvas arcade engine. No external runtime dependencies.
@@ -1340,7 +1356,7 @@ function wave(){
 }
 
 function startBossRush(){resetRun(1);game.bossRush=true;game.rushRound=1;game.level=1;game.mp=20;for(const e of entities)e.active=false;arenaHeadingUntil=0;arenaHeadingPending=0;$('arenaHeading').classList.add('hidden');enterWarning()}
-function advanceRush(){phaseCutinUntil=0;$('v11PhaseCutin').classList.add('hidden');game.laserAttack=null;game.bossAttack=null;game.rushRound++;game.feverUntil=0;game.pulseUntil=0;for(const e of entities)e.active=false;game.boss=null;game.hp=Math.min(game.maxHp,game.hp+20);if(game.rushRound>4){game.mode='end';game.bossRush=false;game.lastRush=true;const bonus=450+Math.min(450,Math.floor(game.score/100));save.stardust+=game.earned+bonus;save.bestRush=Math.max(Number(save.bestRush)||0,game.score);save.best=Math.max(Number(save.best)||0,game.score);persist();$('endtag').textContent='COMMANDERS DEFEATED / FOUR OF FOUR';$('endtitle').textContent='BOSS RUSH CLEARED';$('endstats').textContent='4 COMMANDERS · SCORE '+game.score.toLocaleString();$('endmessage').textContent='Lyra conquered all four enemy commanders. Best Boss Rush: '+save.bestRush.toLocaleString();$('endreward').textContent='✦ '+(game.earned+bonus).toLocaleString()+' STARDUST EARNED';show('end');sound('boss');return}game.level=game.rushRound;game.mp=Math.min(100,game.mp+45);game.spawnTimer=1.1;enterWarning();comboAnnouncement('COMMANDER DEFEATED','ROUND '+game.rushRound+' / 4',1.3)}
+function advanceRush(){phaseCutinUntil=0;$('v11PhaseCutin').classList.add('hidden');game.laserAttack=null;game.bossAttack=null;game.rushRound++;game.feverUntil=0;game.pulseUntil=0;for(const e of entities)e.active=false;game.boss=null;game.hp=Math.min(game.maxHp,game.hp+20);if(game.rushRound>4){game.mode='end';game.bossRush=false;game.lastRush=true;const bonus=450+Math.min(450,Math.floor(game.score/100));save.stardust+=game.earned+bonus;save.bestRush=Math.max(Number(save.bestRush)||0,game.score);save.best=Math.max(Number(save.best)||0,game.score);persist();$('endtag').textContent='COMMANDERS DEFEATED / FOUR OF FOUR';$('endtitle').textContent='BOSS RUSH CLEARED';$('endstats').textContent='4 COMMANDERS · SCORE '+game.score.toLocaleString();$('endmessage').textContent='Lyra conquered all four enemy commanders. Best Boss Rush: '+save.bestRush.toLocaleString();$('endreward').textContent='✦ '+Math.round(game.earned+bonus).toLocaleString()+' STARDUST EARNED';v13RenderReport();show('end');sound('boss');return}game.level=game.rushRound;game.mp=Math.min(100,game.mp+45);game.spawnTimer=1.1;enterWarning();comboAnnouncement('COMMANDER DEFEATED','ROUND '+game.rushRound+' / 4',1.3)}
 function enterWarning(){game.directorQueue=[];game.directorCue=null;game.stormKind=null;game.laserAttack=null;game.bossAttack=null;game.mode='warning';game.warning=3.1;game.boss=null;$('warninglabel').textContent=['RIFT SOVEREIGN','VOID HARBINGER','CHROME LEVIATHAN','ECHO TYRANT'][(game.level-1)%4];$('warningAttack').textContent=['RADIAL SWARM · PULSE BREAKS SHIELD','PHASING FOES · TIME YOUR SLASH','ARMORED BARRAGE · STRIKE REPEATEDLY','SPLITTER SWARM · WATCH THE FRAGMENTS'][(game.level-1)%4]+' · ★ NO MERCY';show('warning');sound('boss')}
 function beginBoss(){game.stormKind=null;game.laserAttack=null;game.laserNext=3.7;game.mode='play';const hp=25+game.level*9,kind=(game.level-1)%4;game.bossAttack=null;game.bossAttackNext=4.8;game.boss={hp,maxHp:hp,x:W/2,y:H*.30,t:0,cool:0,phase:0,kind,attackPhase:0,shieldDown:0,shieldCooldown:0,hintCooldown:0,name:$('warninglabel').textContent};show('');$('bossbar').firstChild.textContent=game.boss.name;popup('BOSS PROTOCOL · BREAK THE SHIELD WITH PULSE!');lyraSay('CHARGE PULSE. I WILL BREAK IT!',3);comboAnnouncement(['RIFT SPIRAL','PHANTOM PHASE','IRON BULWARK','ECHO FRACTURE'][kind],['RADIAL BURST','WARPING ENEMIES','ARMORED BARRAGE','SPLITTER SWARM'][kind],2.1)}
 
@@ -1461,7 +1477,50 @@ function v12UpdateStormHud(){
 }
 
 function levelUp(){phaseCutinUntil=0;$('v11PhaseCutin').classList.add('hidden');game.laserAttack=null;game.bossAttack=null;if(game.bossRush){advanceRush();return}const clearedLevel=game.level;protocolCleared=clearedLevel;const prevStars=Number(save.stars[clearedLevel])||0,newStars=game.stageMisses===0&&game.stageDamage===0?3:game.stageMisses<=2&&game.stageDamage<=35?2:1;save.stars[clearedLevel]=Math.max(prevStars,newStars);const rankBonus=Math.max(0,newStars-prevStars)*35;const nextLevel=game.level+1;const firstClear=nextLevel>save.highestUnlocked;const award=(firstClear?100+game.level*35:25+game.level*6)+rankBonus;save.stardust+=award;save.best=Math.max(save.best,game.score);save.highestUnlocked=Math.max(save.highestUnlocked,nextLevel);save.checkpoint=nextLevel;persist();game.level++;game.progress=0;game.levelQuota=18+game.level*5;game.hp=Math.min(game.maxHp,game.hp+12);game.mp=Math.min(100,game.mp+20);for(const e of entities)e.active=false;game.boss=null;game.bossAttack=null;game.mode='play';game.spawnTimer=4.0;game.feverUntil=0;game.directorQueue=[];game.directorCue=null;game.directorWavesUntil=5;game.stormKind=null;game.stormTimer=10;game.shieldCharges=v12Rank('barrier')*2;game.levelTransitionUntil=clock+3.14;game.stageDamage=0;game.stageMisses=0;show('');protocolPending=clock+3.14;arenaHeadingPending=0;showLyraMoment('SECTOR CLEAR · '+('★'.repeat(newStars)),'+'+award+' STARDUST · LEVEL '+game.level+' UNLOCKED',3.1);popup('LEVEL '+game.level+' · +'+award+' STARDUST');sound('level')}
-function finish(){game.laserAttack=null;game.bossAttack=null;const rush=game.bossRush;if(rush){game.lastRush=true;save.bestRush=Math.max(Number(save.bestRush)||0,game.score)}game.feverUntil=0;game.pulseUntil=0;game.mode='end';game.bossRush=false;game.boss=null;save.stardust+=game.earned;save.best=Math.max(save.best,game.score);persist();$('endtag').textContent=rush?'BOSS RUSH · COMMANDER '+game.rushRound+'/4':'LYRA // MISSION REPORT';$('endtitle').textContent=rush?'BOSS RUSH FAILED':'SIGNAL LOST';$('endstats').textContent='SCORE '+game.score.toLocaleString()+' · LEVEL '+game.level;$('endmessage').textContent=(rush?'Commanders reached: '+game.rushRound+' / 4 · ':'')+'Targets sliced: '+game.runHits+' · Best combo: '+(game.bestCombo||0)+' · Disarms: '+(game.disarms||0)+' · Missed: '+game.misses+' · Best score: '+save.best.toLocaleString();$('endreward').textContent='✦ +'+game.earned+' STARDUST BANKED';show('end')}
+
+function v13Grade(){
+ // A personal arcade performance estimate, not a ranking against other players.
+ const rate=game.runHits/Math.max(1,game.runHits+game.misses);
+ const score=game.score;
+ const combo=game.bestCombo||0;
+ let points=rate*65+Math.min(25,combo*1.2)+Math.min(10,score/3500);
+ if(game.bossRush&&game.rushRound>3)points+=5;
+ if(points>=91)return ['S','LEGENDARY'];
+ if(points>=77)return ['A','EXCELLENT'];
+ if(points>=61)return ['B','STRONG'];
+ if(points>=42)return ['C','FIGHT ON'];
+ return ['D','REBUILD']
+}
+function v13RenderReport(){
+ const grade=v13Grade();
+ $('v13Grade').textContent=grade[0];$('v13GradeLabel').textContent=grade[1];
+ const record=(game.score>=save.best&&game.score>0);
+ $('v13PersonalBest').classList.toggle('hidden',!record);
+ $('v13StatKills').textContent=Number(game.runHits||0).toLocaleString('en-US');
+ $('v13StatCombo').textContent=Number(game.bestCombo||0).toLocaleString('en-US');
+ $('v13StatCounters').textContent=Number(game.disarms||0).toLocaleString('en-US');
+ $('v13StatMisses').textContent=Number(game.misses||0).toLocaleString('en-US');
+ const sec=Math.max(0,Math.floor(game.elapsed||0));
+ $('v13RunTime').textContent='TIME '+String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+ $('v13ShareStatus').textContent='EVERY SLASH COUNTS. YOUR NEXT RUN CAN BE BETTER.'
+}
+function v13ScoreShareText(){
+ const grade=v13Grade()[0];
+ return 'NEON ECHO / RADIANT\n'+(game.lastRush?'BOSS RUSH':'CAMPAIGN')+' · SECTOR '+game.level+
+ '\nSCORE '+game.score.toLocaleString('en-US')+' · GRADE '+grade+
+ '\n'+game.runHits+' TARGETS · '+(game.bestCombo||0)+' BEST COMBO · '+game.disarms+' COUNTERS'+
+ '\nCan you beat my score?\nhttps://eedmond95.github.io/Neon-Slash-/'
+}
+async function v13ShareRun(){
+ const value=v13ScoreShareText(),b=$('v13ShareStatus');
+ try{
+   if(navigator.share){await navigator.share({title:'Neon Echo — Beat My Score',text:value});b.textContent='CHALLENGE READY TO SHARE';return}
+   if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(value);b.textContent='SCORE COPIED — SEND IT TO A FRIEND';return}
+   b.textContent='SHARING NOT AVAILABLE ON THIS DEVICE'
+ }catch(e){b.textContent=e&&e.name==='AbortError'?'SHARE CANCELLED':'SHARING UNAVAILABLE'}
+}
+
+function finish(){game.laserAttack=null;game.bossAttack=null;const rush=game.bossRush;if(rush){game.lastRush=true;save.bestRush=Math.max(Number(save.bestRush)||0,game.score)}game.feverUntil=0;game.pulseUntil=0;game.mode='end';game.bossRush=false;game.boss=null;save.stardust+=game.earned;save.best=Math.max(save.best,game.score);persist();$('endtag').textContent=rush?'BOSS RUSH · COMMANDER '+game.rushRound+'/4':'LYRA // MISSION REPORT';$('endtitle').textContent=rush?'BOSS RUSH FAILED':'SIGNAL LOST';$('endstats').textContent='SCORE '+game.score.toLocaleString()+' · LEVEL '+game.level;$('endmessage').textContent=(rush?'Commanders reached: '+game.rushRound+' / 4 · ':'')+'Targets sliced: '+game.runHits+' · Best combo: '+(game.bestCombo||0)+' · Disarms: '+(game.disarms||0)+' · Missed: '+game.misses+' · Best score: '+save.best.toLocaleString();$('endreward').textContent='✦ +'+Math.round(game.earned)+' STARDUST BANKED';v13RenderReport();show('end')}
 function hitPlayer(damage){if(game.mode!=='play')return;if((game.shieldCharges||0)>0){game.shieldCharges--;impactRing(W*.5,H*.64,'#86fff0',Math.min(W,H)*.45,2);comboAnnouncement('AEGIS ABSORBED IMPACT',game.shieldCharges+' SHIELD CHARGES REMAIN',1.1);lyraSay('AEGIS SAVED US!',1.6);sound('ui');updateHUD();return}impactRing(W*.5,H*.64,'#ff4a78',Math.min(W,H)*.85,2);game.stageDamage=(game.stageDamage||0)+damage;comboAnnouncement('HULL BREACH','-'+damage+' HEALTH',.95);if(game.hp<game.maxHp*.45)lyraSay('HULL CRITICAL! STAY SHARP!',2);game.hitFlash=.55;game.hitStop=.065;game.hp=Math.max(0,game.hp-damage);game.combo=0;game.feverUntil=0;game.shake=Math.max(game.shake,11);sound('bad');if(game.hp<=0)finish()}
 
 function v12DetonateDrone(drone){
@@ -1994,7 +2053,7 @@ function renderShop(){
 }
 function openShop(){if(game.mode==='play')return;renderShop();show('shop')}function toHub(){game.directorQueue=[];game.directorCue=null;protocolPending=0;phaseCutinUntil=0;lyraMessageUntil=0;$('v11PhaseCutin').classList.add('hidden');$('v11LyraMessage').classList.add('hidden');game.laserAttack=null;game.bossAttack=null;game.bossRush=false;game.feverUntil=0;arcadeFeedbackUntil=arenaHeadingUntil=arenaHeadingPending=0;$('arcadeFeedback').classList.add('hidden');$('arenaHeading').classList.add('hidden');game.pulseUntil=0;game.mode='menu';refreshContinue();game.boss=null;for(const e of entities)e.active=false;for(const p of particles)p.active=false;for(const t of texts)t.active=false;pointer.trail.length=0;pointer.down=false;$('pause').textContent='Ⅱ';renderShop();show('menu')}
 $('bossRushBtn').onclick=startBossRush;$('missionsBtn').onclick=()=>{renderMissions();show('missions')};$('missionsBack').onclick=toHub;
-const tutorialKey='neonEchoTutorialSeen_v1';function beginFriendly(){let seen=false;try{seen=localStorage.getItem(tutorialKey)==='yes'}catch(e){}if(seen)resetRun();else show('howto')} $('start').onclick=beginFriendly;$('continueBtn').onclick=()=>selectLevel(save.highestUnlocked);$('levelsBtn').onclick=()=>{renderLevels();show('levels')};$('levelsBack').onclick=toHub;$('howToBtn').onclick=()=>show('howto');$('tutorialBack').onclick=()=>show('menu');$('tutorialPlay').onclick=()=>{try{if($('skipTutorial').checked)localStorage.setItem(tutorialKey,'yes')}catch(e){}resetRun()};$('again').onclick=()=>game.lastRush?startBossRush():resetRun();$('home').onclick=toHub;$('shopBtn').onclick=openShop;$('endshop').onclick=openShop;$('shopBack').onclick=toHub;$('pause').onclick=pause;$('resume').onclick=pause;$('quitPause').onclick=toHub;$('pulse').onclick=usePulse;
+const tutorialKey='neonEchoTutorialSeen_v1';function beginFriendly(){let seen=false;try{seen=localStorage.getItem(tutorialKey)==='yes'}catch(e){}if(seen)resetRun();else show('howto')} $('start').onclick=beginFriendly;$('continueBtn').onclick=()=>selectLevel(save.highestUnlocked);$('levelsBtn').onclick=()=>{renderLevels();show('levels')};$('levelsBack').onclick=toHub;$('howToBtn').onclick=()=>show('howto');$('tutorialBack').onclick=()=>show('menu');$('tutorialPlay').onclick=()=>{try{if($('skipTutorial').checked)localStorage.setItem(tutorialKey,'yes')}catch(e){}resetRun()};$('shareRunBtn').onclick=v13ShareRun;$('again').onclick=()=>game.lastRush?startBossRush():resetRun();$('home').onclick=toHub;$('shopBtn').onclick=openShop;$('endshop').onclick=openShop;$('shopBack').onclick=toHub;$('pause').onclick=pause;$('resume').onclick=pause;$('quitPause').onclick=toHub;$('pulse').onclick=usePulse;
 // TODO: Embed Orbit & Echo Side-Game Here for Point Generation.
 // Integration adapter: replace this iframe with a shared-origin mini-game bridge.
 // For secure real currency exchange use signed server-side achievements, not iframe messages alone.
