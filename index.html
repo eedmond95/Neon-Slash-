@@ -1099,7 +1099,7 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
   <header class="v7-masthead">
     <div class="v7-brand"><span class="v7-mark">◈</span><span>NEON ECHO<small>LYRA / NEON REIGN</small></span></div>
     <div class="v7-mast-center"><i></i> ASTRAL SYSTEMS ONLINE <span>◌ 07</span></div>
-    <div class="v8-mast-actions"><button id="fxToggle" aria-label="Toggle performance mode" title="Switch between high and lite visual effects">FX HIGH</button><button id="audioToggle" aria-label="Toggle sound" title="Toggle sound effects">♫ SOUND ON</button></div>
+    <div class="v8-mast-actions"><button id="fxToggle" aria-label="Toggle performance mode" title="Switch between high and lite visual effects">FX HIGH</button><button id="musicToggle" aria-label="Toggle music" title="Toggle synthwave soundtrack">♫ MUSIC ON</button><button id="audioToggle" aria-label="Toggle sound" title="Toggle sound effects">♪ FX ON</button></div>
   </header>
   <div class="v7-hero">
     <div class="v7-main">
@@ -1179,9 +1179,9 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 // NEON ECHO — single-file Canvas arcade engine. No external runtime dependencies.
 const $=id=>document.getElementById(id), canvas=$('game'),ctx=canvas.getContext('2d',{alpha:false});let W=0,H=0,DPR=1,clock=0,last=0,raf=0;
 function resize(){DPR=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0)}addEventListener('resize',resize);resize();
-const storeKey='neon_echo_lyra_v1';const defaults=()=>({highestUnlocked:1,checkpoint:1,stardust:0,best:0,weapon:1,radius:1,hull:1,muted:false,daily:null,stars:{},fxQuality:'high',blade:'ion',bladeOwned:['ion'],visits:{day:'',count:0}});let save;try{save={...defaults(),...JSON.parse(localStorage.getItem(storeKey)||'{}')}}catch{save=defaults()}const persist=()=>{try{localStorage.setItem(storeKey,JSON.stringify(save))}catch{}};
+const storeKey='neon_echo_lyra_v1';const defaults=()=>({highestUnlocked:1,checkpoint:1,stardust:0,best:0,weapon:1,radius:1,hull:1,muted:false,music:true,daily:null,stars:{},fxQuality:'high',blade:'ion',bladeOwned:['ion'],visits:{day:'',count:0}});let save;try{save={...defaults(),...JSON.parse(localStorage.getItem(storeKey)||'{}')}}catch{save=defaults()}const persist=()=>{try{localStorage.setItem(storeKey,JSON.stringify(save))}catch{}};
 // Campaign progression is stored independently of individual runs.
-save.highestUnlocked=Math.max(1,Math.min(99,Number(save.highestUnlocked)||1));save.checkpoint=Math.max(1,Math.min(save.highestUnlocked,Number(save.checkpoint)||save.highestUnlocked));if(!save.stars||typeof save.stars!=='object')save.stars={};if(!['high','lite'].includes(save.fxQuality))save.fxQuality='high';save.stardust=Math.max(0,Math.round(Number(save.stardust)||0));if(!Array.isArray(save.bladeOwned))save.bladeOwned=['ion'];if(!save.bladeOwned.includes('ion'))save.bladeOwned.unshift('ion');if(!save.bladeOwned.includes(save.blade))save.blade='ion';
+save.highestUnlocked=Math.max(1,Math.min(99,Number(save.highestUnlocked)||1));save.checkpoint=Math.max(1,Math.min(save.highestUnlocked,Number(save.checkpoint)||save.highestUnlocked));if(!save.stars||typeof save.stars!=='object')save.stars={};if(!['high','lite'].includes(save.fxQuality))save.fxQuality='high';save.stardust=Math.max(0,Math.round(Number(save.stardust)||0));if(typeof save.music!=='boolean')save.music=true;if(!Array.isArray(save.bladeOwned))save.bladeOwned=['ion'];if(!save.bladeOwned.includes('ion'))save.bladeOwned.unshift('ion');if(!save.bladeOwned.includes(save.blade))save.blade='ion';
 const contractSpecs=[
 {id:'slices',name:'PHANTOM CLEANUP',description:'Destroy 35 enemy targets across your runs.',goal:35,reward:150,icon:'⚔'},
 {id:'armor',name:'CRACK THE ARMOR',description:'Destroy 6 armored enemies.',goal:6,reward:180,icon:'⬡'},
@@ -1300,6 +1300,60 @@ function sound(type){
     if((type==='bad'||type==='pulse'||type==='level')&&typeof navigator!=='undefined'&&navigator.vibrate){navigator.vibrate(type==='bad'?[35,30,55]:type==='pulse'?[16,18,24]:15)}
   }catch{}
 }
+
+// Original procedural soundtrack, built from synthesized notes rather than copyrighted audio.
+// Scheduling uses a short lookahead from the animation loop; no network or audio assets.
+let musicNextTime=0,musicStep=0,musicContext=null,musicDuckUntil=0;
+const musicBass=[55,55,43.65,43.65,65.41,65.41,49,49];
+const musicLead=[0,12,7,0,3,7,10,7,0,12,7,5,3,7,10,12];
+function musicVoice(freq,start,duration,volume,wave='triangle',filterHz=0){
+ if(!audio||audio.state!=='running')return;
+ const o=audio.createOscillator(),g=audio.createGain();
+ o.type=wave;o.frequency.setValueAtTime(Math.max(26,freq),start);
+ const attack=Math.max(.007,Math.min(.024,duration*.09));
+ g.gain.setValueAtTime(.0001,start);g.gain.exponentialRampToValueAtTime(Math.max(.00015,volume),start+attack);
+ g.gain.exponentialRampToValueAtTime(.0001,start+duration);
+ if(filterHz){const f=audio.createBiquadFilter();f.type='lowpass';f.frequency.value=filterHz;o.connect(f);f.connect(g)}else o.connect(g);
+ g.connect(audio.destination);o.start(start);o.stop(start+duration+.015)
+}
+function musicPlayStep(i,start,beat,mode){
+ const root=musicBass[Math.floor(i/16)%8],phase=i%16;
+ const mood=mode==='boss'?1.2:mode==='fever'?1.35:mode==='menu'?.52:1;
+ const duck=clock<musicDuckUntil?.25:1,vol=mood*duck;
+ if(phase%4===0){
+   // Synthesized low-frequency kick.
+   const o=audio.createOscillator(),g=audio.createGain();o.type='sine';
+   o.frequency.setValueAtTime(120,start);o.frequency.exponentialRampToValueAtTime(43,start+.11);
+   g.gain.setValueAtTime(.0001,start);g.gain.exponentialRampToValueAtTime(.12*vol,start+.006);g.gain.exponentialRampToValueAtTime(.0001,start+.19);
+   o.connect(g);g.connect(audio.destination);o.start(start);o.stop(start+.2);
+ }
+ if(phase%4===2&&mode!=='menu'){musicVoice(310,start,.075,.02*vol,'sawtooth',1550);musicVoice(510,start,.045,.014*vol,'triangle')}
+ if(phase%2===0){musicVoice(root*(phase%4?2:1),start,beat*.72,.038*vol,mode==='boss'?'sawtooth':'triangle',mode==='boss'?560:360)}
+ if(phase%4===0){musicVoice(root*4,start,beat*2.7,.009*vol,'sine');musicVoice(root*6,start+.015,beat*2.55,.006*vol,'sine')}
+ if((mode==='boss'||mode==='fever'||mode==='play')&&[2,5,9,13].includes(phase)){
+   const note=musicLead[phase];musicVoice(root*4*Math.pow(2,note/12),start,beat*.55,.019*vol,'triangle',2400)
+ }
+ if(mode==='boss'&&phase%2){musicVoice(root*8,start,beat*.26,.009*vol,'square',1800)}
+}
+function musicTick(){
+ if(!save.music||save.muted||!audio||audio.state!=='running')return;
+ if(game.mode==='paused'||game.mode==='protocol'||game.mode==='warning')return;
+ const mode=game.mode==='play'?(game.boss?'boss':game.feverUntil>clock?'fever':'play'):'menu';
+ const beat=60/(mode==='boss'?138:mode==='fever'?146:115)/4;
+ const now=audio.currentTime;
+ if(!musicNextTime||musicNextTime<now-.35){musicNextTime=now+.035;musicStep=0}
+ const end=now+.125;let scheduled=0;
+ while(musicNextTime<end&&scheduled<3){
+   musicPlayStep(musicStep++,musicNextTime,beat,mode);
+   musicNextTime+=beat;scheduled++
+ }
+}
+function updateMusicButton(){
+ const b=$('musicToggle');if(!b)return;
+ b.textContent=save.music?'♫ MUSIC ON':'♫ MUSIC OFF';
+ b.setAttribute('aria-pressed',String(save.music))
+}
+
 const stars=Array.from({length:190},()=>({x:Math.random(),y:Math.random(),a:rnd(.1,.8),r:rnd(.35,1.8),speed:rnd(.002,.024)}));
 const game={mode:'menu',level:1,score:0,combo:0,hp:100,maxHp:100,mp:0,progress:0,elapsed:0,spawnTimer:0,boss:null,bossShots:0,warning:0,shake:0,levelQuota:18,earned:0,runHits:0,misses:0};
 const pointer={x:0,y:0,down:false,id:null,prevX:0,prevY:0,trail:[],lastMove:0};
@@ -1723,7 +1777,7 @@ function drawEmpAttack(){
 
 function slash(ax,ay,bx,by){if(game.mode!=='play'||(game.levelTransitionUntil&&clock<game.levelTransitionUntil))return;const distance=Math.hypot(bx-ax,by-ay);if(distance<5)return;game.lastSlashAngle=Math.atan2(by-ay,bx-ax);const steps=Math.max(1,Math.ceil(distance/100));for(let k=0;k<steps;k++){let sx=ax+(bx-ax)*k/steps,sy=ay+(by-ay)*k/steps,ex=ax+(bx-ax)*(k+1)/steps,ey=ay+(by-ay)*(k+1)/steps;if(game.laserAttack&&slashLaserAttack(game.laserAttack.x,game.laserAttack.y,sx,sy,ex,ey))continue;if(game.bossAttack&&segmentDistance(game.bossAttack.x,game.bossAttack.y,sx,sy,ex,ey)<Math.max(32,Math.min(W,H)*.09))disarmEmpAttack();for(const e of entities){if(!e.active)continue;const radius=(e.size*(.5+e.z*1.15)+9+(save.radius-1)*8+v12Rank('focus')*7);if(segmentDistance(e.x,e.y,sx,sy,ex,ey)<radius)sliceEntity(e)}if(game.boss){const b=game.boss;if(Math.hypot((sx+ex)/2-b.x,(sy+ey)/2-b.y)<Math.max(58,Math.min(W,H)*.105)&&b.cool<=0){if(b.shieldDown<=0){b.cool=.32;if(b.hintCooldown<=0){popup(game.mp>=100?'SHIELD UP! TAP ⚡ PULSE NOW':'SHIELD UP! SLASH MINIONS TO CHARGE ⚡');b.hintCooldown=2.2}spawnParticle(b.x,b.y,'#44eaff',12,.6);continue}b.hp-=Math.max(.5,save.weapon*1.15);b.cool=.27;if(b.hp<=b.maxHp*.54&&b.phase<2)triggerBossRage();game.mp=clamp(game.mp+3,0,100);game.combo++;game.bestCombo=Math.max(game.bestCombo||0,game.combo);game.runHits++;spawnParticle(b.x,b.y,'#ff67c8',19,1.3);giveScore(210,b.x,b.y);game.shake=6;impactRing(b.x,b.y,'#ffa3dd',Math.max(20,Math.min(W,H)*.09),0);sound('hit');if(b.hp<=0){giveScore(2500,b.x,b.y);spawnParticle(b.x,b.y,'#fe71f4',110,2);impactRing(b.x,b.y,'#ffeafa',Math.max(W,H)*.65,2);levelUp();break}}}}if(Math.random()<.65)sound('slash')}
 function pulseSweep(){if(game.mode!=='play'||!(game.pulseUntil>clock))return;for(const e of entities){if(!e.active)continue;if(e.type==='bomb'){e.active=false;spawnParticle(e.x,e.y,'#ff9f6b',12,.5);continue}if(e.type==='orb'){e.active=false;game.hp=Math.min(game.maxHp,game.hp+12);spawnParticle(e.x,e.y,'#42ffad',14,.65)}else if(e.type==='prism'){e.active=false;game.mp=Math.min(100,game.mp+12);giveScore(350,e.x,e.y);spawnParticle(e.x,e.y,'#ffe3a4',28,1)}else{e.hp=0;destroyEntity(e)}}}
-function usePulse(){if(game.mode!=='play'||game.mp<100||(game.levelTransitionUntil&&clock<game.levelTransitionUntil))return;game.mp=0;recordMission('pulse',1);game.pulseUntil=clock+2.85;phaseCutinUntil=0;$('v11PhaseCutin').classList.add('hidden');game.laserAttack=null;game.bossAttack=null;game.shake=15;showLyraMoment('NOVA PULSE!','LYRA OVERDRIVE ACTIVATED',2.85);popup('LYRA OVERDRIVE // NOVA PULSE');pulseSweep();if(game.boss&&game.mode==='play'){const b=game.boss;if(b.shieldDown<=0){b.shieldDown=7.5;b.cool=0;impactRing(b.x,b.y,'#70fbff',Math.min(W,H)*.55,2);spawnParticle(b.x,b.y,'#71ffff',90,1.4);popup('SHIELD BROKEN! SLASH THE CORE · 7 SECONDS!');lyraSay('SHIELD DOWN! STRIKE NOW!',2)}else{b.shieldDown=Math.max(b.shieldDown,5);popup('SHIELD DOWN · KEEP SLASHING!')} }for(let i=0;i<12;i++)spawnParticle(W/2,H/2,'#5affff',25,2);sound('pulse')}
+function usePulse(){if(game.mode!=='play'||game.mp<100||(game.levelTransitionUntil&&clock<game.levelTransitionUntil))return;game.mp=0;recordMission('pulse',1);game.pulseUntil=clock+2.85;musicDuckUntil=clock+1.2;phaseCutinUntil=0;$('v11PhaseCutin').classList.add('hidden');game.laserAttack=null;game.bossAttack=null;game.shake=15;showLyraMoment('NOVA PULSE!','LYRA OVERDRIVE ACTIVATED',2.85);popup('LYRA OVERDRIVE // NOVA PULSE');pulseSweep();if(game.boss&&game.mode==='play'){const b=game.boss;if(b.shieldDown<=0){b.shieldDown=7.5;b.cool=0;impactRing(b.x,b.y,'#70fbff',Math.min(W,H)*.55,2);spawnParticle(b.x,b.y,'#71ffff',90,1.4);popup('SHIELD BROKEN! SLASH THE CORE · 7 SECONDS!');lyraSay('SHIELD DOWN! STRIKE NOW!',2)}else{b.shieldDown=Math.max(b.shieldDown,5);popup('SHIELD DOWN · KEEP SLASHING!')} }for(let i=0;i<12;i++)spawnParticle(W/2,H/2,'#5affff',25,2);sound('pulse')}
 // iOS Safari reserves the very edges for Home, app switching and browser navigation.
 // Avoid starting a gesture there; use the safe, central playfield for slashes.
 const coarseTouch=()=>matchMedia('(pointer:coarse)').matches;
@@ -2079,7 +2133,7 @@ const tr=pointer.trail;if(showCombat&&tr.length>1){
 }
 ctx.restore()
 }
-function loop(now){if(!last)last=now;const dt=Math.min(.034,(now-last)/1000);last=now;update(dt);draw();raf=requestAnimationFrame(loop)}raf=requestAnimationFrame(loop);
+function loop(now){if(!last)last=now;const dt=Math.min(.034,(now-last)/1000);last=now;update(dt);draw();musicTick();raf=requestAnimationFrame(loop)}raf=requestAnimationFrame(loop);
 const bladeSkins={ion:{name:'ION EDGE',price:0,main:'0,243,255',outer:'255,0,245',mainHex:'#00f0ff',outerHex:'#ff00f0'},solar:{name:'SOLAR EDGE',price:325,main:'255,216,108',outer:'255,94,63',mainHex:'#ffd86c',outerHex:'#ff5e3f'},ghost:{name:'PHANTOM EDGE',price:525,main:'179,151,255',outer:'71,255,226',mainHex:'#b397ff',outerHex:'#47ffe2'},aurora:{name:'AURORA EDGE',price:850,main:'99,255,189',outer:'49,137,255',mainHex:'#63ffbd',outerHex:'#3189ff'}};
 const upgrades=[{id:'weapon',name:'PLASMA EDGE',description:'Higher damage; break elite armor.',max:8,base:120},{id:'radius',name:'BLADE REACH',description:'Wider slash collision radius.',max:7,base:100},{id:'hull',name:'HULL MATRIX',description:'+25 maximum HP per upgrade.',max:7,base:110}];function cost(u){return Math.floor(u.base*Math.pow(1.8,save[u.id]-1))}
 function renderBladeShop(){const root=$('bladeShop');root.textContent='';const selected=bladeSkins[save.blade]||bladeSkins.ion;$('equippedBlade').textContent=selected.name+' EQUIPPED';for(const [id,blade] of Object.entries(bladeSkins)){const owned=save.bladeOwned.includes(id),equipped=save.blade===id;const div=document.createElement('div');div.className='v8-blade-card'+(equipped?' equipped':'');div.innerHTML='<div class="v8-blade-preview" style="--blade-main:'+blade.mainHex+';--blade-outer:'+blade.outerHex+'"><i></i><i></i><i></i></div><strong>'+blade.name+'</strong><small>'+(equipped?'CURRENT LOADOUT':owned?'UNLOCKED · OWNED':'✦ '+blade.price+' STARDUST')+'</small>';const button=document.createElement('button');button.disabled=equipped||(!owned&&save.stardust<blade.price);button.textContent=equipped?'✓ EQUIPPED':owned?'EQUIP':'BUY · ✦ '+blade.price;button.onclick=()=>{if(save.blade===id)return;if(!save.bladeOwned.includes(id)){if(save.stardust<blade.price)return;save.stardust-=blade.price;save.bladeOwned.push(id)}save.blade=id;persist();sound('ui');renderShop()};div.appendChild(button);root.appendChild(div)}}
@@ -2109,6 +2163,6 @@ const tutorialKey='neonEchoTutorialSeen_v1';function beginFriendly(){let seen=fa
 // For secure real currency exchange use signed server-side achievements, not iframe messages alone.
 class OrbitEchoBridge{constructor(url){this.url=url}open(){if(game.mode==='play')return;game.mode='side';$('portalframe').src=this.url;show('side')}claim(){const date=new Date().toLocaleDateString('en-CA');if(save.visits?.day!==date)save.visits={day:date,count:0};if(save.visits.count<3){save.visits.count++;save.stardust+=50;persist();popup('✦ +50 SIDE MISSION STARDUST')}this.close()}close(){$('portalframe').src='about:blank';toHub()}}
 const sideGame=new OrbitEchoBridge('https://eedmond95.github.io/Orbit-and-Echo-Test/');$('sideBtn').onclick=()=>sideGame.open();$('sideBack').onclick=()=>sideGame.claim();
-function updateFxButton(){$('fxToggle').textContent=save.fxQuality==='lite'?'FX LITE':'FX HIGH';$('fxToggle').setAttribute('aria-pressed',String(save.fxQuality==='high'))} $('fxToggle').onclick=()=>{save.fxQuality=save.fxQuality==='lite'?'high':'lite';persist();updateFxButton();sound('ui')};function updateSoundButton(){const button=$('audioToggle');if(button){button.textContent=save.muted?'♪ SOUND OFF':'♫ SOUND ON';button.setAttribute('aria-pressed',String(!save.muted))}}$('audioToggle').onclick=()=>{save.muted=!save.muted;persist();updateSoundButton();if(!save.muted)sound('ui')};
-ensureDaily();renderMissions();renderShop();refreshContinue();updateSoundButton();updateFxButton();updateHUD();show('menu');
+function updateFxButton(){$('fxToggle').textContent=save.fxQuality==='lite'?'FX LITE':'FX HIGH';$('fxToggle').setAttribute('aria-pressed',String(save.fxQuality==='high'))} $('fxToggle').onclick=()=>{save.fxQuality=save.fxQuality==='lite'?'high':'lite';persist();updateFxButton();sound('ui')};$('musicToggle').onclick=()=>{save.music=!save.music;persist();musicNextTime=0;updateMusicButton();if(save.music&&!save.muted)sound('ui')};function updateSoundButton(){const button=$('audioToggle');if(button){button.textContent=save.muted?'♪ FX OFF':'♪ FX ON';button.setAttribute('aria-pressed',String(!save.muted))}}$('audioToggle').onclick=()=>{save.muted=!save.muted;persist();updateSoundButton();if(!save.muted)sound('ui')};
+ensureDaily();renderMissions();renderShop();refreshContinue();updateSoundButton();updateMusicButton();updateFxButton();updateHUD();show('menu');
 </script></body></html>
