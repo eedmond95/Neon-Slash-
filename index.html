@@ -2460,6 +2460,8 @@ ensureDaily();renderMissions();renderShop();refreshContinue();updateSoundButton(
      beatNotice('LYRA // SOLAR BREACH','SHIELD SHATTERED · ERASE THE REACTORS',2.5);
    }else beatNotice('LYRA // NOVA ASCENDANT','CLEAR THE SKY · DESTROY EVERYTHING',1.8);
  };
+ // Rebind the already-initialized button so touch users get the new boss-breach mechanics.
+ M('pulse').onclick=usePulse;
  const oldSlash=slash;
  slash=function(ax,ay,bx,by){
    if(game.mode!=='play')return oldSlash(ax,ay,bx,by);
@@ -2509,6 +2511,7 @@ ensureDaily();renderMissions();renderShop();refreshContinue();updateSoundButton(
  startBossRush=function(){
    v14.bossRef=null;v14.nodes=[];v14.lane=null;v14.laneClock=6.6;oldStartBossRush();beatNotice('TITAN GAUNTLET','FOUR COMMANDERS · ONE PILOT',1.75);
  };
+ M('bossRushBtn').onclick=startBossRush;
  const oldUpdate=update;
  update=function(dt){
    oldUpdate(dt);
