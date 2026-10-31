@@ -924,6 +924,25 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 #menu .v7-portrait svg{filter:drop-shadow(0 0 12px #db7aff90)!important}
 }
 @media(prefers-reduced-motion:reduce){#warning .v10-rune-outer,#warning .v10-rune-outer:before,#warning .v10-rune-inner,#warning .v10-rune-rays,#v10EmpIndicator{animation:none!important}}
+</style><style id="neon-rupture-v11">
+#menu .v7-shell{border-color:#83eaffcc!important;box-shadow:0 20px 105px #000e,0 0 95px #ed4bc338,inset 0 1px #fff4,inset 0 0 60px #127dd825!important}
+#menu .v7-title strong{text-shadow:none;filter:drop-shadow(0 0 35px #e76dff8c)!important}
+#menu .v7-rule-row>span{border-color:#68ebff80!important}
+#v11LaserAlert{position:absolute;left:50%;top:clamp(146px,18vh,185px);transform:translateX(-50%);text-align:center;z-index:18;pointer-events:none;padding:11px 23px;min-width:205px;background:linear-gradient(105deg,#4d052be9,#1e0c34ed,#360e37df);border:2px solid #ff478abb;box-shadow:0 0 30px #ff357d8c;clip-path:polygon(0 0,93% 0,100% 23%,100% 100%,7% 100%,0 77%);animation:v11Warning .48s ease-in-out infinite alternate}
+#v11LaserAlert strong{display:block;color:#fff3f7;font:1000 clamp(13px,2vw,19px) system-ui;letter-spacing:.15em;text-shadow:0 0 18px #ff3188}
+#v11LaserAlert span{display:block;margin-top:5px;font:850 10px ui-monospace,monospace;letter-spacing:.1em;color:#ffb0d3}
+#ui.imminent-impact:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;box-shadow:inset 0 0 38px #ff3b6b59;animation:v11Peril 1.1s ease-in-out infinite}
+#ui.imminent-impact #hpbar{filter:brightness(1.18)}
+#v10EmpIndicator{z-index:18}
+#bossbar{border-color:#e86affc9!important;box-shadow:0 0 20px #ff47de6f!important}
+#bossHint.exposed{background:linear-gradient(90deg,#35203cbf,#1a3833df)!important;border-color:#ffb275cc!important;color:#fff3cc!important;box-shadow:0 0 19px #ffbd7955!important}
+#menu .v7-description{font-size:clamp(12px,1.2vw,14px)!important}
+#menu .v7-portrait svg{filter:drop-shadow(0 0 35px #fc83ff88) drop-shadow(12px 23px 12px #000b)!important}
+#menu .v7-portrait-corner{color:#8cf4ffcc!important}
+@keyframes v11Warning{to{filter:brightness(1.32);box-shadow:0 0 55px #ff357cb8}}
+@keyframes v11Peril{50%{opacity:.25}}
+@media(max-width:600px){#v11LaserAlert{top:calc(125px + env(safe-area-inset-top));max-width:82vw;min-width:185px;padding:8px 10px}#v11LaserAlert span{font-size:9px}#menu .v7-portrait svg{filter:drop-shadow(0 0 18px #f98cff79)!important}#ui.imminent-impact:after{box-shadow:inset 0 0 16px #ff3a6459}}
+@media(prefers-reduced-motion:reduce){#v11LaserAlert,#ui.imminent-impact:after{animation:none!important}}
 </style></head><body><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
 <linearGradient id="lyraHair" x2="1" y2="1"><stop stop-color="#f78cff"/><stop offset=".43" stop-color="#ae48fa"/><stop offset="1" stop-color="#482cb5"/></linearGradient><linearGradient id="lyraSuit" x2="0" y2="1"><stop stop-color="#273c75"/><stop offset="1" stop-color="#11142f"/></linearGradient>
 <symbol id="lyraChibiArt" viewBox="0 0 200 240"><path d="M48 76Q10 18 91 9Q163 -7 178 74L169 171Q139 193 117 164L52 167Z" fill="url(#lyraHair)" stroke="#e698ff" stroke-width="4"/><path d="M72 166L52 205Q48 230 68 230H151Q170 226 152 204L129 165" fill="url(#lyraSuit)" stroke="#72eaff" stroke-width="4"/><path d="M86 180L109 212L132 178" fill="none" stroke="#f389fa" stroke-width="8"/><path d="M70 224L65 235M137 224L145 235" stroke="#6deeff" stroke-width="12" stroke-linecap="round"/><ellipse cx="110" cy="111" rx="62" ry="65" fill="#ffd5c6" stroke="#ffbad6" stroke-width="3"/><path d="M44 93Q28 23 105 18Q174 22 176 95Q156 77 150 60Q100 101 44 93" fill="url(#lyraHair)"/><path d="M69 117Q83 103 96 118M124 118Q138 103 151 117" fill="none" stroke="#6b3c88" stroke-width="5" stroke-linecap="round"/><ellipse cx="84" cy="125" rx="9" ry="14" fill="#9f61e9"/><ellipse cx="138" cy="125" rx="9" ry="14" fill="#9f61e9"/><circle cx="87" cy="121" r="3" fill="#fff"/><circle cx="141" cy="121" r="3" fill="#fff"/><path d="M103 145Q111 152 120 145" stroke="#b95b8e" stroke-width="3" fill="none"/><ellipse cx="61" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><ellipse cx="157" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><path d="M47 82L35 161M170 82L183 163" stroke="#c770f5" stroke-width="16" stroke-linecap="round"/><path d="M76 200L109 222L143 200" fill="none" stroke="#72eeff" stroke-width="3"/></symbol>
