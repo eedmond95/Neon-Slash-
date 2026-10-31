@@ -958,7 +958,7 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 <div class="actions"><button id="missionsBack">← RETURN TO COMMAND DECK</button></div>
 </div></section>
 <section id="paused" class="overlay hidden"><div class="panel"><h2>MISSION PAUSED</h2><p>Your run is safe. Tap resume to continue slashing.</p><div class="actions"><button id="resume">▶ RESUME</button><button id="quitPause">QUIT TO HUB</button></div></div></section>
-<section id="warning" class="overlay hidden"><div style="text-align:center"><div class="tag">HOSTILE SIGNATURE DETECTED</div><h1>⚠ WARNING ⚠</h1><h2 id="warninglabel">RIFT SOVEREIGN</h2><p id="warningAttack" class="v8-warning-attack">RADIAL ATTACKS · BREAK THE SHIELD WITH PULSE</p><div class="v8-warning-progress"><i></i></div></div></section>
+<section id="warning" class="overlay hidden"><div class="v10-boss-intro-art" aria-hidden="true"><div class="v10-rune-outer"></div><div class="v10-rune-inner">◈</div><div class="v10-rune-rays"></div></div><div style="text-align:center"><div class="tag">HOSTILE SIGNATURE DETECTED</div><h1>⚠ WARNING ⚠</h1><h2 id="warninglabel">RIFT SOVEREIGN</h2><p id="warningAttack" class="v8-warning-attack">RADIAL ATTACKS · SHIELD BREACH REQUIRED</p><div class="v8-warning-progress"><i></i></div></div></section>
 <section id="end" class="overlay hidden"><div class="panel"><div class="tag" id="endtag">SIGNAL LOST</div><h1 id="endtitle">GAME OVER</h1><h2 id="endstats"></h2><p id="endmessage"></p><div class="wallet" id="endreward"></div><div class="actions"><button id="again">RETRY</button><button id="endshop">ARMORY</button><button id="home">HUB</button></div></div></section>
 <script>
 'use strict';
@@ -1333,9 +1333,27 @@ function background(){
   vg.addColorStop(0,'#00000000');vg.addColorStop(1,'#00020bcc');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
 }
 
+
+function drawTargetSignature(e,size){
+  if(e.type==='orb')return;
+  const r=Math.max(14,size*.8),lite=save.fxQuality==='lite';
+  const types={cube:'#ff62e2',armor:'#4ff5ff',splitter:'#ffc66b',phaser:'#c7a3ff',charger:'#ff7952',prism:'#ffe09a',bomb:'#ff3f68'};
+  const c=types[e.type]||'#72f8ff';
+  ctx.save();ctx.translate(e.x,e.y);ctx.globalCompositeOperation='lighter';
+  const inTime=Math.min(1,e.age/.3),hazard=e.type==='bomb'||e.type==='charger';
+  ctx.globalAlpha=(hazard?.74:.46)*inTime;ctx.shadowColor=c;ctx.shadowBlur=lite?0:18;ctx.strokeStyle=c;
+  ctx.lineWidth=hazard?2.5:1.25;
+  const rim=r*(1.2+.06*Math.sin(clock*4+e.sway));
+  if(hazard){ctx.setLineDash([7,6]);ctx.beginPath();ctx.arc(0,0,rim,clock*.6,clock*.6+Math.PI*2);ctx.stroke();ctx.setLineDash([])}
+  else for(let i=0;i<4;i++){const a=i*Math.PI/2+e.angle*.15+clock*.18;ctx.beginPath();ctx.arc(0,0,rim,a,a+.28);ctx.stroke()}
+  if(!lite){ctx.globalAlpha=.15*inTime;ctx.strokeStyle=c;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(-r*1.6,0);ctx.lineTo(r*1.6,0);ctx.moveTo(0,-r*1.6);ctx.lineTo(0,r*1.6);ctx.stroke()}
+  ctx.restore()
+}
+
 function drawCube(e){
-const p=.18+Math.pow(Math.max(.05,e.z)/1.8,1.55)*2.65;
-const size=e.size*p;
+const p=.31+Math.pow(Math.max(.05,e.z)/1.8,1.55)*2.8;
+const size=e.size*p;drawTargetSignature(e,size);
 if(e.pathDuration&&e.type!=='orb'&&e.type!=='bomb'&&e.age/e.pathDuration>.73){const fraction=Math.min(1,e.age/e.pathDuration);ctx.save();ctx.globalAlpha=(fraction-.72)*1.5;ctx.strokeStyle=fraction>.9?'#ff5376':'#ffc37a';ctx.shadowColor=ctx.strokeStyle;ctx.shadowBlur=18;ctx.lineWidth=2.5;ctx.setLineDash([6,9]);ctx.beginPath();ctx.arc(e.x,e.y,Math.max(15,size*.82)+Math.sin(clock*9)*3,0,Math.PI*2);ctx.stroke();ctx.restore()}
 if(e.type==='phaser'){ctx.save();ctx.globalAlpha=.60+.34*Math.cos(e.age*16+e.sway);ctx.strokeStyle='#bd8fff';ctx.shadowColor='#935bff';ctx.shadowBlur=24;ctx.lineWidth=2.3;ctx.beginPath();ctx.arc(e.x,e.y,Math.max(15,size*.68),0,Math.PI*2);ctx.stroke();ctx.restore()}
 if(e.type==='charger'){ctx.save();ctx.strokeStyle='#ff9c54';ctx.shadowColor='#ff6d28';ctx.shadowBlur=19;ctx.lineWidth=3;const rad=Math.max(16,size*.77);ctx.beginPath();ctx.arc(e.x,e.y,rad,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(e.x-rad*.43,e.y);ctx.lineTo(e.x+rad*.43,e.y);ctx.moveTo(e.x,e.y-rad*.43);ctx.lineTo(e.x,e.y+rad*.43);ctx.stroke();ctx.restore();cubeArt(e.x,e.y,size,e.angle,'#ff8248');return}
@@ -1345,8 +1363,8 @@ if(e.type==='prism'){ctx.save();ctx.translate(e.x,e.y);ctx.rotate(e.angle*.72);c
 if(e.type==='cube'){cubeArt(e.x,e.y,size,e.angle,'#ff30e9');return}
 if(e.type==='armor'){cubeArt(e.x,e.y,size,e.angle,'#00f0ff');ctx.save();ctx.fillStyle='#bffcff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='#00f0ff';ctx.shadowBlur=12;ctx.font='bold '+Math.max(11,size*.33)+'px monospace';ctx.fillText(Math.ceil(e.hp),e.x,e.y);ctx.restore();return}
 ctx.save();ctx.translate(e.x,e.y);ctx.rotate(e.angle);ctx.shadowBlur=26;
-if(e.type==='orb'){ctx.strokeStyle='#66ffc9';ctx.shadowColor='#00ffc8';ctx.lineWidth=2.3;ctx.fillStyle='#38ffaa16';ctx.beginPath();ctx.arc(0,0,size*.65,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.beginPath();ctx.arc(0,0,size*.3,0,Math.PI*2);ctx.stroke()}
-else {ctx.strokeStyle='#ff6b3c';ctx.shadowColor='#ff301c';ctx.lineWidth=2.3;ctx.beginPath();for(let i=0;i<12;i++){const a=i*6.283185/12,r=size*(i%2?.56:1);i?ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r):ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.stroke();line(-size*.33,-size*.33,size*.33,size*.33);line(size*.33,-size*.33,-size*.33,size*.33)}
+if(e.type==='orb'){ctx.strokeStyle='#66ffc9';ctx.shadowColor='#00ffc8';ctx.lineWidth=3.2;ctx.fillStyle='#38ffaa25';ctx.beginPath();ctx.arc(0,0,size*.65,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.beginPath();ctx.arc(0,0,size*.3,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#b9ffe9';ctx.font='900 '+Math.max(9,size*.55)+'px ui-monospace,monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('+',0,0)}
+else {ctx.strokeStyle='#ff6b3c';ctx.shadowColor='#ff301c';ctx.lineWidth=2.3;ctx.beginPath();for(let i=0;i<12;i++){const a=i*6.283185/12,r=size*(i%2?.56:1);i?ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r):ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.stroke();line(-size*.33,-size*.33,size*.33,size*.33);line(size*.33,-size*.33,-size*.33,size*.33);ctx.beginPath();ctx.arc(0,0,size*.28,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#ffb4a8';ctx.font='900 '+Math.max(9,size*.52)+'px ui-monospace,monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('!',0,0)}
 ctx.restore()
 }
 function drawBoss(b){
