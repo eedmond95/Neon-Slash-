@@ -793,6 +793,24 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 #menu .v8-rush small{color:#f6b0c7!important;font-size:9px!important}
 #menu .v8-rush-enter{margin-left:auto;color:#ffdeee;font:900 10px system-ui;white-space:nowrap}
 @media(max-width:600px){#menu #fxToggle{padding:8px 7px!important;font-size:8px!important}#menu .v8-mast-actions{gap:3px}#menu .v8-rush{min-height:57px!important;padding:10px 13px!important}#menu .v8-rush strong{font-size:13px!important}#menu .v8-rush-enter{font-size:9px!important}#menu .v8-rush>span:first-child{font-size:24px!important}}
+</style><style id="eclipse-v8-forge">
+#shop .v8-forge-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:26px 0 13px;padding-top:19px;border-top:1px solid #a4ccff3f}
+#shop .v8-forge-head small{font:900 9px system-ui;color:#76dff3;letter-spacing:.17em}
+#shop .v8-forge-head h3{font:1000 clamp(22px,4vw,30px) system-ui;color:#f4faff;margin:5px 0}
+#shop .v8-forge-head p{margin:5px 0;font-size:11px!important}
+#shop .v8-forge-head>span{flex-shrink:0;font:900 9px system-ui;color:#94ffe4;letter-spacing:.09em;border:1px solid #80f4de6b;padding:8px;border-radius:8px}
+#shop .v8-blade-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:20px}
+#shop .v8-blade-card{display:flex;flex-direction:column;align-items:stretch;gap:7px;padding:12px 10px;background:linear-gradient(135deg,#142640,#1c1834);border:1px solid #7da2da57;border-radius:13px;min-width:0}
+#shop .v8-blade-card.equipped{border-color:#95ffecad;box-shadow:inset 0 0 23px #5ef8e81a}
+#shop .v8-blade-preview{position:relative;height:64px;border:1px solid #ffffff20;background:radial-gradient(ellipse at 50% 50%,#264167,#090f29);border-radius:9px;overflow:hidden;transform:translateZ(0)}
+#shop .v8-blade-preview i{position:absolute;left:20%;top:50%;width:76%;height:4px;border-radius:15px;background:var(--blade-main);box-shadow:0 0 11px 3px var(--blade-main),0 0 27px var(--blade-outer);transform:rotate(-30deg)}
+#shop .v8-blade-preview i:nth-child(2){left:26%;top:33%;width:55%;height:2px;opacity:.7;transform:rotate(-35deg)}
+#shop .v8-blade-preview i:nth-child(3){left:30%;top:65%;width:48%;height:2px;opacity:.7;transform:rotate(-27deg)}
+#shop .v8-blade-card>strong{font:900 11px system-ui;color:#ecffff}
+#shop .v8-blade-card>small{font:850 8px system-ui;color:#a2b8d4;letter-spacing:.06em}
+#shop .v8-blade-card button{margin-top:auto;min-height:35px!important;border:1px solid #76ceff7c!important;background:linear-gradient(100deg,#1c718c,#4c42a0)!important;border-radius:9px!important;padding:7px 6px!important;font-size:9px!important}
+#shop .v8-blade-card button:disabled{opacity:.6;background:#192840!important}
+@media(max-width:660px){#shop .v8-blade-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#shop .v8-forge-head{display:block}#shop .v8-forge-head>span{display:inline-block;margin-top:11px}#shop .v8-blade-card{padding:9px}#shop .v8-blade-preview{height:53px}}
 </style></head><body><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
 <linearGradient id="lyraHair" x2="1" y2="1"><stop stop-color="#f78cff"/><stop offset=".43" stop-color="#ae48fa"/><stop offset="1" stop-color="#482cb5"/></linearGradient><linearGradient id="lyraSuit" x2="0" y2="1"><stop stop-color="#273c75"/><stop offset="1" stop-color="#11142f"/></linearGradient>
 <symbol id="lyraChibiArt" viewBox="0 0 200 240"><path d="M48 76Q10 18 91 9Q163 -7 178 74L169 171Q139 193 117 164L52 167Z" fill="url(#lyraHair)" stroke="#e698ff" stroke-width="4"/><path d="M72 166L52 205Q48 230 68 230H151Q170 226 152 204L129 165" fill="url(#lyraSuit)" stroke="#72eaff" stroke-width="4"/><path d="M86 180L109 212L132 178" fill="none" stroke="#f389fa" stroke-width="8"/><path d="M70 224L65 235M137 224L145 235" stroke="#6deeff" stroke-width="12" stroke-linecap="round"/><ellipse cx="110" cy="111" rx="62" ry="65" fill="#ffd5c6" stroke="#ffbad6" stroke-width="3"/><path d="M44 93Q28 23 105 18Q174 22 176 95Q156 77 150 60Q100 101 44 93" fill="url(#lyraHair)"/><path d="M69 117Q83 103 96 118M124 118Q138 103 151 117" fill="none" stroke="#6b3c88" stroke-width="5" stroke-linecap="round"/><ellipse cx="84" cy="125" rx="9" ry="14" fill="#9f61e9"/><ellipse cx="138" cy="125" rx="9" ry="14" fill="#9f61e9"/><circle cx="87" cy="121" r="3" fill="#fff"/><circle cx="141" cy="121" r="3" fill="#fff"/><path d="M103 145Q111 152 120 145" stroke="#b95b8e" stroke-width="3" fill="none"/><ellipse cx="61" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><ellipse cx="157" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><path d="M47 82L35 161M170 82L183 163" stroke="#c770f5" stroke-width="16" stroke-linecap="round"/><path d="M76 200L109 222L143 200" fill="none" stroke="#72eeff" stroke-width="3"/></symbol>
@@ -861,7 +879,7 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
   <h2>THE ARMORY <span class="v7-armory-glyph">✦</span></h2>
   <p>Invest Stardust in permanent upgrades. Every sector you unlock stays unlocked—even after a failed run.</p>
   <div class="v7-shop-wallet"><span>CURRENT STARDUST</span><strong class="wallet" id="shopwallet">✦ 0</strong></div>
-  <div class="shop-grid" id="shopgrid"></div>
+  <div class="shop-grid" id="shopgrid"></div><div class="v8-forge-head"><div><small>NEON FORGE / COSMETIC LOADOUT</small><h3>BLADE STYLES</h3><p>Equip a different plasma trail. Styles are permanent and cosmetic—no extra damage.</p></div><span id="equippedBlade">ION EDGE EQUIPPED</span></div><div class="v8-blade-grid" id="bladeShop"></div>
   <div class="actions"><button id="shopBack">← RETURN TO COMMAND DECK</button></div>
 </div></section>
 <section id="side" class="overlay hidden"><div class="panel"><h2>ORBIT & ECHO</h2><p>Side mission portal · Earn a bonus stardust reward when you return. Full cross-game currency exchange requires a shared trusted save/backend.</p><iframe id="portalframe" title="Orbit and Echo Side Game" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-pointer-lock" ></iframe><div class="actions"><button id="sideBack">COLLECT +50 ✦ & RETURN</button></div><p class="hint">Bonus is awarded once per portal visit, maximum 3 times per day. The embedded game may restrict iframe display; use the external link below if necessary.<br><a href="https://eedmond95.github.io/Orbit-and-Echo-Test/" target="_blank" rel="noopener">Open Orbit & Echo in a new tab</a></p></div></section>
@@ -879,9 +897,9 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 // NEON ECHO — single-file Canvas arcade engine. No external runtime dependencies.
 const $=id=>document.getElementById(id), canvas=$('game'),ctx=canvas.getContext('2d',{alpha:false});let W=0,H=0,DPR=1,clock=0,last=0,raf=0;
 function resize(){DPR=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0)}addEventListener('resize',resize);resize();
-const storeKey='neon_echo_lyra_v1';const defaults=()=>({highestUnlocked:1,checkpoint:1,stardust:0,best:0,weapon:1,radius:1,hull:1,muted:false,daily:null,stars:{},fxQuality:'high',visits:{day:'',count:0}});let save;try{save={...defaults(),...JSON.parse(localStorage.getItem(storeKey)||'{}')}}catch{save=defaults()}const persist=()=>{try{localStorage.setItem(storeKey,JSON.stringify(save))}catch{}};
+const storeKey='neon_echo_lyra_v1';const defaults=()=>({highestUnlocked:1,checkpoint:1,stardust:0,best:0,weapon:1,radius:1,hull:1,muted:false,daily:null,stars:{},fxQuality:'high',blade:'ion',bladeOwned:['ion'],visits:{day:'',count:0}});let save;try{save={...defaults(),...JSON.parse(localStorage.getItem(storeKey)||'{}')}}catch{save=defaults()}const persist=()=>{try{localStorage.setItem(storeKey,JSON.stringify(save))}catch{}};
 // Campaign progression is stored independently of individual runs.
-save.highestUnlocked=Math.max(1,Math.min(99,Number(save.highestUnlocked)||1));save.checkpoint=Math.max(1,Math.min(save.highestUnlocked,Number(save.checkpoint)||save.highestUnlocked));if(!save.stars||typeof save.stars!=='object')save.stars={};if(!['high','lite'].includes(save.fxQuality))save.fxQuality='high';
+save.highestUnlocked=Math.max(1,Math.min(99,Number(save.highestUnlocked)||1));save.checkpoint=Math.max(1,Math.min(save.highestUnlocked,Number(save.checkpoint)||save.highestUnlocked));if(!save.stars||typeof save.stars!=='object')save.stars={};if(!['high','lite'].includes(save.fxQuality))save.fxQuality='high';if(!Array.isArray(save.bladeOwned))save.bladeOwned=['ion'];if(!save.bladeOwned.includes('ion'))save.bladeOwned.unshift('ion');if(!save.bladeOwned.includes(save.blade))save.blade='ion';
 const contractSpecs=[
 {id:'slices',name:'PHANTOM CLEANUP',description:'Destroy 35 enemy targets across your runs.',goal:35,reward:150,icon:'⚔'},
 {id:'armor',name:'CRACK THE ARMOR',description:'Destroy 6 armored enemies.',goal:6,reward:180,icon:'⬡'},
@@ -1195,16 +1213,18 @@ for(const p of particles)if(showCombat&&p.active){let alpha=Math.min(1,p.life*2.
 ctx.save();ctx.translate(p.x,p.y);ctx.rotate((p.vx-p.vy)*.01);if(p.size>3.1){ctx.beginPath();ctx.moveTo(-p.size,-p.size*.48);ctx.lineTo(p.size,0);ctx.lineTo(-p.size*.4,p.size*.76);ctx.closePath();ctx.fill()}else ctx.fillRect(0,0,p.size,p.size);ctx.restore()}
 ctx.globalAlpha=1;ctx.restore();
 ctx.save();ctx.font='900 23px Arial';ctx.textAlign='center';for(const t of texts)if(showCombat&&t.active){ctx.globalAlpha=Math.max(0,t.life);ctx.fillStyle=t.color;ctx.shadowColor=t.color;ctx.shadowBlur=22;ctx.fillText(t.value,t.x,t.y)}ctx.restore();
-const tr=pointer.trail;if(showCombat&&tr.length>1){ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.globalCompositeOperation='lighter';
+const tr=pointer.trail;if(showCombat&&tr.length>1){const skin=bladeSkins[save.blade]||bladeSkins.ion;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.globalCompositeOperation='lighter';
 for(let i=1;i<tr.length;i++){const a=tr[i-1],b=tr[i],alpha=clamp(1-(clock-b.t)/.24,0,1),w=3+12*i/tr.length;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-ctx.shadowColor='#ff00f0';ctx.shadowBlur=32;ctx.strokeStyle='rgba(255,0,245,'+alpha*.28+')';ctx.lineWidth=w*2;ctx.stroke();
-ctx.shadowColor='#00f0ff';ctx.shadowBlur=21;ctx.strokeStyle='rgba(0,243,255,'+alpha*.9+')';ctx.lineWidth=w;ctx.stroke();
+ctx.shadowColor=skin.outerHex;ctx.shadowBlur=32;ctx.strokeStyle='rgba('+skin.outer+','+alpha*.28+')';ctx.lineWidth=w*2;ctx.stroke();
+ctx.shadowColor=skin.mainHex;ctx.shadowBlur=21;ctx.strokeStyle='rgba('+skin.main+','+alpha*.9+')';ctx.lineWidth=w;ctx.stroke();
 ctx.shadowColor='white';ctx.shadowBlur=12;ctx.strokeStyle='rgba(255,255,255,'+alpha+')';ctx.lineWidth=Math.max(1.5,w*.2);ctx.stroke()}
 ctx.restore()}
 ctx.restore()
 }
 function loop(now){if(!last)last=now;const dt=Math.min(.034,(now-last)/1000);last=now;update(dt);draw();raf=requestAnimationFrame(loop)}raf=requestAnimationFrame(loop);
+const bladeSkins={ion:{name:'ION EDGE',price:0,main:'0,243,255',outer:'255,0,245',mainHex:'#00f0ff',outerHex:'#ff00f0'},solar:{name:'SOLAR EDGE',price:325,main:'255,216,108',outer:'255,94,63',mainHex:'#ffd86c',outerHex:'#ff5e3f'},ghost:{name:'PHANTOM EDGE',price:525,main:'179,151,255',outer:'71,255,226',mainHex:'#b397ff',outerHex:'#47ffe2'},aurora:{name:'AURORA EDGE',price:850,main:'99,255,189',outer:'49,137,255',mainHex:'#63ffbd',outerHex:'#3189ff'}};
 const upgrades=[{id:'weapon',name:'PLASMA EDGE',description:'Higher damage; break elite armor.',max:8,base:120},{id:'radius',name:'BLADE REACH',description:'Wider slash collision radius.',max:7,base:100},{id:'hull',name:'HULL MATRIX',description:'+25 maximum HP per upgrade.',max:7,base:110}];function cost(u){return Math.floor(u.base*Math.pow(1.8,save[u.id]-1))}
+function renderBladeShop(){const root=$('bladeShop');root.textContent='';const selected=bladeSkins[save.blade]||bladeSkins.ion;$('equippedBlade').textContent=selected.name+' EQUIPPED';for(const [id,blade] of Object.entries(bladeSkins)){const owned=save.bladeOwned.includes(id),equipped=save.blade===id;const div=document.createElement('div');div.className='v8-blade-card'+(equipped?' equipped':'');div.innerHTML='<div class="v8-blade-preview" style="--blade-main:'+blade.mainHex+';--blade-outer:'+blade.outerHex+'"><i></i><i></i><i></i></div><strong>'+blade.name+'</strong><small>'+(equipped?'CURRENT LOADOUT':owned?'UNLOCKED · OWNED':'✦ '+blade.price+' STARDUST')+'</small>';const button=document.createElement('button');button.disabled=equipped||(!owned&&save.stardust<blade.price);button.textContent=equipped?'✓ EQUIPPED':owned?'EQUIP':'BUY · ✦ '+blade.price;button.onclick=()=>{if(save.blade===id)return;if(!save.bladeOwned.includes(id)){if(save.stardust<blade.price)return;save.stardust-=blade.price;save.bladeOwned.push(id)}save.blade=id;persist();sound('ui');renderShop()};div.appendChild(button);root.appendChild(div)}}
 function renderShop(){
   $('wallet').textContent='✦ '+save.stardust.toLocaleString('en-US');
   $('shopwallet').textContent='✦ '+save.stardust.toLocaleString('en-US');
@@ -1221,7 +1241,7 @@ function renderShop(){
     btn.disabled=maxed||save.stardust<c;
     btn.onclick=()=>{if(save.stardust<cost(u)||save[u.id]>=u.max)return;save.stardust-=cost(u);save[u.id]++;persist();sound('ui');renderShop()};
     box.appendChild(btn);$('shopgrid').appendChild(box)
-  }
+  }renderBladeShop()
 }
 function openShop(){if(game.mode==='play')return;renderShop();show('shop')}function toHub(){game.bossRush=false;game.feverUntil=0;arcadeFeedbackUntil=arenaHeadingUntil=arenaHeadingPending=0;$('arcadeFeedback').classList.add('hidden');$('arenaHeading').classList.add('hidden');game.pulseUntil=0;game.mode='menu';refreshContinue();game.boss=null;for(const e of entities)e.active=false;for(const p of particles)p.active=false;for(const t of texts)t.active=false;pointer.trail.length=0;pointer.down=false;$('pause').textContent='Ⅱ';renderShop();show('menu')}
 $('bossRushBtn').onclick=startBossRush;$('missionsBtn').onclick=()=>{renderMissions();show('missions')};$('missionsBack').onclick=toHub;
