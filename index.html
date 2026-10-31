@@ -1071,6 +1071,30 @@ button:focus-visible{outline:2px solid #a1f7ff;outline-offset:3px}
 #end .v13-report-reward>span{font-size:8px}
 #end .v13-report-reward .wallet{font-size:19px}
 }
+</style><style id="radiant-v13-academy">
+#menu .v7-secondary{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#menu #trainingBtn{grid-column:1/-1;display:flex!important;align-items:center!important;justify-content:center!important;min-height:46px!important;background:linear-gradient(115deg,#0b576e,#292c69)!important;border:1px solid #9bfaffac!important;color:#dbffff!important;font-size:11px!important;box-shadow:0 0 24px #38f2ff2a!important}
+#menu #musicToggle{font-size:10px!important;padding:11px 12px!important;border:1px solid #b29bff76!important;border-radius:11px!important;background:#181b3bca!important;color:#ece4ff!important;box-shadow:none!important;white-space:nowrap}
+#howto #tutorialTraining{background:linear-gradient(110deg,#166e83,#4e45a1)!important;border:1px solid #8efffa9c!important}
+#v13TrainingHud{position:absolute;z-index:12;top:clamp(124px,17vh,172px);left:50%;transform:translateX(-50%);width:min(90vw,440px);box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;padding:15px 20px;background:linear-gradient(135deg,#0b3252ea,#141b3aeb 68%,#35143feb);border:1px solid #93fffbdd;box-shadow:0 12px 39px #0009,0 0 30px #3befff47;clip-path:polygon(0 0,96% 0,100% 17%,100% 100%,4% 100%,0 83%);pointer-events:none}
+#v13TrainingStep{color:#90ffe3;font:900 10px ui-monospace,monospace;letter-spacing:.18em}
+#v13TrainingTitle{font:1000 clamp(17px,3.5vw,27px) system-ui;color:#fff;letter-spacing:.01em;text-shadow:0 0 14px #60f8ff}
+#v13TrainingHint{font:600 12px/1.4 system-ui;color:#bceaff;margin:0;max-width:375px}
+#v13TrainingExit{pointer-events:auto;position:relative;z-index:15;margin-top:3px;padding:5px 11px!important;min-height:28px;font:900 9px system-ui!important;background:#24324ea9!important;border:1px solid #83cfff8c!important;border-radius:7px!important;box-shadow:none!important;letter-spacing:.07em!important}
+#ui:has(#v13TrainingHud:not(.hidden)) #v12StormHUD,#ui:has(#v13TrainingHud:not(.hidden)) #missionTrack{display:none!important}
+@media(max-width:620px){
+#menu .v7-masthead{flex-wrap:wrap!important;gap:5px!important;padding:10px 0!important}
+#menu .v7-brand{flex:1 0 100%}
+#menu .v8-mast-actions{width:100%;display:flex;gap:5px;justify-content:space-between}
+#menu .v8-mast-actions button{flex:1;padding:7px 5px!important;font-size:9px!important;min-height:30px}
+#menu #musicToggle{font-size:8px!important;padding:8px 5px!important}
+#v13TrainingHud{top:calc(91px + env(safe-area-inset-top));padding:8px 13px;gap:4px;width:min(88vw,360px)}
+#v13TrainingStep{font-size:8px}
+#v13TrainingTitle{font-size:16px}
+#v13TrainingHint{font-size:10px}
+#v13TrainingExit{min-height:24px;padding:4px 7px!important}
+#howto #tutorialTraining{font-size:10px!important}
+}
 </style></head><body><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
 <linearGradient id="lyraHair" x2="1" y2="1"><stop stop-color="#f78cff"/><stop offset=".43" stop-color="#ae48fa"/><stop offset="1" stop-color="#482cb5"/></linearGradient><linearGradient id="lyraSuit" x2="0" y2="1"><stop stop-color="#273c75"/><stop offset="1" stop-color="#11142f"/></linearGradient>
 <symbol id="lyraChibiArt" viewBox="0 0 200 240"><path d="M48 76Q10 18 91 9Q163 -7 178 74L169 171Q139 193 117 164L52 167Z" fill="url(#lyraHair)" stroke="#e698ff" stroke-width="4"/><path d="M72 166L52 205Q48 230 68 230H151Q170 226 152 204L129 165" fill="url(#lyraSuit)" stroke="#72eaff" stroke-width="4"/><path d="M86 180L109 212L132 178" fill="none" stroke="#f389fa" stroke-width="8"/><path d="M70 224L65 235M137 224L145 235" stroke="#6deeff" stroke-width="12" stroke-linecap="round"/><ellipse cx="110" cy="111" rx="62" ry="65" fill="#ffd5c6" stroke="#ffbad6" stroke-width="3"/><path d="M44 93Q28 23 105 18Q174 22 176 95Q156 77 150 60Q100 101 44 93" fill="url(#lyraHair)"/><path d="M69 117Q83 103 96 118M124 118Q138 103 151 117" fill="none" stroke="#6b3c88" stroke-width="5" stroke-linecap="round"/><ellipse cx="84" cy="125" rx="9" ry="14" fill="#9f61e9"/><ellipse cx="138" cy="125" rx="9" ry="14" fill="#9f61e9"/><circle cx="87" cy="121" r="3" fill="#fff"/><circle cx="141" cy="121" r="3" fill="#fff"/><path d="M103 145Q111 152 120 145" stroke="#b95b8e" stroke-width="3" fill="none"/><ellipse cx="61" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><ellipse cx="157" cy="145" rx="12" ry="6" fill="#ff92ab" opacity=".5"/><path d="M47 82L35 161M170 82L183 163" stroke="#c770f5" stroke-width="16" stroke-linecap="round"/><path d="M76 200L109 222L143 200" fill="none" stroke="#72eeff" stroke-width="3"/></symbol>
