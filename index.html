@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no,interactive-widget=resizes-content"><meta name="theme-color" content="#050b1d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>NEON ECHO — Lyra's Slash — NEON REIGN v12.0</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no,interactive-widget=resizes-content"><meta name="theme-color" content="#050b1d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>NEON ECHO — Lyra's Slash — NEON ECHO: RADIANT // DIRECTOR'S CUT v13.0</title>
 <style>
 :root{--pink:#ff36d9;--cyan:#55f8ff;--gold:#ffd270;--bg:#080617}*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden;background:#04030c;color:white;font-family:Arial,Helvetica,sans-serif;touch-action:none}canvas{display:block;position:absolute;inset:0;width:100%;height:100%;touch-action:none}#ui{position:absolute;inset:0;pointer-events:none;user-select:none}button{cursor:pointer;font:inherit;color:#fff;border:1px solid #b94af3;background:linear-gradient(120deg,#4a146c,#1a123e);padding:12px 19px;letter-spacing:.12em;font-weight:900;text-transform:uppercase;box-shadow:0 0 20px #a91ffb44,inset 0 0 12px #f24ce933}button:hover{border-color:var(--cyan);box-shadow:0 0 24px #58eaff77}button:disabled{opacity:.35;cursor:not-allowed}#top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:calc(10px + env(safe-area-inset-top)) max(10px,2.5vw) 0}.stat{min-width:125px;text-align:center;background:linear-gradient(140deg,#3a0e59e8,#09091cde);clip-path:polygon(0 0,100% 0,100% 85%,92% 100%,8% 100%,0 85%);border-top:3px solid #e74fff;padding:8px 10px 15px;filter:drop-shadow(0 0 12px #bb17fa)}.stat label{font-size:clamp(11px,2vw,22px);letter-spacing:.16em;display:block;font-weight:1000;text-shadow:2px 2px #65005e}.stat strong{font-size:clamp(21px,4vw,43px);display:block;line-height:1.1;color:#ffc378;text-shadow:2px 3px #b92919,0 0 14px #ff682e;font-variant-numeric:tabular-nums}.center{width:min(43vw,460px);text-align:center}.meter{height:12px;border:2px solid #9e38da;background:#100c27;box-shadow:0 0 14px #e84bff88;overflow:hidden}.meter>div{height:100%;width:0%;background:linear-gradient(90deg,#9828fd,#46ecdb,#f3ffe8);transition:width .15s}.center .sub{font-size:clamp(10px,1.55vw,17px);margin-top:9px;letter-spacing:.16em;color:#80ffff;text-shadow:0 0 9px #14eafa;font-weight:bold}.bottom{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom));left:12px;right:12px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}.health{width:min(46vw,340px);font-size:12px;font-weight:900;letter-spacing:.13em;color:#b9ffff}.bar{height:15px;border:1px solid #53f7ff;background:#0d1232;margin:6px 0 12px;box-shadow:0 0 12px #33dff777}.bar>div{height:100%;background:linear-gradient(90deg,#22dfca,#a5fffd);width:100%}.bar.mp{height:8px;border-color:#ef58f9}.bar.mp>div{background:linear-gradient(90deg,#bd32fc,#ff6fd4)}.bottom button{pointer-events:auto;font-size:11px;padding:10px}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:15px;background:#040313aa;backdrop-filter:blur(9px);pointer-events:auto}.hidden{display:none!important}.panel{width:min(95vw,650px);max-height:89vh;overflow:auto;padding:clamp(20px,4vw,35px);background:linear-gradient(150deg,#200c38ef,#070b23f5 62%,#0c2440ef);border:2px solid #b343f8;box-shadow:0 0 55px #d424fb66,inset 0 0 45px #5b20a932;text-align:center}.panel h1{font-size:clamp(29px,7vw,57px);line-height:1.03;letter-spacing:.12em;margin:0 0 10px;color:#fff;text-shadow:0 0 8px #ff1ac4,0 0 35px #ea21ff}.panel h2{font-size:26px;letter-spacing:.14em;color:#86ffff}.panel p{color:#b9c8e6;line-height:1.55}.tag{font-size:11px;color:#7ffcff;letter-spacing:.3em;font-weight:bold;margin-bottom:15px}.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}.actions button{flex:1 1 130px}.wallet{color:#ffd978;font-weight:bold;letter-spacing:.11em}.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:15px 0}.upgrade{padding:14px;border:1px solid #9142c5;background:#110d2b;text-align:left}.upgrade b{color:#8ef9ff}.upgrade small{display:block;min-height:40px;color:#adb6d5;margin:8px 0}.upgrade button{width:100%;font-size:11px;padding:9px 4px}.hint{font-size:12px!important;color:#90a2be!important}#warning{background:#1b0016aa;animation:alert .22s infinite alternate}#warning h1{color:#ff506b;font-size:clamp(38px,10vw,94px)}@keyframes alert{to{background:#300009dd}}#bossbar{position:absolute;top:clamp(100px,13vh,150px);left:21%;width:58%;text-align:center;display:none;color:#ff83dc;font-weight:900;letter-spacing:.17em;text-shadow:0 0 9px #ff15d4}#bossbar .meter{margin-top:6px}#bossbar .meter>div{background:linear-gradient(90deg,#f42a86,#ffb361)}#portalframe{width:100%;height:min(48vh,380px);border:1px solid var(--cyan);background:#050819}a{color:#73faff}#toast{position:absolute;left:50%;top:21%;transform:translateX(-50%);text-align:center;color:#ffeaa8;font-weight:900;letter-spacing:.15em;text-shadow:0 0 15px #ff27df;opacity:0;transition:opacity .15s;white-space:nowrap;font-size:clamp(15px,3vw,30px)}@media(max-width:550px){.stat{min-width:85px;padding:7px 4px 10px}.center{width:35vw}.center .sub{font-size:9px}.bottom{bottom:calc(8px + env(safe-area-inset-bottom))}.health{width:48vw}.bottom button{font-size:10px;padding:9px 8px}}
 <style>
@@ -1745,37 +1745,86 @@ if(e.type==='orb'){ctx.strokeStyle='#66ffc9';ctx.shadowColor='#00ffc8';ctx.lineW
 else {ctx.strokeStyle='#ff6b3c';ctx.shadowColor='#ff301c';ctx.lineWidth=2.3;ctx.beginPath();for(let i=0;i<12;i++){const a=i*6.283185/12,r=size*(i%2?.56:1);i?ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r):ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.stroke();line(-size*.33,-size*.33,size*.33,size*.33);line(size*.33,-size*.33,-size*.33,size*.33);ctx.beginPath();ctx.arc(0,0,size*.28,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#ffb4a8';ctx.font='900 '+Math.max(9,size*.52)+'px ui-monospace,monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('!',0,0)}
 ctx.restore()
 }
+// FOUR SILHOUETTES: one unique chassis and motion signature per commander.
+// Distinct geometry ensures bosses remain recognizable even without color.
 function drawBoss(b){
-  const r=Math.max(47,Math.min(W,H)*.118)*(b.kind===2?1.13:1),shield=b.shieldDown<=0;
-  ctx.save();ctx.translate(b.x,b.y);
-  const accent=['#fc74df','#ad83ff','#75f6ff','#ffb46e'][b.kind||0];const engine=ctx.createRadialGradient(0,0,4,0,0,r*2.5);
-  engine.addColorStop(0,shield?'rgba(25,245,255,.19)':'rgba(255,126,67,.30)');
-  engine.addColorStop(.35,'rgba(111,26,156,.11)');engine.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=engine;ctx.beginPath();ctx.arc(0,0,r*2.5,0,Math.PI*2);ctx.fill();
-  // Four independent metallic blades rotating around an unstable core.
-  ctx.rotate(b.t*.36);ctx.lineJoin='round';
-  for(let n=0;n<4;n++){ctx.save();ctx.rotate(n*Math.PI/2);
-    const plate=ctx.createLinearGradient(-r,-r,r,r);plate.addColorStop(0,'#b554d1');plate.addColorStop(.45,'#411d72');plate.addColorStop(1,'#15132f');
-    ctx.beginPath();ctx.moveTo(0,-r*.17);ctx.lineTo(-r*.84,-r*1.14);ctx.lineTo(-r*.48,-r*1.42);ctx.lineTo(0,-r*.94);ctx.lineTo(r*.48,-r*1.42);ctx.lineTo(r*.84,-r*1.14);ctx.closePath();ctx.fillStyle=plate;ctx.fill();
-    ctx.shadowColor=accent;ctx.shadowBlur=16;ctx.strokeStyle=accent;ctx.lineWidth=2.5;ctx.stroke();
-    ctx.shadowBlur=0;ctx.strokeStyle='#ffe4ff80';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-r*.45,-r*1.1);ctx.lineTo(0,-r*.84);ctx.lineTo(r*.45,-r*1.1);ctx.stroke();ctx.restore()
+ const kind=b.kind||0,r=Math.max(46,Math.min(W,H)*.115),t=b.t||0,rage=b.phase>=2;
+ const tones=['#ff61b8','#ad89ff','#62f5ff','#ffc17b'],accent=tones[kind],shield=b.shieldDown<=0;
+ ctx.save();ctx.translate(b.x,b.y);
+ const halo=ctx.createRadialGradient(0,0,4,0,0,r*2.8);
+ halo.addColorStop(0,rage?'#f947725e':'#9054ee38');halo.addColorStop(.43,accent+'25');halo.addColorStop(1,'#00000000');
+ ctx.fillStyle=halo;ctx.beginPath();ctx.arc(0,0,r*2.8,0,Math.PI*2);ctx.fill();
+ ctx.shadowColor=accent;ctx.shadowBlur=save.fxQuality==='lite'?11:25;ctx.lineJoin='round';ctx.lineCap='round';
+ if(kind===0){
+  // THE RIFT SOVEREIGN — predatory six-winged angular insect.
+  for(let i=0;i<6;i++){
+   ctx.save();ctx.rotate(i*Math.PI/3+Math.sin(t*1.7+i)*.09);
+   const wing=ctx.createLinearGradient(0,-r*.28,r*1.85,-r*.2);
+   wing.addColorStop(0,'#3a215e');wing.addColorStop(.65,'#241044');wing.addColorStop(1,'#100e2e');
+   ctx.fillStyle=wing;ctx.strokeStyle=accent;ctx.lineWidth=2.8;
+   ctx.beginPath();ctx.moveTo(r*.25,-r*.2);ctx.lineTo(r*1.05,-r*.54);ctx.lineTo(r*1.9,-r*.1);ctx.lineTo(r*1.15,r*.06);ctx.lineTo(r*1.58,r*.39);ctx.lineTo(r*.5,r*.27);ctx.closePath();ctx.fill();ctx.stroke();
+   ctx.strokeStyle='#ffd5fd99';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(r*.45,0);ctx.lineTo(r*1.49,-r*.1);ctx.stroke();ctx.restore()
   }
-  ctx.rotate(-b.t*1.2);
-  ctx.fillStyle='#090a20';ctx.shadowColor=shield?'#5cefff':'#ff9a63';ctx.shadowBlur=28;
-  ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,rr=r*(i%2?.38:.64);i?ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();ctx.fill();
-  ctx.lineWidth=3;ctx.strokeStyle=shield?'#69efff':'#ffcf87';ctx.stroke();
-  const core=ctx.createRadialGradient(-r*.07,-r*.08,1,0,0,r*.27);
-  core.addColorStop(0,'#ffffff');core.addColorStop(.35,shield?'#b7ffff':'#ffe1aa');core.addColorStop(1,shield?'#23b3e1':'#ff347d');
-  ctx.fillStyle=core;ctx.beginPath();ctx.arc(0,0,r*.25,0,Math.PI*2);ctx.fill();
-  if(shield){
-    const pulse=1+Math.sin(b.t*3.7)*.028;ctx.rotate(-b.t*.65);ctx.lineWidth=3;ctx.shadowColor='#50e6ff';ctx.shadowBlur=28;ctx.strokeStyle='#76faff';
-    ctx.fillStyle='rgba(20,219,250,.045)';ctx.beginPath();ctx.arc(0,0,r*1.54*pulse,0,Math.PI*2);ctx.fill();ctx.stroke();
-    ctx.setLineDash([r*.22,r*.09]);ctx.lineWidth=5;ctx.strokeStyle='#d2ffff91';ctx.beginPath();ctx.arc(0,0,r*1.54*pulse,-Math.PI/2,-Math.PI/2+Math.PI*1.7);ctx.stroke();
-  }else{
-    ctx.rotate(b.t*1.15);ctx.strokeStyle='#ffa972';ctx.shadowColor='#ff6734';ctx.shadowBlur=26;ctx.lineWidth=2;ctx.setLineDash([9,18]);
-    ctx.beginPath();ctx.arc(0,0,r*1.44,0,Math.PI*2);ctx.stroke()
+  ctx.save();ctx.rotate(t*.5);
+  ctx.strokeStyle='#ffb0ee';ctx.lineWidth=4;ctx.strokeRect(-r*.54,-r*.54,r*1.08,r*1.08);
+  ctx.rotate(Math.PI/4);ctx.lineWidth=2;ctx.strokeRect(-r*.4,-r*.4,r*.8,r*.8);ctx.restore()
+ }else if(kind===1){
+  // VOID HARBINGER — three split spectral crescents / ethereal phantom.
+  for(let i=0;i<3;i++){
+   ctx.save();ctx.rotate(i*2*Math.PI/3-t*.27);
+   ctx.strokeStyle=accent;ctx.lineWidth=4;ctx.fillStyle='#281349db';
+   ctx.beginPath();ctx.moveTo(-r*.45,-r*.36);ctx.bezierCurveTo(-r*1.25,-r*1.2,r*.45,-r*1.95,r*1.23,-r*1.2);
+   ctx.bezierCurveTo(r*.56,-r*1.4,r*.25,-r*.9,r*.15,-r*.48);
+   ctx.lineTo(r*.35,-r*.27);ctx.closePath();ctx.fill();ctx.stroke();
+   ctx.globalAlpha=.35;ctx.strokeStyle='#efffff';ctx.beginPath();ctx.arc(0,-r*1.15,r*.31,Math.PI*.15,Math.PI*.9);ctx.stroke();ctx.restore()
   }
-  ctx.restore()
+  ctx.save();ctx.rotate(-t*.7);ctx.setLineDash([8,13]);ctx.strokeStyle='#d7c8ff';ctx.lineWidth=2.2;ctx.beginPath();ctx.arc(0,0,r*.87,0,Math.PI*2);ctx.stroke();ctx.restore()
+ }else if(kind===2){
+  // CHROME LEVIATHAN — heavy armored mechanical tank with four pistons.
+  for(let i=0;i<4;i++){
+   ctx.save();ctx.rotate(i*Math.PI/2);
+   ctx.fillStyle='#1a3c4e';ctx.strokeStyle='#7dfaff';ctx.lineWidth=3;
+   ctx.beginPath();ctx.moveTo(-r*.4,-r*.39);ctx.lineTo(-r*.6,-r*1.45);ctx.lineTo(-r*.32,-r*1.8);ctx.lineTo(r*.32,-r*1.8);ctx.lineTo(r*.6,-r*1.45);ctx.lineTo(r*.4,-r*.39);ctx.closePath();ctx.fill();ctx.stroke();
+   ctx.fillStyle='#65edff93';ctx.fillRect(-r*.23,-r*1.55,r*.46,r*.55);
+   ctx.strokeStyle='#e4ffffd6';ctx.lineWidth=1.5;for(let x of [-.28,0,.28]){ctx.beginPath();ctx.moveTo(r*x,-r*1.35);ctx.lineTo(r*x,-r*.7);ctx.stroke()}ctx.restore()
+  }
+  ctx.fillStyle='#092333';ctx.strokeStyle=accent;ctx.lineWidth=5;
+  ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,rr=i%2?r*.82:r*1.05;i?ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.strokeStyle='#eaffff91';ctx.lineWidth=2;ctx.strokeRect(-r*.53,-r*.53,r*1.06,r*1.06)
+ }else{
+  // ECHO TYRANT — rotating broken cyber-diamond / unstable triplet cores.
+  ctx.save();ctx.rotate(t*.37);
+  for(let i=0;i<4;i++){
+   ctx.save();ctx.rotate(i*Math.PI/2);
+   ctx.fillStyle='#50301dc9';ctx.strokeStyle=accent;ctx.lineWidth=3;
+   ctx.beginPath();ctx.moveTo(0,-r*.36);ctx.lineTo(-r*.7,-r*1.07);ctx.lineTo(-r*.23,-r*2.05);ctx.lineTo(0,-r*1.7);ctx.lineTo(r*.23,-r*2.05);ctx.lineTo(r*.7,-r*1.07);ctx.closePath();ctx.fill();ctx.stroke();
+   ctx.strokeStyle='#fff6cc';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,-r*.56);ctx.lineTo(0,-r*1.82);ctx.stroke();ctx.restore()
+  }ctx.restore();
+  for(let k=0;k<3;k++){const a=t*.9+k*2*Math.PI/3;
+   const x=Math.cos(a)*r*.85,y=Math.sin(a)*r*.85;
+   ctx.fillStyle='#0d182e';ctx.strokeStyle='#ffe2a3';ctx.lineWidth=2;
+   ctx.beginPath();ctx.arc(x,y,r*.17,0,Math.PI*2);ctx.fill();ctx.stroke()
+  }
+ }
+ // Shared weak core gives consistent target, even as silhouettes differ.
+ ctx.shadowColor=shield?'#6cfaff':'#ffac7b';ctx.shadowBlur=save.fxQuality==='lite'?9:31;
+ ctx.fillStyle='#07132d';ctx.strokeStyle=shield?'#9fffff':'#ffce93';ctx.lineWidth=4;
+ ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,rr=i%2?r*.38:r*.55;i?ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();ctx.fill();ctx.stroke();
+ const core=ctx.createRadialGradient(-r*.05,-r*.07,1,0,0,r*.4);
+ core.addColorStop(0,'#fff');core.addColorStop(.29,shield?'#a6faff':'#ffdf9d');core.addColorStop(.8,shield?'#168acc':'#ff4d97');core.addColorStop(1,'#11162c');
+ ctx.fillStyle=core;ctx.beginPath();ctx.arc(0,0,r*(rage?.36:.29),0,Math.PI*2);ctx.fill();
+ if(rage){ctx.globalAlpha=.75;ctx.strokeStyle='#ff4c73';ctx.shadowColor='#ff366b';ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(0,0,r*1.5+Math.sin(t*9)*5,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1}
+ if(shield){
+  const rr=r*1.68*(1+Math.sin(t*4)*.02);
+  ctx.shadowColor='#62faff';ctx.shadowBlur=save.fxQuality==='lite'?8:24;ctx.strokeStyle='#78faff';ctx.fillStyle='#21e1fa0b';ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(0,0,rr,0,Math.PI*2);ctx.fill();ctx.stroke();
+  ctx.save();ctx.rotate(-t*.62);ctx.strokeStyle='#e7ffffae';ctx.lineWidth=6;ctx.setLineDash([rr*.22,rr*.12]);
+  ctx.beginPath();ctx.arc(0,0,rr,-Math.PI/2,Math.PI*1.5);ctx.stroke();ctx.restore()
+ }else{
+  ctx.save();ctx.rotate(t*1.12);ctx.strokeStyle='#ffba81';ctx.lineWidth=2.5;ctx.setLineDash([7,13]);ctx.beginPath();ctx.arc(0,0,r*1.54,0,Math.PI*2);ctx.stroke();ctx.restore()
+ }
+ ctx.restore()
 }
 function drawBossTelegraph(b){
   // Holographic tactical rings around hostile cores: non-interactive visual-only.
