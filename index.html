@@ -2355,4 +2355,344 @@ class OrbitEchoBridge{constructor(url){this.url=url}open(){if(game.mode==='play'
 const sideGame=new OrbitEchoBridge('https://eedmond95.github.io/Orbit-and-Echo-Test/');$('sideBtn').onclick=()=>sideGame.open();$('sideBack').onclick=()=>sideGame.claim();
 function updateFxButton(){$('fxToggle').textContent=save.fxQuality==='lite'?'FX LITE':'FX HIGH';$('fxToggle').setAttribute('aria-pressed',String(save.fxQuality==='high'))} $('fxToggle').onclick=()=>{save.fxQuality=save.fxQuality==='lite'?'high':'lite';renderScaleLimit=save.fxQuality==='lite'?1.25:2;resize();persist();updateFxButton();sound('ui')};function toggleMusic(){save.music=!save.music;persist();musicNextTime=0;updateMusicButton();if(save.music)ensureMusicAudio()}$('musicToggle').onclick=toggleMusic;$('pauseMusic').onclick=toggleMusic;function updateSoundButton(){if($('pauseFx'))$('pauseFx').textContent=save.muted?'♪ FX OFF':'♪ FX ON';const button=$('audioToggle');if(button){button.textContent=save.muted?'♪ FX OFF':'♪ FX ON';button.setAttribute('aria-pressed',String(!save.muted))}}function toggleEffects(){save.muted=!save.muted;persist();updateSoundButton();if(!save.muted)sound('ui')} $('audioToggle').onclick=toggleEffects;$('pauseFx').onclick=toggleEffects;
 ensureDaily();renderMissions();renderShop();refreshContinue();updateSoundButton();updateMusicButton();updateFxButton();updateHUD();show('menu');
+
+/* RIFTBREAK v14 — combat systems. Existing v13 progress, modes, academy, and rewards retained. */
+(function(){
+ const M=(id)=>document.getElementById(id);
+ const v14={parryTime:0,parryCooldown:0,parryPerfect:0,beatEnd:0,threatEnd:0,
+    bossRef:null,nodes:[],phase:0,lane:null,laneClock:6.6,comboMark:0,precisionTap:false,
+    killFx:0,skillFX:0,lastNodeHit:-100};
+ const title=M('menu').querySelector('.v7-title');
+ if(title)title.innerHTML='<span>LYRA</span><strong>RIFTBREAK<span class="v7-dot">.</span></strong>';
+ const brand=M('menu').querySelector('.v7-brand>span:last-child');
+ if(brand)brand.innerHTML='RIFTBREAK<small>LYRA / ZERO HOUR PROTOCOL</small>';
+ const build=M('menu').querySelector('.v7-build');if(build)build.textContent='RECKONING · V14';
+ const eyebrow=M('menu').querySelector('.v7-eyebrow>span');if(eyebrow)eyebrow.textContent='00 / CITY OF THE FALLEN SUN';
+ const subtitle=M('menu').querySelector('.v7-subtitle');if(subtitle)subtitle.innerHTML='<i></i> ONE BLADE. ONE LAST CITY. <span>— LYRA / UNIT 07</span>';
+ const descr=M('menu').querySelector('.v7-description');
+ if(descr)descr.textContent='Defend the last neon megacity. Execute precision slashes, counter lethal lane strikes, disable enemy reactors and shatter multi-phase titans. Upgrade your blade, master your timing, and reclaim the skyline.';
+ const banner=M('menu').querySelector('.v8-feature-banner');
+ if(banner)banner.innerHTML='<strong>RIFTBREAK // RECKONING</strong><span>DIRECTIONAL ARMOR</span><span>REACTOR BOSSES</span><span>PERFECT PARRY</span>';
+ const footer=M('menu').querySelector('.v7-footer>span:last-child');if(footer)footer.textContent='RIFTBREAK V14.0 // NEW COMBAT ENGINE';
+ const next=M('continueBtn')?.querySelector('strong');if(next)next.textContent='ENTER THE RIFT';
+ const rush=M('bossRushBtn')?.querySelector('strong');if(rush)rush.textContent='TITAN GAUNTLET';
+ const hint=M('howto')?.querySelector('.tutorial-panel');
+ if(hint){const p=document.createElement('p');p.style.cssText='padding:13px;border:1px solid #f0806a80;background:#391d2b8a;color:#ffe3d4;font-weight:700';p.textContent='RIFTBREAK NEW: blue armored targets show a blade-direction arrow—match your slash to the arrow. In titan fights, use Lyra Pulse to breach the shield, cut glowing orbiting reactors, then damage the exposed core. Tap PARRY just before a hit or a laser strike to counter.';hint.insertBefore(p,hint.querySelector('.actions'))}
+ const bottom=M('ui')?.querySelector('.v7-button-group');
+ let parry=null;
+ if(bottom){
+   parry=document.createElement('button');parry.id='v14Parry';parry.className='ready';parry.type='button';
+   parry.textContent='◇ PARRY';parry.setAttribute('aria-label','Parry an incoming attack');
+   bottom.insertBefore(parry,M('pause'));
+ }
+ const beat=document.createElement('div');beat.id='v14Beat';beat.setAttribute('aria-live','off');document.body.append(beat);
+ const threats=document.createElement('div');threats.id='v14Threat';document.body.append(threats);
+ const orders=document.createElement('div');orders.id='v14BossOrders';document.body.append(orders);
+ const stamp=document.createElement('div');stamp.id='v14CombatStamp';stamp.textContent='RIFTBREAK // PHANTOM ASSAULT SYSTEM // 14.0';M('ui').append(stamp);
+ function beatNotice(main,minor,seconds){
+   beat.innerHTML='';
+   beat.append(document.createTextNode(main));
+   if(minor){const e=document.createElement('small');e.textContent=minor;beat.append(e)}
+   v14.beatEnd=clock+(seconds||1.2);beat.classList.add('live');
+ }
+ function flashThreat(t){v14.threatEnd=Math.max(v14.threatEnd,clock+t);threats.classList.add('live')}
+ function activateParry(){
+   if(game.mode!=='play'||v14.parryCooldown>0||game.levelTransitionUntil>clock)return;
+   v14.parryTime=.91;v14.parryCooldown=6.8;v14.parryPerfect=.55;
+   if(parry)parry.classList.remove('ready');
+   impactRing(W*.5,H*.72,'#6dfff2',Math.min(W,H)*.34,2);
+   spawnParticle(W*.5,H*.72,'#8dfff2',34,.9);sound('ui');
+   beatNotice('AEGIS COUNTER','0.9 SEC INVULNERABILITY · TIME YOUR DEFENSE',.88);
+ }
+ if(parry){parry.addEventListener('pointerdown',e=>e.stopPropagation());parry.addEventListener('click',e=>{e.stopPropagation();activateParry()})}
+ addEventListener('keydown',e=>{if(e.code==='ShiftLeft'||e.code==='ShiftRight'||e.key.toLowerCase()==='f'){e.preventDefault();activateParry()}});
+ const oldHitPlayer=hitPlayer;
+ hitPlayer=function(damage){
+   if(game.mode==='play'&&!game.training&&v14.parryTime>0){
+     const perfect=v14.parryPerfect>0;
+     game.mp=Math.min(100,game.mp+(perfect?30:12));
+     game.combo+=perfect?3:1;
+     game.bestCombo=Math.max(game.bestCombo||0,game.combo);
+     v14.parryTime=0;v14.parryPerfect=0;
+     game.shake=Math.max(game.shake,perfect?16:8);
+     impactRing(W*.5,H*.64,perfect?'#ffe7b0':'#83faff',Math.min(W,H)*.65,2);
+     spawnParticle(W*.5,H*.6,perfect?'#ffd496':'#82faff',90,1.8);
+     if(perfect){giveScore(480,W*.5,H*.5);beatNotice('PERFECT COUNTER','DAMAGE NEGATED · +30 NOVA · +480 SCORE',1.5);v14.lane=null;}
+     else beatNotice('DEFLECTED','DAMAGE NEGATED · +12 NOVA',1.05);
+     sound('hit');return;
+   }
+   flashThreat(.8);oldHitPlayer(damage);
+ };
+ const oldTapSlash=tapSlash;
+ tapSlash=function(x,y){v14.precisionTap=true;try{return oldTapSlash(x,y)}finally{v14.precisionTap=false}};
+ const oldSliceEntity=sliceEntity;
+ sliceEntity=function(e){
+   if(!e||!e.active)return;
+   if(!v14.precisionTap&&(e.type==='armor'||e.type==='charger')&&e.age>.23&&!game.training&&!(game.pulseUntil>clock)){
+     const desired=e.type==='armor'?Math.PI/2:0,angle=game.lastSlashAngle||0;
+     const deviation=Math.abs(Math.sin(angle-desired));
+     if(deviation>.67){
+       if(e.hitCooldown<=0){e.hitCooldown=.22;spawnParticle(e.x,e.y,'#8df6ff',9,.45);floatText(e.x,e.y,'ANGLE BLOCKED','#a9edff');sound('slash')}
+       return;
+     }
+   }
+   return oldSliceEntity(e);
+ };
+ function nodePos(n,b){
+   const r=Math.max(54,Math.min(W*.17,H*.17,140));
+   const a=n.angle+Math.sin(clock*1.1+n.angle)*.12+b.t*.12;
+   return {x:clamp(b.x+Math.cos(a)*r,38,W-38),y:clamp(b.y+Math.sin(a)*r*.88,Math.max(145,H*.2),H*.78)};
+ }
+ function armNodes(n){
+   v14.nodes=Array.from({length:n},(_,i)=>({angle:(Math.PI*2*i/n)-Math.PI/2,hit:false,life:1}));
+   v14.lastNodeHit=-100;
+   beatNotice(n+' REACTORS ARMED','CUT THE ORBITAL CORES TO UNLOCK THE TITAN',1.5);
+ }
+ const oldUsePulse=usePulse;
+ usePulse=function(){
+   const available=game.mode==='play'&&game.mp>=100&&!(game.levelTransitionUntil>clock);
+   oldUsePulse();
+   if(!available)return;
+   v14.skillFX=2.9;
+   if(game.boss&&!game.training){
+     game.boss.shieldDown=Math.max(11,game.boss.shieldDown);
+     armNodes(game.boss.phase>=2?3:2);
+     beatNotice('LYRA // SOLAR BREACH','SHIELD SHATTERED · ERASE THE REACTORS',2.5);
+   }else beatNotice('LYRA // NOVA ASCENDANT','CLEAR THE SKY · DESTROY EVERYTHING',1.8);
+ };
+ const oldSlash=slash;
+ slash=function(ax,ay,bx,by){
+   if(game.mode!=='play')return oldSlash(ax,ay,bx,by);
+   const b=game.boss;
+   if(v14.lane&&v14.lane.stage==='warning'){
+     const a=v14.lane;
+     if(segmentDistance(a.x,a.y,ax,ay,bx,by)<Math.max(30,Math.min(W,H)*.068)){
+       a.stage='disarmed';a.time=.5;game.mp=Math.min(100,game.mp+18);giveScore(370,a.x,a.y);
+       impactRing(a.x,a.y,'#90fff1',Math.min(W,H)*.36,2);
+       spawnParticle(a.x,a.y,'#73ffe8',55,1.2);
+       beatNotice('LANE STRIKE CANCELED','REACTOR DISARMED · +18 NOVA',1.25);sound('hit');
+     }
+   }
+   if(b&&b.shieldDown>0&&!game.training){
+     let pending=v14.nodes.filter(n=>!n.hit);
+     for(const n of pending){
+       const p=nodePos(n,b);
+       if(segmentDistance(p.x,p.y,ax,ay,bx,by)<Math.max(28,Math.min(W,H)*.049)){
+         n.hit=true;v14.lastNodeHit=clock;game.mp=Math.min(100,game.mp+5);
+         game.combo++;game.bestCombo=Math.max(game.bestCombo||0,game.combo);
+         spawnParticle(p.x,p.y,'#ffb578',70,1.4);impactRing(p.x,p.y,'#ffcea1',Math.min(W,H)*.14,2);giveScore(310,p.x,p.y);
+         game.shake=Math.max(game.shake,11);sound('hit');
+         const left=v14.nodes.filter(q=>!q.hit).length;
+         beatNotice(left?left+' REACTOR'+(left===1?'':'S')+' LEFT':'CORE UNLOCKED',left?'SLASH THE REMAINING ORBITALS':'STRIKE THE TITAN WHILE ITS SHIELD IS DOWN',1.1);
+       }
+     }
+     if(v14.nodes.some(n=>!n.hit)){
+       b.cool=Math.max(b.cool,.32);
+     }else if(pending.length>0){
+       b.cool=Math.max(b.cool,.12);
+     }
+   }
+   return oldSlash(ax,ay,bx,by);
+ };
+ const oldLevelUp=levelUp;
+ levelUp=function(){
+   if(game.boss&&!game.training){v14.killFx=2.7;v14.lane=null;spawnParticle(game.boss.x,game.boss.y,'#ffdbad',110,2.4);beatNotice('TITAN EXECUTED','SKYLINE SECURED · SECTOR CLEARED',2.6)}
+   return oldLevelUp();
+ };
+ const oldResetRun=resetRun;
+ resetRun=function(lvl){
+   v14.parryTime=0;v14.parryCooldown=0;v14.parryPerfect=0;v14.bossRef=null;
+   v14.nodes=[];v14.lane=null;v14.laneClock=6.6;v14.killFx=0;v14.skillFX=0;v14.comboMark=0;
+   oldResetRun(lvl);beatNotice('SECTOR '+String(game.level).padStart(2,'0')+' // DEPLOYED','SLASH · COUNTER · SURVIVE',1.45);
+ };
+ const oldStartBossRush=startBossRush;
+ startBossRush=function(){
+   v14.bossRef=null;v14.nodes=[];v14.lane=null;v14.laneClock=6.6;oldStartBossRush();beatNotice('TITAN GAUNTLET','FOUR COMMANDERS · ONE PILOT',1.75);
+ };
+ const oldUpdate=update;
+ update=function(dt){
+   oldUpdate(dt);
+   if(clock>=v14.beatEnd)beat.classList.remove('live');
+   if(clock>=v14.threatEnd)threats.classList.remove('live');
+   if(game.mode!=='play'){orders.style.display='none';return}
+   if(game.hitStop>0)return;
+   v14.parryTime=Math.max(0,v14.parryTime-dt);
+   v14.parryPerfect=Math.max(0,v14.parryPerfect-dt);
+   v14.parryCooldown=Math.max(0,v14.parryCooldown-dt);
+   v14.skillFX=Math.max(0,v14.skillFX-dt);v14.killFx=Math.max(0,v14.killFx-dt);
+   if(parry){
+     if(v14.parryCooldown>0){parry.textContent='◇ '+v14.parryCooldown.toFixed(1)+'s';parry.className='cooling'}
+     else{parry.textContent='◇ PARRY';parry.className='ready'}
+   }
+   if(game.combo>=12&&game.combo>=v14.comboMark+12){
+     v14.comboMark=game.combo-(game.combo%12);
+     beatNotice(game.combo+'× BLADE FRENZY','HOLD YOUR STREAK FOR MAXIMUM RANK',1.05);
+   }
+   const b=game.boss;
+   if(b&&!game.training){
+     orders.style.display='';
+     if(v14.bossRef!==b){v14.bossRef=b;v14.nodes=[];v14.phase=b.phase||0;v14.lane=null;v14.laneClock=5.7}
+     if(b.phase>=2&&v14.phase<2&&b.shieldDown>0){armNodes(3);flashThreat(1.2)}
+     v14.phase=b.phase;
+     if(b.shieldDown<=0){v14.nodes=[];orders.innerHTML='<strong>⬡ BARRIER ONLINE</strong>SLASH MINIONS · FILL NOVA · ACTIVATE LYRA PULSE'}
+     else{
+       const left=v14.nodes.filter(n=>!n.hit).length;
+       orders.innerHTML=left?'<strong>◉ '+left+' REACTOR'+(left===1?'':'S')+' ACTIVE</strong>SLASH GLOWING NODES · '+Math.ceil(b.shieldDown)+'s REMAINING':'<strong>✕ REACTOR LOCK BROKEN</strong>THE TITAN IS VULNERABLE · ATTACK THE CORE';
+     }
+     if(!v14.lane){v14.laneClock-=dt;if(v14.laneClock<=0&&game.pulseUntil<=clock){
+       const horizontal=Math.random()<.5,x=W*(.24+Math.random()*.52),y=H*(.34+Math.random()*.29);
+       v14.lane={horizontal,x,y,time:2.15,stage:'warning'};
+       v14.laneClock=7+Math.random()*3;
+       flashThreat(.45);lyraSay('REACTOR STRIKE! SLASH THE SIGNAL NODE!',2.3);
+     }}else{
+       const l=v14.lane;l.time-=dt;
+       if(l.stage==='warning'&&l.time<=0){
+         l.stage='fired';l.time=.8;flashThreat(1);
+         hitPlayer(b.phase>=2?24:18);game.shake=Math.max(14,game.shake);
+         beatNotice('RIFT STRIKE','COUNTER OR CUT THE TELEGRAPH NEXT TIME',1.1);
+       }
+       if(l.time<=0)v14.lane=null;
+     }
+   }else{orders.style.display='none';v14.bossRef=null;v14.nodes=[];v14.lane=null}
+ };
+ function polygon(points,fill,stroke,w){
+   ctx.beginPath();for(let i=0;i<points.length;i++){const p=points[i];i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])}
+   ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=w||1;ctx.stroke()}
+ }
+ const oldBossArt=drawBoss;
+ drawBoss=function(b){
+   const kind=b.kind||0,t=b.t||0,phase=b.phase>=2,shield=b.shieldDown<=0;
+   const palette=[['#ff4b60','#ffbd8a'],['#a275ff','#ff7cc7'],['#5df3fc','#a3f9e2'],['#ffba58','#ff6862']][kind];
+   const hue=palette[0],light=palette[1],r=Math.max(55,Math.min(W,H)*.13);
+   ctx.save();ctx.translate(b.x,b.y+Math.sin(t*2.8)*5);
+   ctx.shadowColor=hue;ctx.shadowBlur=save.fxQuality==='lite'?9:38;
+   const aura=ctx.createRadialGradient(0,0,r*.1,0,0,r*2.3);
+   aura.addColorStop(0,phase?'#ff7b5445':'#4966d833');aura.addColorStop(.6,hue+'24');aura.addColorStop(1,'#00000000');
+   ctx.fillStyle=aura;ctx.beginPath();ctx.arc(0,0,r*2.3,0,Math.PI*2);ctx.fill();
+   ctx.save();ctx.rotate(t*(kind%2?-.4:.42));
+   for(let i=0;i<12;i++){const a=i*Math.PI/6;ctx.save();ctx.rotate(a);polygon([[-r*.07,-r*1.85],[r*.07,-r*1.85],[r*.20,-r*2.15],[0,-r*2.35],[-r*.2,-r*2.15]],'#101a31',hue,2);ctx.restore()}
+   ctx.strokeStyle=hue;ctx.lineWidth=2;ctx.globalAlpha=.65;
+   ctx.beginPath();ctx.arc(0,0,r*1.7,0,Math.PI*2);ctx.stroke();ctx.restore();
+   ctx.globalAlpha=1;ctx.shadowBlur=18;
+   const wingLift=Math.sin(t*2.1)*r*.09;
+   // Independent weapon silhouettes for each Void Commander.
+   if(kind===0||kind===2){
+     for(const side of [-1,1]){
+       ctx.save();ctx.scale(side,1);
+       polygon([[r*.38,-r*.31],[r*1.0,-r*.68],[r*1.62,-r*1.23-wingLift],[r*1.48,-r*.25],[r*.96,r*.43],[r*.52,r*.21]],'#18213b',hue,3);
+       polygon([[r*1.19,-r*.67],[r*1.81,-r*1.44-wingLift],[r*1.62,r*.12],[r*1.14,r*.41]],kind===2?'#103d50':'#482035',light,2);
+       for(let j=0;j<3;j++){ctx.strokeStyle=light;ctx.lineWidth=1.4;line(r*(.8+j*.19),-r*(.6+j*.17),r*(1.15+j*.15),-r*.2)}
+       ctx.restore()
+     }
+   }else{
+     for(const side of [-1,1]){ctx.save();ctx.scale(side,1);
+       polygon([[r*.4,-r*.4],[r*1.48,-r*1.6],[r*1.28,-r*.34],[r*2.14,r*.11],[r*.72,r*.5]],'#172344',hue,3);
+       polygon([[r*1.5,-r*1.7],[r*1.64,-r*.65],[r*1.39,-r*.65]],light,light,1);
+       ctx.restore()}
+   }
+   const armor=ctx.createLinearGradient(-r,-r,r,r);
+   armor.addColorStop(0,'#3b4266');armor.addColorStop(.43,'#131f36');armor.addColorStop(1,'#080c20');
+   polygon([[0,-r*.95],[r*.81,-r*.51],[r*.97,r*.25],[r*.53,r*.83],[0,r*1.02],[-r*.53,r*.83],[-r*.97,r*.25],[-r*.81,-r*.51]],armor,hue,3.7);
+   polygon([[0,-r*.81],[r*.51,-r*.39],[r*.7,r*.18],[r*.28,r*.55],[0,r*.81],[-r*.28,r*.55],[-r*.7,r*.18],[-r*.51,-r*.39]],'#172b43',light,1.8);
+   for(const side of [-1,1]){
+     ctx.save();ctx.scale(side,1);
+     polygon([[r*.21,-r*.65],[r*.63,-r*1.22],[r*.97,-r*1.8],[r*.88,-r*.59],[r*.6,-r*.36]],'#112437',hue,3);
+     polygon([[r*.19,-r*.14],[r*.58,-r*.2],[r*.47,-r*.02],[r*.17,r*.04]],'#fffded',hue,1.7);
+     polygon([[r*.5,r*.25],[r*.82,r*.41],[r*.45,r*.68]],'#0b1226',light,1.5);
+     ctx.restore()
+   }
+   // Animated mouth grille and reactor core.
+   ctx.shadowColor=light;ctx.shadowBlur=22;
+   polygon([[0,-r*.18],[r*.18,0],[r*.19,r*.29],[0,r*.43],[-r*.19,r*.29],[-r*.18,0]],light,'#fff9df',2);
+   ctx.shadowBlur=0;ctx.strokeStyle='#092033';ctx.lineWidth=2;
+   for(let i=-2;i<=2;i++)line(-r*.11,r*(.08+i*.045),r*.11,r*(.08+i*.045));
+   ctx.strokeStyle=light;ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,r*1.18,t*.4,t*.4+Math.PI*.6);ctx.stroke();
+   if(shield){ctx.strokeStyle='#7efaff';ctx.shadowColor='#71e8ff';ctx.shadowBlur=22;ctx.lineWidth=3.5;ctx.globalAlpha=.8;ctx.beginPath();ctx.ellipse(0,0,r*1.3,r*1.12,-.2,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=.4;ctx.setLineDash([7,14]);ctx.beginPath();ctx.arc(0,0,r*1.57,0,Math.PI*2);ctx.stroke();ctx.setLineDash([])}
+   else{ctx.shadowColor='#ffb16d';ctx.shadowBlur=35;ctx.strokeStyle=light;ctx.lineWidth=5;ctx.beginPath();ctx.arc(0,0,r*.46,t*1.5,t*1.5+Math.PI*1.4);ctx.stroke()}
+   ctx.restore();
+ };
+ function drawArmorMarker(e){
+   if(!e.active||game.mode!=='play'||game.pulseUntil>clock)return;
+   const s=e.size*(.31+Math.pow(Math.max(.05,e.z)/1.8,1.55)*2.8);
+   ctx.save();ctx.translate(e.x,e.y);ctx.globalAlpha=Math.min(1,e.age*3);
+   ctx.strokeStyle=e.type==='armor'?'#8affff':'#ffc0a7';ctx.lineWidth=3;ctx.shadowColor=ctx.strokeStyle;ctx.shadowBlur=10;
+   const m=Math.max(9,s*.38);ctx.beginPath();
+   if(e.type==='armor'){ctx.moveTo(0,-m);ctx.lineTo(0,m);ctx.moveTo(-m*.35,m*.6);ctx.lineTo(0,m);ctx.lineTo(m*.35,m*.6)}
+   else{ctx.moveTo(-m,0);ctx.lineTo(m,0);ctx.moveTo(m*.6,-m*.35);ctx.lineTo(m,0);ctx.lineTo(m*.6,m*.35)}
+   ctx.stroke();ctx.restore();
+ }
+ function drawLane(){
+   const l=v14.lane;if(!l)return;
+   ctx.save();const progress=clamp(l.time/2.15,0,1),fired=l.stage==='fired';
+   ctx.globalCompositeOperation='lighter';ctx.globalAlpha=fired?.9:.4+.5*(1-progress);
+   ctx.strokeStyle=fired?'#ffe9b6':'#ff4757';ctx.shadowColor='#ff3144';ctx.shadowBlur=fired?55:30;
+   ctx.lineWidth=fired?24:5;ctx.beginPath();
+   if(l.horizontal){ctx.moveTo(0,l.y);ctx.lineTo(W,l.y)}
+   else{ctx.moveTo(l.x,0);ctx.lineTo(l.x,H)}
+   ctx.stroke();ctx.setLineDash([8,16]);ctx.strokeStyle='#ffe5bf';ctx.lineWidth=1.5;
+   ctx.beginPath();if(l.horizontal){ctx.moveTo(0,l.y);ctx.lineTo(W,l.y)}else{ctx.moveTo(l.x,0);ctx.lineTo(l.x,H)}ctx.stroke();ctx.setLineDash([]);
+   ctx.globalAlpha=l.stage==='warning'?1:.2;ctx.translate(l.x,l.y);ctx.rotate(clock*2);
+   polygon([[0,-26],[26,0],[0,26],[-26,0]],'#1c1124','#ffd2a4',3);ctx.fillStyle='#ff685d';ctx.beginPath();ctx.arc(0,0,10,0,Math.PI*2);ctx.fill();
+   ctx.restore();
+   if(l.stage==='warning'){
+     ctx.save();ctx.textAlign='center';ctx.fillStyle='#fff0c7';ctx.shadowColor='#ff3a57';ctx.shadowBlur=12;ctx.font='900 '+Math.max(10,Math.min(14,W*.03))+'px ui-monospace,monospace';
+     ctx.fillText('CUT THE REACTOR · '+l.time.toFixed(1)+'s',clamp(l.x,90,W-90),clamp(l.y-42,135,H-110));ctx.restore();
+   }
+ }
+ function drawReactorNodes(){
+   const b=game.boss;if(!b||b.shieldDown<=0)return;
+   for(const n of v14.nodes){if(n.hit)continue;const p=nodePos(n,b);
+     const rr=Math.max(19,Math.min(30,Math.min(W,H)*.055)),spin=clock*1.7+n.angle;
+     ctx.save();ctx.translate(p.x,p.y);ctx.rotate(spin);ctx.globalCompositeOperation='lighter';ctx.shadowColor='#ffac60';ctx.shadowBlur=35;
+     ctx.strokeStyle='#ffe8b4';ctx.lineWidth=3;
+     ctx.beginPath();ctx.arc(0,0,rr*.92,-.5,Math.PI*1.6);ctx.stroke();
+     for(let i=0;i<4;i++){ctx.rotate(Math.PI/2);polygon([[0,-rr*1.25],[rr*.34,-rr*.71],[0,-rr*.42],[-rr*.34,-rr*.71]],'#923344','#ffba83',2)}
+     polygon([[0,-rr*.53],[rr*.55,0],[0,rr*.53],[-rr*.55,0]],'#ff8f5f','#fff8e5',3);
+     ctx.restore();
+     ctx.save();ctx.strokeStyle='#ffb38577';ctx.lineWidth=1;ctx.setLineDash([3,9]);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);ctx.restore();
+   }
+ }
+ function drawRiftForeground(){
+   if(game.mode!=='play'&&game.mode!=='warning')return;
+   ctx.save();ctx.globalCompositeOperation='screen';
+   const horizon=H*.56,vanishX=W*.5;
+   ctx.strokeStyle='#47a9e3';ctx.lineWidth=1;
+   for(let j=-9;j<=9;j++){
+     ctx.globalAlpha=.08;ctx.beginPath();ctx.moveTo(vanishX+j*W*.016,horizon);ctx.lineTo(vanishX+j*W*.19,H);ctx.stroke()
+   }
+   for(let i=0;i<10;i++){
+     const u=((i/10+clock*.037)%1),y=horizon+(H-horizon)*u*u;
+     ctx.globalAlpha=.035+u*.13;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()
+   }
+   const edge=ctx.createLinearGradient(0,0,W,0);
+   edge.addColorStop(0,'#ff3d4818');edge.addColorStop(.18,'#00000000');edge.addColorStop(.82,'#00000000');edge.addColorStop(1,'#ff3d4818');
+   ctx.globalAlpha=1;ctx.fillStyle=edge;ctx.fillRect(0,0,W,H);
+   if(v14.skillFX>0){
+     const u=v14.skillFX/2.9;ctx.globalAlpha=Math.min(.8,u*.65);ctx.strokeStyle='#bafaff';ctx.shadowColor='#ffffff';ctx.shadowBlur=32;ctx.lineWidth=8;
+     for(let i=0;i<6;i++){const x=W*((i+1)/7);ctx.beginPath();ctx.moveTo(x-W*.3*Math.sin(clock*6+i),0);ctx.lineTo(x+W*.2*Math.cos(clock*5+i),H);ctx.stroke()}
+   }
+   if(v14.killFx>0){
+     const u=v14.killFx/2.7;ctx.globalAlpha=u*.3;ctx.fillStyle='#ffe0b5';ctx.fillRect(0,0,W,H);
+   }
+   ctx.restore();
+ }
+ const oldDraw=draw;
+ draw=function(){
+   oldDraw();
+   if(game.mode!=='play'&&game.mode!=='warning')return;
+   ctx.save();
+   drawRiftForeground();
+   if(game.mode==='play'){
+     for(const e of entities)if(e.active&&(e.type==='armor'||e.type==='charger'))drawArmorMarker(e);
+     drawLane();drawReactorNodes();
+   }
+   ctx.restore();
+ };
+ // Fast retry paths and safety: continue older game menus and save data without migration.
+ window.RIFTBREAK_BUILD='14.0.0';
+ window.RIFTBREAK_DIAGNOSTICS=()=>({build:window.RIFTBREAK_BUILD,mode:game.mode,sector:game.level,
+   parryReady:v14.parryCooldown<=0,shieldNodes:v14.nodes.filter(n=>!n.hit).length,
+   laneActive:!!v14.lane,progressSaved:save.highestUnlocked});
+ console.info('[RIFTBREAK v14] interactive reactor bosses / directional armor / parry / cinematic renderer ready');
+})();
 </script></body></html>
